@@ -1,7 +1,7 @@
-import { Categories } from "./components/categories"
-import { Navbar } from "./components/navbar"
-import { ProductCard } from "./components/product-card"
-import { ProductCarousel } from "./components/product-carousel"
+import { Categories } from "../components/components/categories"
+import { Navbar } from "../components/components/navbar"
+import { ProductCard } from "../components/components/product-card"
+import { ProductCarousel } from "../components/components/product-carousel"
 
 
 const products = [
