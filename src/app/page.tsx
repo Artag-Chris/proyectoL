@@ -1,7 +1,8 @@
-import { Categories } from "../components/components/categories"
-import { Navbar } from "../components/components/navbar"
-import { ProductCard } from "../components/components/product-card"
-import { ProductCarousel } from "../components/components/product-carousel"
+import { Categories } from "@/components/components/categories"
+import { Footer } from "@/components/components/footer"
+import { Navbar } from "@/components/components/navbar"
+import { ProductCard } from "@/components/components/product-card"
+import { ProductCarousel } from "@/components/components/product-carousel"
 
 
 const products = [
@@ -82,6 +83,7 @@ export default function Home() {
           ))}
         </div>
       </div>
+      <Footer />
     </main>
   )
 }
