@@ -21,6 +21,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/wp-content/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
+        port: '',
+        pathname: '/originals/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },
@@ -28,5 +34,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-

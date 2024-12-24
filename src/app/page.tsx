@@ -23,7 +23,7 @@ const products = [
     id: 3, 
     name: 'Set de Velas Decorativas', 
     price: 34.99, 
-    image: '/placeholder.svg?height=200&width=200',
+    image: 'https://i.pinimg.com/originals/c9/ec/84/c9ec84d5ed92a750244a1791e11732b7.jpg?height=200&width=200',
     description: 'Set de 3 velas decorativas con diferentes formas y tamaños, perfectas para crear ambiente.'
   },
   { 
