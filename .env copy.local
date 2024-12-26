@@ -1,0 +1,8 @@
+#referente a la documentacion: 
+#https://next-auth.js.org/providers/google
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+#referente a la documentacion:
+#https://next-auth.js.org/providers/facebook
+FACEBOOK_CLIENT_ID=
+FACEBOOK_CLIENT_SECRET=
