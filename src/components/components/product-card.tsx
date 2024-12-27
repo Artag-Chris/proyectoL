@@ -1,6 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 interface ProductCardProps {
   id: number
@@ -12,29 +13,37 @@ interface ProductCardProps {
 
 export function ProductCard({ id, name, price, image, description }: ProductCardProps) {
   return (
-    <Card className="w-full max-w-sm mx-auto overflow-hidden h-full backdrop-blur-md bg-white/30 border-none shadow-lg">
-      <div className="relative w-full h-48">
-        <Image
-          src={image}
-          alt={name}
-          fill
-          style={{ objectFit: 'cover' }}
-          className="rounded-t-md"
-        />
-      </div>
-      <CardHeader>
-        <CardTitle className="text-lg font-semibold">{name}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-gray-700 line-clamp-2">{description}</p>
-      </CardContent>
-      <CardFooter className="flex justify-between items-center">
-        <span className="text-xl font-bold">${price.toFixed(2)}</span>
-        <Button className="bg-accent text-accent-foreground hover:bg-accent/80">
-          Añadir al carrito
-        </Button>
-      </CardFooter>
-    </Card>
+    <motion.div
+     
+      className="w-full h-full"
+    >
+      <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
+        <div className="relative flex-grow">
+          
+          <Image
+
+            src={image}
+            alt={name}
+            fill
+            style={{ objectFit: 'cover' }}
+            className="rounded-t-lg"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+           className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4">
+            <CardTitle className="text-lg font-semibold text-white mb-2">{name}</CardTitle>
+            <p className="text-sm text-white/80 line-clamp-2">{description}</p>
+          </motion.div>
+        </div>
+        <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
+          <span className="text-xl font-bold text-white">${price.toFixed(2)}</span>
+          <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+            Añadir al carrito
+          </Button>
+        </CardFooter>
+      </Card>
+    </motion.div>
   )
 }
-

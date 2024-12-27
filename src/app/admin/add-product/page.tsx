@@ -8,6 +8,13 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 
 const categories = ['Electrónicos', 'Ropa', 'Hogar', 'Velas', 'Accesorios']
 
@@ -16,7 +23,11 @@ export default function AddProductPage() {
   const [description, setDescription] = useState('')
   const [price, setPrice] = useState('')
   const [category, setCategory] = useState('')
+  const [desCategory, setDesCategory] = useState('')
+  const [stock, setStock] = useState('')
   const [image, setImage] = useState<File | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalContent, setModalContent] = useState('')
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -27,23 +38,36 @@ export default function AddProductPage() {
     formData.append('description', description)
     formData.append('price', price)
     formData.append('category', category)
+    formData.append('desCategory', desCategory)
+    formData.append('stock', stock)
     if (image) {
-      formData.append('image', image)
+      formData.append('file', image)
     }
 
     try {
-      const response = await fetch('/api/products', {
+      const response = await fetch('http://localhost:45623/api/productos/upload', {
         method: 'POST',
         body: formData,
       })
 
+      const data = await response.json()
+      setModalContent(JSON.stringify(data, null, 2))
+      setIsModalOpen(true)
+
       if (response.ok) {
-        router.push('/admin/products')
-      } else {
-        console.error('Failed to add product')
+        // Limpiar el formulario después de un envío exitoso
+        setName('')
+        setDescription('')
+        setPrice('')
+        setCategory('')
+        setDesCategory('')
+        setStock('')
+        setImage(null)
       }
     } catch (error) {
       console.error('Error adding product:', error)
+      setModalContent('Error al agregar el producto. Por favor, intente de nuevo.')
+      setIsModalOpen(true)
     }
   }
 
@@ -98,11 +122,30 @@ export default function AddProductPage() {
               </Select>
             </div>
             <div className="space-y-2">
+              <Label htmlFor="desCategory">Descripción de Categoría</Label>
+              <Input
+                id="desCategory"
+                value={desCategory}
+                onChange={(e) => setDesCategory(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="stock">Stock</Label>
+              <Input
+                id="stock"
+                type="number"
+                value={stock}
+                onChange={(e) => setStock(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="image">Imagen del Producto</Label>
               <Input
                 id="image"
                 type="file"
-                accept="image/*"
+                accept="image/png,image/jpeg,image/jpg"
                 onChange={(e) => setImage(e.target.files?.[0] || null)}
                 required
               />
@@ -113,6 +156,20 @@ export default function AddProductPage() {
           </form>
         </CardContent>
       </Card>
+
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Respuesta del Servidor</DialogTitle>
+            <DialogDescription>
+              <pre className="bg-gray-100 p-4 rounded-md overflow-auto max-h-96">
+                {modalContent}
+              </pre>
+            </DialogDescription>
+          </DialogHeader>
+          <Button onClick={() => setIsModalOpen(false)}>Cerrar</Button>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

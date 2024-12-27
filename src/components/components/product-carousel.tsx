@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '@/components/ui/card'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
-
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion } from 'framer-motion'
 
 interface Product {
   id: number
@@ -48,42 +48,56 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
   }, [nextSlide])
 
   return (
-    <div className="relative overflow-hidden">
-      <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-        {products.map((product) => (
-          <div key={product.id} className="w-full flex-shrink-0 p-4">
-            <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
-              <div className="relative w-full h-48">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  style={{ objectFit: 'cover' }}
-                  className="rounded-t-md"
-                />
-              </div>
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">{product.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-700 line-clamp-2">{product.description}</p>
-              </CardContent>
-              <CardFooter className="flex justify-between items-center">
-                <span className="text-xl font-bold">${product.price.toFixed(2)}</span>
-                <Button className="bg-accent text-accent-foreground hover:bg-accent/80">
-                  Añadir al carrito
-                </Button>
-              </CardFooter>
-            </Card>
-          </div>
-        ))}
+    <div className="relative overflow-hidden rounded-lg">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/candles-background.jpg"
+          alt="Candles Background"
+          layout="fill"
+          objectFit="cover"
+          className="opacity-20"
+        />
       </div>
-      <Button className="absolute top-1/2 left-2 transform -translate-y-1/2" onClick={prevSlide}>
-        <ChevronLeft className="h-6 w-6" />
-      </Button>
-      <Button className="absolute top-1/2 right-2 transform -translate-y-1/2" onClick={manualNextSlide}>
-        <ChevronRight className="h-6 w-6" />
-      </Button>
+      
+      {/* Carousel Content */}
+      <div className="relative z-10">
+        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+          {products.map((product) => (
+            <div key={product.id} className="w-full flex-shrink-0 p-4">
+              <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
+                <div className="relative w-full h-48">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="rounded-t-md"
+                  />
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-lg font-semibold text-amber-800">{product.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-amber-700 line-clamp-2">{product.description}</p>
+                </CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <span className="text-xl font-bold text-amber-800">${product.price.toFixed(2)}</span>
+                  <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                    Añadir al carrito
+                  </Button>
+                </CardFooter>
+              </Card>
+            </div>
+          ))}
+        </div>
+        <Button className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={prevSlide}>
+          <ChevronLeft className="h-6 w-6" />
+        </Button>
+        <Button className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={manualNextSlide}>
+          <ChevronRight className="h-6 w-6" />
+        </Button>
+      </div>
     </div>
   )
 }

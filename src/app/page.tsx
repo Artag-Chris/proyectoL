@@ -1,88 +1,160 @@
-import { Categories } from "@/components/components/categories";
-import { Footer } from "@/components/components/footer";
-import { Navbar } from "@/components/components/navbar";
-import { ProductCard } from "@/components/components/product-card";
-import { ProductCarousel } from "@/components/components/product-carousel";
+'use client'
+
+import { useEffect, useState } from 'react'
+
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowUp } from 'lucide-react'
+import { Categories } from '@/components/components/categories'
+import { Footer } from '@/components/components/footer'
+import { Navbar } from '@/components/components/navbar'
+import { ProductCard } from '@/components/components/product-card'
+import { ProductCarousel } from '@/components/components/product-carousel'
 
 const products = [
   { 
     id: 1, 
     name: 'Vela Aromática Lavanda', 
     price: 19.99, 
-    image: "https://cdn.bioguia.com/embed/4e2c63b79bdd73bc392cf1baad21576662223/velas.jpg?height=200&width=200",
+    image: '/placeholder.svg?height=200&width=200',
     description: 'Vela aromática de lavanda hecha a mano con cera de soja natural y aceites esenciales.'
   },
   { 
     id: 2, 
-    name: 'Smartphone XYZ', 
-    price: 599.99, 
+    name: 'Set de Velas de Vainilla', 
+    price: 29.99, 
     image: '/placeholder.svg?height=200&width=200',
-    description: 'Un smartphone de última generación con cámara de alta resolución y batería de larga duración.'
+    description: 'Set de 3 velas de vainilla con diferentes tamaños, perfectas para crear un ambiente acogedor.'
   },
   { 
     id: 3, 
-    name: 'Set de Velas Decorativas', 
-    price: 34.99, 
-    image: 'https://i.pinimg.com/originals/c9/ec/84/c9ec84d5ed92a750244a1791e11732b7.jpg?height=200&width=200',
-    description: 'Set de 3 velas decorativas con diferentes formas y tamaños, perfectas para crear ambiente.'
+    name: 'Difusor de Aceites Esenciales', 
+    price: 39.99, 
+    image: '/placeholder.svg?height=200&width=200',
+    description: 'Difusor ultrasónico para aceites esenciales con luz LED de colores cambiantes.'
   },
   { 
     id: 4, 
-    name: 'Smartwatch Pro', 
-    price: 249.99, 
+    name: 'Vela de Soja Cítrica', 
+    price: 24.99, 
     image: '/placeholder.svg?height=200&width=200',
-    description: 'Reloj inteligente con monitoreo de salud, notificaciones y resistencia al agua.'
+    description: 'Vela de soja con aroma cítrico refrescante, ideal para energizar espacios.'
   },
-];
-
-const soldProducts = [
   { 
     id: 5, 
-    name: 'Vela de Soja Vainilla', 
-    price: 24.99, 
-    image: 'https://cdn.bioguia.com/embed/4e2c63b79bdd73bc392cf1baad21576662223/velas.jpg?height=200&width=200',
-    description: 'Vela de soja con aroma a vainilla, larga duración y envase reutilizable.'
+    name: 'Set de Mini Velas Aromáticas', 
+    price: 34.99, 
+    image: '/placeholder.svg?height=200&width=200',
+    description: 'Set de 6 mini velas aromáticas con diferentes fragancias para variar el ambiente.'
   },
   { 
     id: 6, 
-    name: 'Consola de Juegos', 
-    price: 499.99, 
-    image: 'https://th.bing.com/th/id/R.cbd2d83dab87f8849d0397c6e9cc6b39?rik=Xitu7aRQVkyZFQ&pid=ImgRaw&r=0?height=200&width=200',
-    description: 'La última consola de juegos con gráficos de alta calidad y juegos exclusivos.'
+    name: 'Vela de Madera y Ámbar', 
+    price: 27.99, 
+    image: '/placeholder.svg?height=200&width=200',
+    description: 'Vela con aroma a madera y ámbar en un elegante recipiente de vidrio.'
   },
+]
+
+const soldProducts = [
   { 
     id: 7, 
-    name: 'Vela Aromática Cítrica', 
+    name: 'Vela Aromática de Jazmín', 
     price: 22.99, 
-    image: 'https://th.bing.com/th/id/R.d00fd4eb85155152a54e28bc79c2411f?rik=6Hac5UyzGMikXQ&riu=http%3a%2f%2fblog.eco-citric.es%2fwp-content%2fuploads%2f2016%2f08%2fvelas-683x1024.jpg&ehk=F%2fN5HUWYgguB%2f%2bo5zMnfmVJ8ZDj8NgknfUcnyLEeQsY%3d&risl=&pid=ImgRaw&r=0?height=200&width=200',
-    description: 'Vela aromática con fragancia cítrica refrescante, ideal para energizar espacios.'
+    image: '/placeholder.svg?height=200&width=200',
+    description: 'Vela aromática con fragancia de jazmín, perfecta para relajarse después de un largo día.'
   },
-];
+  { 
+    id: 8, 
+    name: 'Set de Velas Flotantes', 
+    price: 19.99, 
+    image: '/placeholder.svg?height=200&width=200',
+    description: 'Set de 12 velas flotantes sin aroma, ideales para decorar piscinas o centros de mesa.'
+  },
+  { 
+    id: 9, 
+    name: 'Vela de Masaje', 
+    price: 32.99, 
+    image: '/placeholder.svg?height=200&width=200',
+    description: 'Vela de masaje que se derrite en un aceite cálido y aromático para una experiencia relajante.'
+  },
+]
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+}
 
 export default function Home() {
+  const [showScrollTop, setShowScrollTop] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.pageYOffset > 300)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
-    <main className="min-h-screen flex flex-col bg-gradient-to-br from-orange-400 to-yellow-200">
+    <main className="min-h-screen flex flex-col bg-gradient-to-br from-amber-50 to-orange-100">
       <Navbar />
       <div className="container mx-auto px-4 flex-grow">
-        <h1 className="text-4xl font-bold text-center my-8 text-white">Bienvenido a VibrantShop</h1>
-
-        <h2 className="text-2xl font-semibold mt-12 mb-6 text-white">Categorías</h2>
+        <h1 className="text-4xl font-bold text-center my-8 text-amber-800">Bienvenido a AromaFlame</h1>
+        
+        <h2 className="text-2xl font-semibold mt-12 mb-6 text-amber-700">Categorías</h2>
         <Categories />
-
-        <h2 className="text-2xl font-semibold mt-12 mb-6 text-white">Últimos productos vendidos</h2>
+        
+        <h2 className="text-2xl font-semibold mt-12 mb-6 text-amber-700">Últimos productos vendidos</h2>
         <ProductCarousel products={soldProducts} />
-
-        <h2 className="text-2xl font-semibold mt-12 mb-6 text-white">Lo último en llegar</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {products.map((product) => (
-            <ProductCard 
-              key={product.id} 
-              {...product} 
-            />
+        
+        <h2 className="text-2xl font-semibold mt-12 mb-6 text-amber-700">Lo último en llegar</h2>
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {products.map((product, index) => (
+            <div key={product.id} className={`
+              backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
+              ${index === 0 ? 'md:col-span-2 md:row-span-2' : ''}
+              ${index === 1 ? 'md:col-span-2' : ''}
+              ${index === 3 ? 'md:row-span-2' : ''}
+              ${index === 5 ? 'md:col-span-2' : ''}
+            `}>
+              <ProductCard {...product} />
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
       <Footer />
+
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.button
+            className="fixed bottom-8 right-8 p-3 bg-orange-500 text-white rounded-full shadow-lg"
+            onClick={scrollToTop}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <ArrowUp size={24} />
+          </motion.button>
+        )}
+      </AnimatePresence>
     </main>
-  );
+  )
 }
+
