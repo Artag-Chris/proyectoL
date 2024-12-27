@@ -52,7 +52,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/candles-background.jpg"
+          src="https://d1ih8jugeo2m5m.cloudfront.net/2024/10/velas_aromaticas-768x512.jpg"
           alt="Candles Background"
           layout="fill"
           objectFit="cover"
