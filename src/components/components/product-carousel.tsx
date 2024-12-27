@@ -54,12 +54,12 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         <Image
           src="https://d1ih8jugeo2m5m.cloudfront.net/2024/10/velas_aromaticas-768x512.jpg"
           alt="Candles Background"
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: 'cover' }}
           className="opacity-20"
         />
       </div>
-      
+
       {/* Carousel Content */}
       <div className="relative z-10">
         <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
