@@ -4,6 +4,9 @@ const categories = [
   'Electrónicos', 'Ropa', 'Hogar', 'Deportes', 'Belleza'
 ]
 
+//aqui usaremos el hook de traer las categorias de la base de datos para renderizarlos
+//een el componente de categorias
+
 export function Categories() {
   return (
     <div className="flex flex-wrap justify-center gap-4 my-8">

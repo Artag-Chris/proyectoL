@@ -10,6 +10,10 @@ import { Navbar } from '@/components/components/navbar'
 import { ProductCard } from '@/components/components/product-card'
 import { ProductCarousel } from '@/components/components/product-carousel'
 
+//hay que colocar los lazy imports para que la carga de los componentes no se vea tan rustica
+//a su vez aqui podriamos colocar o usar lo nuevo de react el use optimistic para manejar las cargas
+//eso con el suspense y el lazy import
+
 const products = [
   { 
     id: 1, 
@@ -94,7 +98,7 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.pageYOffset > 300)
+      setShowScrollTop(window.scrollY > 300)
     }
 
     window.addEventListener('scroll', handleScroll)

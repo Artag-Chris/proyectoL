@@ -12,6 +12,8 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ id, name, price, image, description }: ProductCardProps) {
+  //aqui se podria colocar  las animaciones de framer motion para que se vea mas fluido
+  //investigar como hacer para que cuando tengan un hover aparesca un modal para ver la informacion
   return (
     <motion.div
      
