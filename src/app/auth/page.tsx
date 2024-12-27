@@ -9,6 +9,11 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { FaGoogle, FaFacebook, FaTwitter } from 'react-icons/fa'
 
+
+//se quitara el icono de twitter y  se agrandaran los iconos de google y facebook
+//con el fin de que el usuario quiera usarlos mas y nos ayude a identificar mas facil nuestros usuario
+//se colocaran mas peque;os los inputs los simbolos de google y facebook sera mas protagonistas
+//y tendran animaciones 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')

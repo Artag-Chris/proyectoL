@@ -9,6 +9,12 @@ import { Navbar } from '@/components/components/navbar'
 import { Footer } from '@/components/components/footer'
 import { ProductCard } from '@/components/components/product-card'
 
+// aca se mirara el parametro de la url y se pedira a la api los datos de la categoria y sus productos 
+//relacionados para mostrarlos en la pagina
+//se usara un hook especifico
+//se crearan unas tarjetas especificas para mostrar los productos seran distintas a la pagina principal
+//con el fin de crear una sesacion de exploracion al usuario
+//cuando se haga click en un producto se redirigira a la pagina de detalle del producto
 // Datos dummy para la demostración
 const categoryProducts = [
   { 

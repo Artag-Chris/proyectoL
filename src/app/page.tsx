@@ -13,6 +13,8 @@ import { ProductCarousel } from '@/components/components/product-carousel'
 //hay que colocar los lazy imports para que la carga de los componentes no se vea tan rustica
 //a su vez aqui podriamos colocar o usar lo nuevo de react el use optimistic para manejar las cargas
 //eso con el suspense y el lazy import
+//se crearan mas secciones como el por que usar velas aromaticas y sus beneficios tambien una seccion de about us
+//y una seccion de compra tu vela aromatica personalizada
 
 const products = [
   { 
