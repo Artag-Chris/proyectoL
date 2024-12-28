@@ -1,9 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, Package, ShoppingCart, Users, FolderPlus, PlusCircle } from 'lucide-react'
+import { LayoutDashboard, Package, ShoppingCart, Users, FolderPlus, PlusCircle, Menu } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 const routes = [
   {
@@ -46,9 +49,36 @@ const routes = [
 
 export function AdminSidebar() {
   const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="space-y-4 py-4 flex flex-col h-full backdrop-blur-md bg-white/10 border-r border-white/10">
+    <>
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+          <Button variant="outline" size="icon" className="md:hidden fixed top-4 left-4 z-50">
+            <Menu className="h-6 w-6" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="left" className="p-0 backdrop-blur-md bg-white/10 border-none">
+          <SidebarContent pathname={pathname} setIsOpen={setIsOpen} />
+        </SheetContent>
+      </Sheet>
+
+      <div className="hidden md:flex h-screen backdrop-blur-md bg-white/10 border-r border-white/10">
+        <SidebarContent pathname={pathname} setIsOpen={setIsOpen} />
+      </div>
+    </>
+  )
+}
+
+interface SidebarContentProps {
+  pathname: string;
+  setIsOpen?: (isOpen: boolean) => void;
+}
+
+function SidebarContent({ pathname, setIsOpen }: SidebarContentProps) {
+  return (
+    <div className="space-y-4 py-4 flex flex-col h-full">
       <div className="px-3 py-2">
         <Link href="/admin" className="flex items-center pl-3 mb-14">
           <h1 className="text-2xl font-bold text-[var(--color-text)]">
@@ -60,6 +90,7 @@ export function AdminSidebar() {
             <Link
               key={route.href}
               href={route.href}
+              onClick={() => setIsOpen?.(false)}
               className={cn(
                 "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:bg-white/10 rounded-lg transition",
                 pathname === route.href ? "bg-white/10" : "transparent",
@@ -77,3 +108,4 @@ export function AdminSidebar() {
     </div>
   )
 }
+
