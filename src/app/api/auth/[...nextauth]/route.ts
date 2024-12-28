@@ -1,6 +1,7 @@
-import NextAuth from 'next-auth'
+import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
+
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 const handler = NextAuth({
@@ -31,14 +32,14 @@ const handler = NextAuth({
     signIn: '/auth',
   },
   callbacks: {
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account, profile }:any) {
       if (account) {
         token.accessToken = account.access_token!
         token.id = profile?.sub!
       }
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session, token }:any) {
       session.accessToken = token.accessToken as string
       return session
     },

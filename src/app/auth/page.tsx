@@ -11,7 +11,7 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa'
 
 async function sendUserDataToBackend(userData: any) {
   try {
-    const response = await fetch('http://localhost:45623/auth/social-login', {
+    const response = await fetch('localhost:45623/api/usuarios/sociallogin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
