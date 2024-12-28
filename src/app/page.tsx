@@ -114,6 +114,7 @@ export default function Home() {
   return (
     <main className="min-h-screen flex flex-col bg-gradient-to-br from-amber-50 to-orange-100">
       <Navbar />
+      
       <div className="container mx-auto px-4 flex-grow">
         <h1 className="text-4xl font-bold text-center my-8 text-amber-800">Bienvenido a AromaFlame</h1>
         

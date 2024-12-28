@@ -1,3 +1,5 @@
+'use client'
+import Rotate, { Bottom } from '@/components/animations/rotate'
 import React from 'react'
 
 //esta pagina sera la pagina de administracion de la pagina web
@@ -10,7 +12,11 @@ import React from 'react'
 
 function page() {
   return (
-    <div>admin page</div>
+    <div>
+      <Rotate />
+      <>hello</>
+      <Bottom/>
+    </div>
   )
 }
 
