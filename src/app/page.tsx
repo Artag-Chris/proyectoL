@@ -11,6 +11,7 @@ import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
 import { ProductCard } from '@/components/components/product-card'
 import { ProductCarousel } from '@/components/components/product-carousel'
+import PageTransition from '@/components/transitions/PageTransition'
 
 const products = [
   { 
@@ -108,7 +109,9 @@ export default function Home() {
   }
 
   return (
+   
     <main className="min-h-screen flex flex-col bg-gradient-custom">
+      <PageTransition />
       <Navbar />
       <div className="container mx-auto px-4 flex-grow">
         <h1 className="text-4xl font-bold text-center my-8 text-[var(--color-text)]">Bienvenido a AromaFlame</h1>

@@ -5,6 +5,7 @@ import { Bar, BarChart, Line, LineChart, XAxis, YAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import { DollarSign, Users, ShoppingBag, Activity } from 'lucide-react'
 import Image from 'next/image'
+import PageTransition from '@/components/transitions/PageTransition'
 
 const data = [
   { month: 'Jan', revenue: 4000 },
@@ -52,6 +53,7 @@ const recentSales = [
 export default function AdminDashboard() {
   return (
     <div className="space-y-8">
+      <PageTransition />
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold text-[var(--color-text)]">Dashboard</h1>
         <div className="backdrop-blur-md bg-white/10 rounded-lg px-4 py-2 text-[var(--color-text)]">
