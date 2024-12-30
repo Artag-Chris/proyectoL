@@ -1,5 +1,6 @@
 'use client'
 
+import { FadeInTransition } from "@/components/transitions/FadeIn";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import Image from "next/image"
 
@@ -36,6 +37,7 @@ export default function UsersPage() {
 
 function UserCard({ user }: any) {
     return (
+        <FadeInTransition position="bottom"> 
         <Card className="overflow-hidden backdrop-blur-md bg-white/10 border-none">
             <CardHeader className="flex flex-row items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden">
@@ -52,6 +54,7 @@ function UserCard({ user }: any) {
                 <p className="text-[var(--color-text)]/80">{user.email}</p>
             </CardContent>
         </Card>
+        </FadeInTransition>
     )
 }
 
