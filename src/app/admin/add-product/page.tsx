@@ -28,6 +28,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import PageTransition from "@/components/transitions/PageTransition";
+import { FadeInTransition } from "@/components/transitions/FadeIn";
 
 const categories = ["Electrónicos", "Ropa", "Hogar", "Velas", "Accesorios"];
 
@@ -92,92 +93,93 @@ export default function AddProductPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 to-yellow-200 p-4">
       <PageTransition />
-      <Card className="w-full max-w-2xl backdrop-blur-md bg-white/30 border-none shadow-lg">
-        <CardHeader>
-          <CardTitle>Agregar Nuevo Producto</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Nombre del Producto</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="description">Descripción</Label>
-              <Textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="price">Precio</Label>
-              <Input
-                id="price"
-                type="number"
-                step="0.01"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="category">Categoría</Label>
-              <Select onValueChange={setCategory} required>
-                <SelectTrigger>
-                  <SelectValue placeholder="Selecciona una categoría" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="desCategory">Descripción de Categoría</Label>
-              <Input
-                id="desCategory"
-                value={desCategory}
-                onChange={(e) => setDesCategory(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="stock">Stock</Label>
-              <Input
-                id="stock"
-                type="number"
-                value={stock}
-                onChange={(e) => setStock(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="image">Imagen del Producto</Label>
-              <Input
-                id="image"
-                type="file"
-                accept="image/png,image/jpeg,image/jpg"
-                onChange={(e) => setImage(e.target.files?.[0] || null)}
-                required
-              />
-            </div>
-            <Button type="submit" className="w-full">
-              Agregar Producto
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
-
+      <FadeInTransition position="right">
+        <Card className="w-full max-w-2xl backdrop-blur-md bg-white/30 border-none shadow-lg">
+          <CardHeader>
+            <CardTitle>Agregar Nuevo Producto</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Nombre del Producto</Label>
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Descripción</Label>
+                <Textarea
+                  id="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="price">Precio</Label>
+                <Input
+                  id="price"
+                  type="number"
+                  step="0.01"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="category">Categoría</Label>
+                <Select onValueChange={setCategory} required>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona una categoría" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="desCategory">Descripción de Categoría</Label>
+                <Input
+                  id="desCategory"
+                  value={desCategory}
+                  onChange={(e) => setDesCategory(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="stock">Stock</Label>
+                <Input
+                  id="stock"
+                  type="number"
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="image">Imagen del Producto</Label>
+                <Input
+                  id="image"
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg"
+                  onChange={(e) => setImage(e.target.files?.[0] || null)}
+                  required
+                />
+              </div>
+              <Button type="submit" className="w-full">
+                Agregar Producto
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </FadeInTransition>
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent>
           <DialogHeader>
