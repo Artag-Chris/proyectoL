@@ -1,61 +1,67 @@
-'use client'
+"use client";
 
-import { Card } from '@/components/ui/card'
-import { Bar, BarChart, Line, LineChart, XAxis, YAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { DollarSign, Users, ShoppingBag, Activity } from 'lucide-react'
-import Image from 'next/image'
-import PageTransition from '@/components/transitions/PageTransition'
+import { Card } from "@/components/ui/card";
+import { Bar, BarChart, Line, LineChart, XAxis, YAxis } from "recharts";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { DollarSign, Users, ShoppingBag, Activity } from "lucide-react";
+import Image from "next/image";
+import PageTransition from "@/components/transitions/PageTransition";
 
 const data = [
-  { month: 'Jan', revenue: 4000 },
-  { month: 'Feb', revenue: 1800 },
-  { month: 'Mar', revenue: 2800 },
-  { month: 'Apr', revenue: 1200 },
-  { month: 'May', revenue: 2500 },
-  { month: 'Jun', revenue: 4300 },
-  { month: 'Jul', revenue: 4100 },
-  { month: 'Aug', revenue: 2300 },
-  { month: 'Sep', revenue: 3200 },
-  { month: 'Oct', revenue: 3500 },
-  { month: 'Nov', revenue: 4500 },
-  { month: 'Dec', revenue: 3800 },
-]
+  { month: "Jan", revenue: 4000 },
+  { month: "Feb", revenue: 1800 },
+  { month: "Mar", revenue: 2800 },
+  { month: "Apr", revenue: 1200 },
+  { month: "May", revenue: 2500 },
+  { month: "Jun", revenue: 4300 },
+  { month: "Jul", revenue: 4100 },
+  { month: "Aug", revenue: 2300 },
+  { month: "Sep", revenue: 3200 },
+  { month: "Oct", revenue: 3500 },
+  { month: "Nov", revenue: 4500 },
+  { month: "Dec", revenue: 3800 },
+];
 
 const recentSales = [
   {
-    name: 'Olivia Martin',
-    email: 'olivia.martin@email.com',
-    amount: '+$1,999.00'
+    name: "Olivia Martin",
+    email: "olivia.martin@email.com",
+    amount: "+$1,999.00",
   },
   {
-    name: 'Jackson Lee',
-    email: 'jackson.lee@email.com',
-    amount: '+$39.00'
+    name: "Jackson Lee",
+    email: "jackson.lee@email.com",
+    amount: "+$39.00",
   },
   {
-    name: 'Isabella Nguyen',
-    email: 'isabella.nguyen@email.com',
-    amount: '+$299.00'
+    name: "Isabella Nguyen",
+    email: "isabella.nguyen@email.com",
+    amount: "+$299.00",
   },
   {
-    name: 'William Kim',
-    email: 'will@email.com',
-    amount: '+$99.00'
+    name: "William Kim",
+    email: "will@email.com",
+    amount: "+$99.00",
   },
   {
-    name: 'Sofia Davis',
-    email: 'sofia.davis@email.com',
-    amount: '+$39.00'
+    name: "Sofia Davis",
+    email: "sofia.davis@email.com",
+    amount: "+$39.00",
   },
-]
+];
 
 export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       <PageTransition />
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-[var(--color-text)]">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-[var(--color-text)]">
+          Dashboard
+        </h1>
         <div className="backdrop-blur-md bg-white/10 rounded-lg px-4 py-2 text-[var(--color-text)]">
           Jan 20, 2023 - Feb 09, 2023
         </div>
@@ -65,9 +71,15 @@ export default function AdminDashboard() {
         <Card className="backdrop-blur-md bg-white/10 border-none">
           <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">Total Revenue</span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">$45,231.89</span>
-              <span className="text-xs text-[var(--color-text)]/60">+20.1% from last month</span>
+              <span className="text-sm font-medium text-[var(--color-text)]/60">
+                Total Revenue
+              </span>
+              <span className="text-2xl font-bold text-[var(--color-text)]">
+                $45,231.89
+              </span>
+              <span className="text-xs text-[var(--color-text)]/60">
+                +20.1% from last month
+              </span>
             </div>
             <DollarSign className="h-8 w-8 text-[var(--color-text)]" />
           </div>
@@ -75,9 +87,15 @@ export default function AdminDashboard() {
         <Card className="backdrop-blur-md bg-white/10 border-none">
           <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">Subscriptions</span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">+2,350</span>
-              <span className="text-xs text-[var(--color-text)]/60">+180.1% from last month</span>
+              <span className="text-sm font-medium text-[var(--color-text)]/60">
+                Subscriptions
+              </span>
+              <span className="text-2xl font-bold text-[var(--color-text)]">
+                +2,350
+              </span>
+              <span className="text-xs text-[var(--color-text)]/60">
+                +180.1% from last month
+              </span>
             </div>
             <Users className="h-8 w-8 text-[var(--color-text)]" />
           </div>
@@ -85,9 +103,15 @@ export default function AdminDashboard() {
         <Card className="backdrop-blur-md bg-white/10 border-none">
           <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">Sales</span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">+12,234</span>
-              <span className="text-xs text-[var(--color-text)]/60">+19% from last month</span>
+              <span className="text-sm font-medium text-[var(--color-text)]/60">
+                Sales
+              </span>
+              <span className="text-2xl font-bold text-[var(--color-text)]">
+                +12,234
+              </span>
+              <span className="text-xs text-[var(--color-text)]/60">
+                +19% from last month
+              </span>
             </div>
             <ShoppingBag className="h-8 w-8 text-[var(--color-text)]" />
           </div>
@@ -95,9 +119,15 @@ export default function AdminDashboard() {
         <Card className="backdrop-blur-md bg-white/10 border-none">
           <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">Active Now</span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">+573</span>
-              <span className="text-xs text-[var(--color-text)]/60">+201 since last hour</span>
+              <span className="text-sm font-medium text-[var(--color-text)]/60">
+                Active Now
+              </span>
+              <span className="text-2xl font-bold text-[var(--color-text)]">
+                +573
+              </span>
+              <span className="text-xs text-[var(--color-text)]/60">
+                +201 since last hour
+              </span>
             </div>
             <Activity className="h-8 w-8 text-[var(--color-text)]" />
           </div>
@@ -108,7 +138,9 @@ export default function AdminDashboard() {
         <Card className="col-span-4 backdrop-blur-md bg-white/10 border-none">
           <div className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[var(--color-text)]">Overview</h2>
+              <h2 className="text-lg font-bold text-[var(--color-text)]">
+                Overview
+              </h2>
             </div>
             <div className="h-[300px]">
               <ChartContainer
@@ -158,7 +190,9 @@ export default function AdminDashboard() {
         <Card className="col-span-3 backdrop-blur-md bg-white/10 border-none">
           <div className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-bold text-[var(--color-text)]">Recent Sales</h2>
+              <h2 className="text-lg font-bold text-[var(--color-text)]">
+                Recent Sales
+              </h2>
             </div>
             <div className="space-y-8">
               {recentSales.map((sale, index) => (
@@ -173,10 +207,16 @@ export default function AdminDashboard() {
                     />
                   </div>
                   <div className="ml-4 space-y-1">
-                    <p className="text-sm font-medium text-[var(--color-text)]">{sale.name}</p>
-                    <p className="text-sm text-[var(--color-text)]/60">{sale.email}</p>
+                    <p className="text-sm font-medium text-[var(--color-text)]">
+                      {sale.name}
+                    </p>
+                    <p className="text-sm text-[var(--color-text)]/60">
+                      {sale.email}
+                    </p>
                   </div>
-                  <div className="ml-auto font-medium text-[var(--color-text)]">{sale.amount}</div>
+                  <div className="ml-auto font-medium text-[var(--color-text)]">
+                    {sale.amount}
+                  </div>
                 </div>
               ))}
             </div>
@@ -184,6 +224,5 @@ export default function AdminDashboard() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
-

@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Navbar } from '@/components/components/navbar'
 import { Footer } from '@/components/components/footer'
 import { ProductCard } from '@/components/components/product-card'
+import PageTransition from '@/components/transitions/PageTransition'
 
 // aca se mirara el parametro de la url y se pedira a la api los datos de la categoria y sus productos 
 //relacionados para mostrarlos en la pagina
@@ -80,6 +81,7 @@ export default function CategoryPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-orange-400 to-yellow-200">
+       <PageTransition />
       <Navbar />
       <main className="flex-grow container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-center my-8 text-white">

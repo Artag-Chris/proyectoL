@@ -1,78 +1,97 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import PageTransition from "@/components/transitions/PageTransition";
 
-const categories = ['Electrónicos', 'Ropa', 'Hogar', 'Velas', 'Accesorios']
+const categories = ["Electrónicos", "Ropa", "Hogar", "Velas", "Accesorios"];
 
 export default function AddProductPage() {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [price, setPrice] = useState('')
-  const [category, setCategory] = useState('')
-  const [desCategory, setDesCategory] = useState('')
-  const [stock, setStock] = useState('')
-  const [image, setImage] = useState<File | null>(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [modalContent, setModalContent] = useState('')
-  const router = useRouter()
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [desCategory, setDesCategory] = useState("");
+  const [stock, setStock] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState("");
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    const formData = new FormData()
-    formData.append('name', name)
-    formData.append('description', description)
-    formData.append('price', price)
-    formData.append('category', category)
-    formData.append('desCategory', desCategory)
-    formData.append('stock', stock)
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("desCategory", desCategory);
+    formData.append("stock", stock);
     if (image) {
-      formData.append('file', image)
+      formData.append("file", image);
     }
 
     try {
-      const response = await fetch('http://localhost:45623/api/productos/upload', {
-        method: 'POST',
-        body: formData,
-      })
+      const response = await fetch(
+        "http://localhost:45623/api/productos/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
-      const data = await response.json()
-      setModalContent(JSON.stringify(data, null, 2))
-      setIsModalOpen(true)
+      const data = await response.json();
+      setModalContent(JSON.stringify(data, null, 2));
+      setIsModalOpen(true);
 
       if (response.ok) {
         // Limpiar el formulario después de un envío exitoso
-        setName('')
-        setDescription('')
-        setPrice('')
-        setCategory('')
-        setDesCategory('')
-        setStock('')
-        setImage(null)
+        setName("");
+        setDescription("");
+        setPrice("");
+        setCategory("");
+        setDesCategory("");
+        setStock("");
+        setImage(null);
       }
     } catch (error) {
-      console.error('Error adding product:', error)
-      setModalContent('Error al agregar el producto. Por favor, intente de nuevo.')
-      setIsModalOpen(true)
+      console.error("Error adding product:", error);
+      setModalContent(
+        "Error al agregar el producto. Por favor, intente de nuevo."
+      );
+      setIsModalOpen(true);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 to-yellow-200 p-4">
+      <PageTransition />
       <Card className="w-full max-w-2xl backdrop-blur-md bg-white/30 border-none shadow-lg">
         <CardHeader>
           <CardTitle>Agregar Nuevo Producto</CardTitle>
@@ -116,7 +135,9 @@ export default function AddProductPage() {
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((cat) => (
-                    <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -171,6 +192,5 @@ export default function AddProductPage() {
         </DialogContent>
       </Dialog>
     </div>
-  )
+  );
 }
-
