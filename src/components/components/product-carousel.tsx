@@ -62,9 +62,13 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
 
       {/* Carousel Content */}
       <div className="relative z-10">
-        <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+        <div
+         className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {products.map((product) => (
-            <div key={product.id} className="w-full flex-shrink-0 p-4">
+            <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+             key={product.id} className="w-full flex-shrink-0 p-4">
               <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
                 <div className="relative w-full h-48">
                   <Image
@@ -88,7 +92,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                   </Button>
                 </CardFooter>
               </Card>
-            </div>
+            </motion.div>
           ))}
         </div>
         <Button className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={prevSlide}>

@@ -149,7 +149,9 @@ export default function Home() {
           animate="visible"
         >
           {products.map((product, index) => (
-            <div
+            <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
               key={product.id}
               className={`
               backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
@@ -160,7 +162,7 @@ export default function Home() {
             `}
             >
               <ProductCard {...product} />
-            </div>
+            </motion.div>
           ))}
         </motion.div>
 

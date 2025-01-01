@@ -35,6 +35,7 @@ export function ProductCard({
         scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
       }}
       className="w-full h-full"
+     
     >
       <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
         <div className="relative flex-grow">
