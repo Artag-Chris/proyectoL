@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
+import { motion } from "framer-motion";
 
 // Datos dummy para productos
 const products = [
@@ -98,6 +99,11 @@ export default function ProductsPage() {
 
 function ProductCard({ product }: any) {
   return (
+    <motion.div
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    >
+
     <Card className="overflow-hidden backdrop-blur-md bg-white/10 border-none">
       <div className="relative h-48">
         <Image
@@ -123,5 +129,6 @@ function ProductCard({ product }: any) {
         </Badge>
       </CardFooter>
     </Card>
+    </motion.div>
   );
 }
