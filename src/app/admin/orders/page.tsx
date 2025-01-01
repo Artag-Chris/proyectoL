@@ -67,7 +67,9 @@ export default function OrdersPage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {deliveredOrders.map((order) => (
+            <FadeInTransition position="right">
             <OrderCard key={order.id} order={order} />
+            </FadeInTransition>
           ))}
         </div>
       </div>
