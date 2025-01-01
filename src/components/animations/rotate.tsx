@@ -1,34 +1,39 @@
+"use client"
 
-//import { motion } from "motion/react"
-import * as motion from "motion/react-client"
+import { motion } from "framer-motion";
 
 
-export default function Rotate() {
+/****************************************************
+ * Relacionado con las animaciones de entrada y salida de framer-motion 
+ * se le pasa el hijo que serian todos los elementos que se quieren animar con Rotate
+*****************************************************/
+ 
+
+export type RotateProps = {
+    children: React.ReactNode;
+    className?: string;
+    
+};
+
+export function Rotate(props: RotateProps) {
+    const { children, className,  } = props
+
     return (
         <motion.div
-            style={box}
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1 }}
-        />
+        className={className}
+        initial={{rotate: -50, scale: 0.5, opacity: 0} }
+        animate={{  rotate: 0, scale: 1, opacity: 1 }}
+        exit={{ rotate: -50, scale: 0.5, opacity: 0 }}
+        transition={{ duration: 0.5 }}
+        >
+            {children}
+        </motion.div>
     )
 }
 
-export  function Bottom() {
-    return (
-        <motion.button whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        onHoverStart={() => console.log('hover started!')}
-         initial={{ scale: 0 }} animate={{ scale: 1 }} />
-    )
-}
 
-/**
- * ==============   Styles   ================
- */
 
-const box = {
-    width: 100,
-    height: 100,
-    backgroundColor: "#ff0088",
-    borderRadius: 5,
-}
+/* 
+
+
+*/
