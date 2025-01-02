@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label"
 import { ShoppingBag, Settings, User } from 'lucide-react'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
+import { useEffect } from 'react'
 
 // Datos dummy para pedidos recientes
 const recentOrders = [
@@ -25,12 +26,18 @@ export default function ProfilePage() {
   const { data: session, status } = useSession()
   const router = useRouter()
 
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/auth')
+    }
+  }, [status, router])
+
   if (status === 'loading') {
     return <div>Cargando...</div>
   }
 
   if (status === 'unauthenticated') {
-    router.push('/auth')
     return null
   }
 
