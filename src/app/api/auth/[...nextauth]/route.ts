@@ -1,7 +1,6 @@
 import NextAuth from 'next-auth/next'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
-
 import CredentialsProvider from 'next-auth/providers/credentials'
 
 const handler = NextAuth({
@@ -21,6 +20,7 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        // Aquí deberías implementar la lógica para verificar las credenciales
         if (credentials?.email === "user@example.com" && credentials?.password === "password") {
           return { id: "1", name: "J Smith", email: "user@example.com" }
         }
@@ -29,22 +29,28 @@ const handler = NextAuth({
     })
   ],
   pages: {
-    signIn: '/auth',
+    signIn: "/auth",
   },
   callbacks: {
-    async jwt({ token, account, profile }:any) {
+    async jwt({ token, account, profile }: any) {
       if (account) {
-        token.accessToken = account.access_token!
-        token.id = profile?.sub!
+        token.accessToken = account.access_token
+        if (profile) {
+          token.id = profile.sub
+          token.email = profile.email
+          token.name = profile.name
+        }
       }
       return token
     },
-    async session({ session, token }:any) {
-      session.accessToken = token.accessToken as string
+    async session({ session, token }: any) {
+      session.accessToken = token.accessToken
+      session.user.id = token.id
+      session.user.email = token.email
+      session.user.name = token.name
       return session
     },
   },
 })
 
 export { handler as GET, handler as POST }
-

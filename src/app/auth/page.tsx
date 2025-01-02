@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -31,29 +31,39 @@ export default function AuthPage() {
   const [password, setPassword] = useState('')
   const router = useRouter()
 
+  useEffect(() => {
+    const checkSession = async () => {
+      const session = await getSession()
+      if (session) {
+        router.push('/')
+      }
+    }
+    checkSession()
+  }, [router])
+
   const handleSocialLogin = async (provider: string, event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault()
-    
-    
+
+
     try {
+
+      await signIn(provider, { redirect: false })
+
+      const session = await getSession()
+
+
+      const backend = await sendUserDataToBackend({
+        provider,
+        userData: session!.user,
+        timestamp: new Date().toISOString(),
+      })
+      console.log('Backend response:', backend) 
       
-      const result = await signIn(provider, { redirect: false })
-      console.log('Result:', result)
-        const session = await getSession()
-        if (session?.user) {
-          console.log('User data:', session.user)
-          await sendUserDataToBackend({
-            provider,
-            userData: session.user,
-            timestamp: new Date().toISOString(),
-          })
-          router.push('/')
-        }
-      
+      router.push('/')
     } catch (error) {
       console.error(`Error during ${provider} login:`, error)
     }
-      
+
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,7 +95,7 @@ export default function AuthPage() {
         <CardContent className="space-y-8">
           {/* Social Login Cards */}
           <div className="grid grid-cols-2 gap-4">
-            <Card 
+            <Card
               onClick={(e) => handleSocialLogin('google', e)}
               className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
@@ -101,7 +111,7 @@ export default function AuthPage() {
               </CardContent>
             </Card>
 
-            <Card 
+            <Card
               onClick={(e) => handleSocialLogin('facebook', e)}
               className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
@@ -153,8 +163,8 @@ export default function AuthPage() {
                 className="bg-white/50 h-9 text-sm border-[var(--color-comfort)] focus:border-[var(--color-warmth)] focus:ring-[var(--color-warmth)]"
               />
             </div>
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full btn-gradient-custom text-white h-9 text-sm"
             >
               {isLogin ? 'Iniciar sesión' : 'Registrarse'}

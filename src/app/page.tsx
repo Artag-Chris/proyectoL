@@ -13,6 +13,8 @@ import { ProductCard } from "@/components/components/product-card";
 import { ProductCarousel } from "@/components/components/product-carousel";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 const products = [
   {
@@ -105,9 +107,10 @@ const containerVariants = {
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
+
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.pageYOffset > 300);
+      setShowScrollTop(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
