@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { signIn } from 'next-auth/react'
+import { signIn, getSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -11,7 +11,7 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa'
 
 async function sendUserDataToBackend(userData: any) {
   try {
-    const response = await fetch('localhost:45623/api/usuarios/sociallogin', {
+    const response = await fetch('http://localhost:45623/api/usuarios/sociallogin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -31,23 +31,29 @@ export default function AuthPage() {
   const [password, setPassword] = useState('')
   const router = useRouter()
 
-  const handleSocialLogin = async (provider: string) => {
+  const handleSocialLogin = async (provider: string, event: React.MouseEvent<HTMLDivElement>) => {
+    event.preventDefault()
+    
+    
     try {
-      const result:any = await signIn(provider, {
-        redirect: false,
-      })
       
-      if (result?.ok && result.user) {
-        await sendUserDataToBackend({
-          provider,
-          userData: result.user,
-          timestamp: new Date().toISOString(),
-        })
-        router.push('/')
-      }
+      const result = await signIn(provider, { redirect: false })
+      console.log('Result:', result)
+        const session = await getSession()
+        if (session?.user) {
+          console.log('User data:', session.user)
+          await sendUserDataToBackend({
+            provider,
+            userData: session.user,
+            timestamp: new Date().toISOString(),
+          })
+          router.push('/')
+        }
+      
     } catch (error) {
       console.error(`Error during ${provider} login:`, error)
     }
+      
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +86,7 @@ export default function AuthPage() {
           {/* Social Login Cards */}
           <div className="grid grid-cols-2 gap-4">
             <Card 
-              onClick={() => handleSocialLogin('google')}
+              onClick={(e) => handleSocialLogin('google', e)}
               className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               <CardContent className="p-4">
@@ -96,7 +102,7 @@ export default function AuthPage() {
             </Card>
 
             <Card 
-              onClick={() => handleSocialLogin('facebook')}
+              onClick={(e) => handleSocialLogin('facebook', e)}
               className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-xl hover:scale-105"
             >
               <CardContent className="p-4">
