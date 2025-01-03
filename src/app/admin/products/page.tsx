@@ -62,6 +62,7 @@ const products = [
 export default function ProductsPage() {
   const availableProducts = products.filter((product) => product.available);
   const unavailableProducts = products.filter((product) => !product.available);
+  
 
   return (
     <div className="space-y-10">

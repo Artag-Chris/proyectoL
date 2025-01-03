@@ -15,24 +15,31 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ThemeToggle } from './theme-toggle'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { sendUserDataToBackend } from '@/utils/functions/sendUserLogin'
 
 
 export function Navbar() {
   const { data: session, status } = useSession()
- 
   const [isAdmin, setIsAdmin] = useState(false)
 
   useEffect(() => {
+    const checkSession = async () => {
     if (status === 'authenticated') {
-      axios.get('http://localhost:45623/api/usuarios/clientes')
+     const  existe = await sendUserDataToBackend(session!.user)
+      if (existe) {
+        console.log("existe")
+      }
+      const email = session!.user?.email
+      axios.get(`http://localhost:45623/api/usuarios/cliente/${email}`)
         .then(response => {
-         
-          setIsAdmin(response.data[0]?.isAdmin)
+          setIsAdmin(response.data.isAdmin)
         })
         .catch(error => {
           console.error('Error fetching user data:', error)
         })
     }
+  }
+    checkSession()
   }, [status])
   
 
