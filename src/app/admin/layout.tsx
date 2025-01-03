@@ -3,7 +3,7 @@ import { AdminSidebar } from "@/components/admin/sidebar";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 
 import axios from "axios";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
