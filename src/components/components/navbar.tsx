@@ -32,6 +32,7 @@ export function Navbar() {
       const email = session!.user?.email
       axios.get(`http://localhost:45623/api/usuarios/cliente/${email}`)
         .then(response => {
+
           setIsAdmin(response.data.isAdmin)
         })
         .catch(error => {
@@ -80,9 +81,11 @@ export function Navbar() {
                 <DropdownMenuContent align="end" className="glass-card">
                   {status === 'authenticated' ? (
                     <>
-                      <DropdownMenuItem onSelect={() => {}} disabled>
-                        {session.user?.name || session.user?.email}
-                      </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => {}} asChild>
+                        <Link href="/profile">
+                          {session.user?.name || session.user?.email}
+                        </Link>
+                        </DropdownMenuItem>
                       <DropdownMenuItem onSelect={() => signOut()}>
                         <LogOut className="mr-2 h-4 w-4" />
                         <span>Cerrar sesión</span>
