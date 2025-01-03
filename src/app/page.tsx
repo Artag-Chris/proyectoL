@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,9 +12,6 @@ import { ProductCard } from "@/components/components/product-card";
 import { ProductCarousel } from "@/components/components/product-carousel";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
-import router, { useRouter } from "next/router";
-import { getSession, useSession } from "next-auth/react";
-import { sendUserDataToBackend } from "@/utils/functions/sendUserLogin";
 
 const products = [
   {
@@ -122,16 +118,6 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-      const checkSession = async () => {
-        const session = await getSession()
-        if (session) {
-        const backend =await sendUserDataToBackend(session.user)
-        console.log('Backend response:', backend)
-        }
-      }
-      checkSession()
-    }, [router])
 
   return (
     <main className="min-h-screen flex flex-col bg-gradient-custom">

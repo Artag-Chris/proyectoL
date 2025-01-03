@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ShoppingCart, User, Flame, LogOut } from 'lucide-react'
+import { ShoppingCart, User, Flame, LogOut, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 import { useSession, signIn, signOut } from 'next-auth/react'
@@ -13,10 +13,28 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { ThemeToggle } from './theme-toggle'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 
 
 export function Navbar() {
   const { data: session, status } = useSession()
+ 
+  const [isAdmin, setIsAdmin] = useState(false)
+
+  useEffect(() => {
+    if (status === 'authenticated') {
+      axios.get('http://localhost:45623/api/usuarios/clientes')
+        .then(response => {
+         
+          setIsAdmin(response.data[0]?.isAdmin)
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error)
+        })
+    }
+  }, [status])
+  
 
   return (
     <motion.nav 
@@ -76,6 +94,18 @@ export function Navbar() {
                 </DropdownMenuContent>
               </DropdownMenu>
             </motion.div>
+            {
+            status === 'authenticated'
+             && isAdmin &&
+              (
+              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                <Link href="/admin">
+                  <Button variant="ghost" size="icon" className="text-[var(--foreground)]">
+                    <Shield className="h-6 w-6" />
+                  </Button>
+                </Link>
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
