@@ -8,22 +8,9 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { FaGoogle, FaFacebook } from 'react-icons/fa'
+import { sendUserDataToBackend } from '@/utils/functions/sendUserLogin'
 
-async function sendUserDataToBackend(userData: any) {
-  try {
-    const response = await fetch('http://localhost:45623/api/usuarios/sociallogin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    })
-    return await response.json()
-  } catch (error) {
-    console.error('Error sending user data to backend:', error)
-    throw error
-  }
-}
+
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true)
@@ -43,15 +30,9 @@ export default function AuthPage() {
 
   const handleSocialLogin = async (provider: string, event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault()
-
-
     try {
-
       await signIn(provider, { redirect: false })
-
       const session = await getSession()
-
-
       const backend = await sendUserDataToBackend({
         provider,
         userData: session!.user,
@@ -62,8 +43,15 @@ export default function AuthPage() {
       router.push('/')
     } catch (error) {
       console.error(`Error during ${provider} login:`, error)
+      const session = await getSession()
+      const backend = await sendUserDataToBackend({
+        provider, 
+        userData: session!.user,
+        timestamp: new Date().toISOString(),
+      })
+      console.log('Backend response:', backend) 
+      return backend
     }
-
   }
 
   const handleSubmit = async (e: React.FormEvent) => {

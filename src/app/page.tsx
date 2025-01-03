@@ -13,8 +13,9 @@ import { ProductCard } from "@/components/components/product-card";
 import { ProductCarousel } from "@/components/components/product-carousel";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
-import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import router, { useRouter } from "next/router";
+import { getSession, useSession } from "next-auth/react";
+import { sendUserDataToBackend } from "@/utils/functions/sendUserLogin";
 
 const products = [
   {
@@ -120,6 +121,17 @@ export default function Home() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+      const checkSession = async () => {
+        const session = await getSession()
+        if (session) {
+        const backend =await sendUserDataToBackend(session.user)
+        console.log('Backend response:', backend)
+        }
+      }
+      checkSession()
+    }, [router])
 
   return (
     <main className="min-h-screen flex flex-col bg-gradient-custom">
