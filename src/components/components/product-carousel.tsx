@@ -4,8 +4,9 @@ import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, } from 'lucide-react'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 interface Product {
   id: number
@@ -73,6 +74,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
              key={product.id} className="w-full flex-shrink-0 p-4">
               <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
                 <div className="relative w-full h-48">
+                  <Link href={`/product/${product.id}`}>
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -80,6 +82,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
                     style={{ objectFit: 'cover' }}
                     className="rounded-t-md"
                   />
+                  </Link>
                 </div>
                 <CardHeader>
                   <CardTitle className="text-lg font-semibold text-amber-800">{product.name}</CardTitle>
