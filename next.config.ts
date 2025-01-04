@@ -29,12 +29,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'www.istockphoto.com',
-        port: '',
-        pathname: '/es/foto/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'd1ih8jugeo2m5m.cloudfront.net',
         port: '',
         pathname: '/2024/10/**',

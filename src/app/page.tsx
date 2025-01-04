@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,7 @@ import { ProductCard } from "@/components/components/product-card";
 import { ProductCarousel } from "@/components/components/product-carousel";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
-import useGetProducts  from "../hooks/useGetProducts";
-
+import useGetProducts from "../hooks/useGetProducts";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,7 +27,7 @@ const containerVariants = {
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { data, loading, error } = useGetProducts();
-const { products, soldProducts } = data;
+  const { products, soldProducts } = data;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +41,6 @@ const { products, soldProducts } = data;
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
 
   return (
     <main className="min-h-screen flex flex-col bg-gradient-custom">
@@ -63,11 +61,8 @@ const { products, soldProducts } = data;
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Últimos productos vendidos
         </h2>
-        
-
+        {loading && <p>Cargando...</p>}
         <ProductCarousel products={soldProducts} />
-      
-
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Lo último en llegar
         </h2>
@@ -79,8 +74,8 @@ const { products, soldProducts } = data;
         >
           {products.map((product, index) => (
             <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               key={product.id}
               className={`
               backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
