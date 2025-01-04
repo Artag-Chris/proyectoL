@@ -18,6 +18,7 @@ import axios from 'axios'
 import { sendUserDataToBackend } from '@/utils/functions/sendUserLogin'
 
 
+
 export function Navbar() {
   const { data: session, status } = useSession()
   const [isAdmin, setIsAdmin] = useState(false)
@@ -60,9 +61,11 @@ export function Navbar() {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+              <Link href="/cart">
               <Button variant="ghost" size="icon" className="text-[var(--foreground)]">
                 <ShoppingCart className="h-6 w-6" />
               </Button>
+              </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
               <DropdownMenu>
