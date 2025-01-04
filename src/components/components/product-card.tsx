@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface ProductCardProps {
   id: number;
@@ -25,7 +26,7 @@ export function ProductCard({
   description,
 }: ProductCardProps) {
   //aqui se podria colocar  las animaciones de framer motion para que se vea mas fluido
-  //investigar como hacer para que cuando tengan un hover aparesca un modal para ver la informacion
+  //Todo agregar las images para que funcione el link
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0 }}
@@ -37,21 +38,25 @@ export function ProductCard({
       className="w-full h-full"
      
     >
+      
       <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
         <div className="relative flex-grow">
+        <Link href={`/product/${id}`}>
           <Image
             src={image}
             alt={name}
             fill
             style={{ objectFit: "cover" }}
             className="rounded-t-lg"
-          />
+            />
+           </Link>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
             className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4"
-          >
+            >
+
             <CardTitle className="text-lg font-semibold text-white mb-2">
               {name}
             </CardTitle>
@@ -67,6 +72,7 @@ export function ProductCard({
           </Button>
         </CardFooter>
       </Card>
+      
     </motion.div>
   );
 }
