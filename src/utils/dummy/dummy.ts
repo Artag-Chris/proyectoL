@@ -84,3 +84,33 @@ export const products = [
     { name: "Velas Aromaticas", description: "Velas con fragancias relajantes y energizantes." },
     { name: "Dulces", description: "Deliciosos dulces y golosinas para todos los gustos." }
   ];
+
+  export const relatedProducts = [
+    {
+      id: 2,
+      name: 'Vela de Vainilla',
+      price: 24.99,
+      image: '/placeholder.svg?height=200&width=200',
+    },
+    {
+      id: 3,
+      name: 'Vela de Canela',
+      price: 26.99,
+      image: '/placeholder.svg?height=200&width=200',
+    },
+    {
+      id: 4,
+      name: 'Vela de Sándalo',
+      price: 29.99,
+      image: '/placeholder.svg?height=200&width=200',
+    }
+  ]
+
+  export const product = {
+    id: 1,
+    name: 'Vela Aromática de Lavanda Premium',
+    price: 29.99,
+    description: 'Vela aromática artesanal de lavanda, elaborada con cera de soja 100% natural y aceites esenciales puros. Perfecta para crear un ambiente relajante y aromático en cualquier espacio.',
+    image: '/placeholder.svg?height=600&width=600',
+  }
+  

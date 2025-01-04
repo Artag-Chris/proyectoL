@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
+import { product, relatedProducts } from '@/utils/dummy/dummy'
 
 /********************************************************************************************************************************
 se cambiara  los colores de la pagina y se le agregara un efecto de blur al card
@@ -18,35 +19,6 @@ se cambiara el color a la typografia
 ///////////////////////////////////////////////////////////////////////////////////////// ********************************/
 
 
-// Datos dummy para el ejemplo
-const product = {
-  id: 1,
-  name: 'Vela Aromática de Lavanda Premium',
-  price: 29.99,
-  description: 'Vela aromática artesanal de lavanda, elaborada con cera de soja 100% natural y aceites esenciales puros. Perfecta para crear un ambiente relajante y aromático en cualquier espacio.',
-  image: '/placeholder.svg?height=600&width=600',
-}
-
-const relatedProducts = [
-  {
-    id: 2,
-    name: 'Vela de Vainilla',
-    price: 24.99,
-    image: '/placeholder.svg?height=200&width=200',
-  },
-  {
-    id: 3,
-    name: 'Vela de Canela',
-    price: 26.99,
-    image: '/placeholder.svg?height=200&width=200',
-  },
-  {
-    id: 4,
-    name: 'Vela de Sándalo',
-    price: 29.99,
-    image: '/placeholder.svg?height=200&width=200',
-  }
-]
 
 export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
