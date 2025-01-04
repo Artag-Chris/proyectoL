@@ -75,3 +75,12 @@ export const products = [
         "Vela de masaje que se derrite en un aceite cálido y aromático para una experiencia relajante.",
     },
   ];
+
+  export const categories = [
+    { name: "Ropa", description: "Moderna y colorida, para todas las ocasiones." },
+    { name: "Hogar", description: "Artículos esenciales y decorativos para el hogar." },
+    { name: "Deportes", description: "Equipamiento y ropa deportiva de alta calidad." },
+    { name: "Belleza", description: "Productos de belleza y cuidado personal." },
+    { name: "Velas Aromaticas", description: "Velas con fragancias relajantes y energizantes." },
+    { name: "Dulces", description: "Deliciosos dulces y golosinas para todos los gustos." }
+  ];
