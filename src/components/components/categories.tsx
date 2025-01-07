@@ -12,7 +12,7 @@ export function Categories() {
   return (
     <FadeInTransition position="bottom">
       <div className="flex flex-wrap justify-center gap-4 my-8">
-        {/*categories.map((category) => (
+        {categories.map((category) => (
           <Link href={`/category/${category.name}`} key={category.name}>
             <motion.button
               whileHover={{
@@ -25,7 +25,7 @@ export function Categories() {
               {category.name}
             </motion.button>
           </Link>
-        ))*/}
+        ))}
       </div>
     </FadeInTransition>
   );

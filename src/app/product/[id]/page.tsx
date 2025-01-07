@@ -5,10 +5,11 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ShoppingCart, Heart, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
-import { product, relatedProducts } from '@/utils/dummy/dummy'
+import useGetProductById from '@/hooks/useGetProductById'
+import { useParams } from 'next/navigation'
+//import { product, relatedProducts } from '@/utils/dummy/dummy'
 
 /********************************************************************************************************************************
 se cambiara  los colores de la pagina y se le agregara un efecto de blur al card
@@ -22,6 +23,9 @@ se cambiara el color a la typografia
 
 export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
+ const { id } = useParams();
+  const parsedId = id ? parseInt(id as string, 10) : null;
+  const { data: product } = useGetProductById(parsedId || 0);
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
@@ -35,25 +39,30 @@ export default function ProductPage() {
             transition={{ duration: 0.5 }}
             className="relative aspect-square rounded-lg overflow-hidden shadow-lg"
           >
-            <Image
-              src={product.image}
-              alt={product.name}
-              fill
-              className="object-cover"
-            />
-          </motion.div>
+            {product && (
+              <Image
+                src={product.imageUrl ? product.imageUrl : '/placeholder.svg?height=600&width=600'}
+                alt={product.name || 'Product Image'}
+                fill
+                className="object-cover"
+              />
+            )}
 
           {/* Información del producto */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+          <div
+           
+          
+          
             className="flex flex-col justify-between"
           >
-            <div>
-              <h1 className="text-3xl font-bold mb-4 text-[var(--color-text)]">{product.name}</h1>
-              <p className="text-2xl font-semibold mb-6 text-[var(--color-primary)]">${product.price.toFixed(2)}</p>
-              <p className="text-[var(--color-text)]/80 mb-8">{product.description}</p>
+              {product && (
+                <>
+                  <h1 className="text-3xl font-bold mb-4 text-[var(--color-text)]">{product.name}</h1>
+                  <p className="text-2xl font-semibold mb-6 text-[var(--color-primary)]">${product.price}</p>
+                  <p className="text-[var(--color-text)]/80 mb-8">{product.description}</p>
+                </>
+              )}
+              <p className="text-[var(--color-text)]/80 mb-8">{product?.description}</p>
             </div>
 
             <div className="space-y-6">
@@ -95,7 +104,8 @@ export default function ProductPage() {
         <section className="mb-16">
           <h2 className="text-2xl font-bold mb-6 text-[var(--color-text)]">Productos relacionados</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {relatedProducts.map((product) => (
+            {/*
+            relatedProducts.map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -113,11 +123,12 @@ export default function ProductPage() {
                   </div>
                   <CardContent className="p-4">
                     <h3 className="text-lg font-semibold mb-2 text-[var(--color-text)]">{product.name}</h3>
-                    <p className="text-[var(--color-primary)] font-semibold">${product.price.toFixed(2)}</p>
+                    <p className="text-[var(--color-primary)] font-semibold">${product.price}</p>
                   </CardContent>
                 </Card>
               </motion.div>
-            ))}
+            ))
+*/              }
           </div>
         </section>
       </main>

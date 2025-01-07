@@ -111,6 +111,6 @@ export const product = [
     name: 'Vela Aromática de Lavanda Premium',
     price: 29.99,
     description: 'Vela aromática artesanal de lavanda, elaborada con cera de soja 100% natural y aceites esenciales puros. Perfecta para crear un ambiente relajante y aromático en cualquier espacio.',
-    image: '/placeholder.svg?height=600&width=600',
+    imageUrl: '/placeholder.svg?height=600&width=600',
   }
   

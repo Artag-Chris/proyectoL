@@ -18,8 +18,7 @@ const useGetCategories = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:45623/api/productos/');
-                
+                const response = await axios.get('http://localhost:45623/api/productos/categorias');      
                 if (response.data.categories.length === 0 ) {
                     setData({ categories});
                 } else {
