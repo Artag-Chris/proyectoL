@@ -9,12 +9,28 @@ import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
 import useGetProductById from '@/hooks/useGetProductById'
 import { useParams } from 'next/navigation'
+import useCartStore from '@/utils/store/cartStore'
+
 
 export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
   const { id } = useParams();
   const parsedId = id ? parseInt(id as string, 10) : null;
   const { data: product } = useGetProductById(parsedId || 0);
+  const addItem = useCartStore((state) => state.addItem); // Obtén la función addItem del cartstore
+
+  const handleAddToCart = () => {
+    if (product) {
+      addItem({
+        id: product.id,
+        name: product.name,
+        quantity,
+        price: product.price,
+      });
+      console.log(product)
+    }
+
+  };
 
   return (
     <div className="min-h-screen bg-[var(--color-background)]">
@@ -70,7 +86,10 @@ export default function ProductPage() {
             </div>
 
             <div className="flex space-x-4">
-              <Button className="flex-1 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)]">
+              <Button
+                className="flex-1 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)]"
+                onClick={handleAddToCart} // Añade el producto al carrito
+              >
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Añadir al carrito
               </Button>
