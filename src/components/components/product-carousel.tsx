@@ -17,26 +17,26 @@ interface Product {
 }
 
 interface ProductCarouselProps {
-  products: Product[]
+  product: Product[]
 }
 
-export function ProductCarousel({ products }: ProductCarouselProps) {
+export function ProductCarousel({ product }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
 
   const nextSlide = useCallback(() => {
     if (isAutoPlay) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length)
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % product.length)
     }
-  }, [isAutoPlay, products.length])
+  }, [isAutoPlay, product.length])
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length)
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + product.length) % product.length)
     setIsAutoPlay(false)
   }
 
   const manualNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % products.length)
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % product.length)
     setIsAutoPlay(false)
   }
 
@@ -66,7 +66,7 @@ export function ProductCarousel({ products }: ProductCarouselProps) {
         <motion.div
         
          className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-          {products.map((product) => (
+          {product.map((product) => (
             <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

@@ -65,9 +65,11 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Últimos productos vendidos
         </h2>
-        {/* <Suspense fallback={<div>Cargando...</div>}>
-          <ProductCarousel products={soldProducts} />
-        </Suspense> */}
+        { /* 
+          <Suspense fallback={<div>Cargando...</div>}>
+          <ProductCarousel product={soldProducts} />
+        </Suspense>*/
+         }
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Lo último en llegar
         </h2>
