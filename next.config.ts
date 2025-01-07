@@ -1,26 +1,6 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+const nextConfig = {
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.bioguia.com',
-        port: '',
-        pathname: '/embed/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'th.bing.com',
-        port: '',
-        pathname: '/th/id/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'blog.eco-citric.es',
-        port: '',
-        pathname: '/wp-content/uploads/**',
-      },
       {
         protocol: 'https',
         hostname: 'i.pinimg.com',
@@ -36,6 +16,12 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**',
       },

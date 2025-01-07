@@ -14,7 +14,7 @@ interface ProductCardProps {
   id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
   description: string;
 }
 
@@ -22,9 +22,10 @@ export function ProductCard({
   id,
   name,
   price,
-  image,
+  imageUrl,
   description,
 }: ProductCardProps) {
+  //console.log(id, name, price, imageUrl)
   //aqui se podria colocar  las animaciones de framer motion para que se vea mas fluido
   //Todo agregar las images para que funcione el link
   return (
@@ -43,7 +44,7 @@ export function ProductCard({
         <div className="relative flex-grow">
         <Link href={`/product/${id}`}>
           <Image
-            src={image}
+            src={imageUrl}
             alt={name}
             fill
             style={{ objectFit: "cover" }}
@@ -65,7 +66,7 @@ export function ProductCard({
         </div>
         <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
           <span className="text-xl font-bold text-white">
-            ${price.toFixed(2)}
+            ${price}
           </span>
           <Button className="bg-orange-500 hover:bg-orange-600 text-white">
             Añadir al carrito

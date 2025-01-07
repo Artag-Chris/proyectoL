@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { categories, products, soldProducts } from '../utils/dummy/dummy';
+import { categories, product, soldProducts } from '../utils/dummy/dummy';
 
 export interface Category {
     name: string;
@@ -20,7 +20,7 @@ const useGetCategories = () => {
             try {
                 const response = await axios.get('http://localhost:45623/api/productos/');
                 
-                if (response.data.products.length === 0 ) {
+                if (response.data.categories.length === 0 ) {
                     setData({ categories});
                 } else {
                     setData(response.data);

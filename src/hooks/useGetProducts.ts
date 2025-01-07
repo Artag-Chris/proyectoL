@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { products, soldProducts } from '../utils/dummy/dummy';
+import { product, soldProducts } from '../utils/dummy/dummy';
 
 interface Product {
     id: number;
     name: string;
     price: number;
-    image: string;
+    imageUrl: string;
     description: string;
 }
 
 const useGetProducts = () => {
-    const [data, setData] = useState<{ products: Product[], soldProducts: Product[] }>({
-        products: [],
+    const [data, setData] = useState<{ product: Product[], soldProducts: Product[] }>({
+        product: [],
         soldProducts: []
     });
     const [loading, setLoading] = useState<boolean>(true);
@@ -23,14 +23,21 @@ const useGetProducts = () => {
             try {
                 const response = await axios.get('http://localhost:45623/api/productos/');
                 
-                if (response.data.products.length === 0 && response.data.soldProducts.length === 0) {
-                    setData({ products, soldProducts });
+                
+                if (!response.data.products && !response.data.soldProducts) {
+                    setData({ product, soldProducts });
                 } else {
-                    setData(response.data);
+                   // console.log("en hook")
+                    const{product,soldProducts}=response.data
+                    console.log("esta es la data")
+                    console.log(response.data)
+                    setData({product,soldProducts});
                 }
             } catch (err) {
                 console.error('Error fetching data, using dummy data', err);
-                setData({ products, soldProducts });
+                console.log(err)
+                console.log("en error")
+                setData({ product, soldProducts });
                 setError('Error fetching data, using dummy data');
             } finally {
                 setLoading(false);

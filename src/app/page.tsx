@@ -27,7 +27,7 @@ const containerVariants = {
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { data, loading, error } = useGetProducts();
-  const { products, soldProducts } = data;
+  const { product, soldProducts } = data;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +42,9 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+   if (!loading){
+    console.log(data)
+   }
   return (
     <main className="min-h-screen flex flex-col bg-gradient-custom">
       <PageTransition />
@@ -56,41 +59,45 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Categorías
         </h2>
-        <Categories />
+        
+        {/* <Categories /> */}
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Últimos productos vendidos
         </h2>
-        <Suspense fallback={<div>Cargando...</div>}>
-        <ProductCarousel products={soldProducts} />
-        </Suspense>
+        {/* <Suspense fallback={<div>Cargando...</div>}>
+          <ProductCarousel products={soldProducts} />
+        </Suspense> */}
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Lo último en llegar
         </h2>
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {products.map((product, index) => (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              key={product.id}
-              className={`
-              backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
-              ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
-              ${index === 1 ? "md:col-span-2" : ""}
-              ${index === 3 ? "md:row-span-2" : ""}
-              ${index === 5 ? "md:col-span-2" : ""}
-            `}
-            >
-              <ProductCard {...product} />
-            </motion.div>
-          ))}
-        </motion.div>
-
+        {loading ? (
+          <div className="text-center text-xl">Cargando productos...</div>
+        ) : (
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {soldProducts.map((product, index) => (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                key={product.id}
+                className={`
+                  backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
+                  ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
+                  ${index === 1 ? "md:col-span-2" : ""}
+                  ${index === 3 ? "md:row-span-2" : ""}
+                  ${index === 5 ? "md:col-span-2" : ""}
+                `}
+              >
+                <ProductCard {...product} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
         {/* Nueva sección hero con CTA */}
         <div
           className="mt-16 relative bg-cover bg-center py-24 rounded-lg overflow-hidden"

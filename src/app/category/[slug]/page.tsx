@@ -16,6 +16,7 @@ import { Footer } from "@/components/components/footer";
 import { ProductCard } from "@/components/components/product-card";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
+import { product } from "@/utils/dummy/dummy";
 
 // aca se mirara el parametro de la url y se pedira a la api los datos de la categoria y sus productos
 //relacionados para mostrarlos en la pagina
@@ -24,63 +25,14 @@ import { FadeInTransition } from "@/components/transitions/FadeIn";
 //con el fin de crear una sesacion de exploracion al usuario
 //cuando se haga click en un producto se redirigira a la pagina de detalle del producto
 // Datos dummy para la demostración
-const categoryProducts = [
-  {
-    id: 1,
-    name: "Vela Aromática Lavanda",
-    price: 19.99,
-    image: "/placeholder.svg?height=200&width=200",
-    description:
-      "Vela aromática de lavanda hecha a mano con cera de soja natural y aceites esenciales.",
-  },
-  {
-    id: 2,
-    name: "Set de Velas Decorativas",
-    price: 34.99,
-    image: "/placeholder.svg?height=200&width=200",
-    description:
-      "Set de 3 velas decorativas con diferentes formas y tamaños, perfectas para crear ambiente.",
-  },
-  {
-    id: 3,
-    name: "Vela de Soja Vainilla",
-    price: 24.99,
-    image: "/placeholder.svg?height=200&width=200",
-    description:
-      "Vela de soja con aroma a vainilla, larga duración y envase reutilizable.",
-  },
-  {
-    id: 4,
-    name: "Vela Aromática Cítrica",
-    price: 22.99,
-    image: "/placeholder.svg?height=200&width=200",
-    description:
-      "Vela aromática con fragancia cítrica refrescante, ideal para energizar espacios.",
-  },
-  {
-    id: 5,
-    name: "Vela de Cera de Abeja",
-    price: 27.99,
-    image: "/placeholder.svg?height=200&width=200",
-    description:
-      "Vela natural de cera de abeja, con aroma suave y propiedades purificantes del aire.",
-  },
-  {
-    id: 6,
-    name: "Set de Mini Velas de Té",
-    price: 15.99,
-    image: "/placeholder.svg?height=200&width=200",
-    description:
-      "Set de 20 mini velas de té, perfectas para crear un ambiente romántico o relajante.",
-  },
-];
+
 
 export default function CategoryPage() {
   const params = useParams();
   const [sortBy, setSortBy] = useState("name");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredProducts = categoryProducts.filter((product) =>
+  const filteredProducts = product.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -128,7 +80,7 @@ export default function CategoryPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {sortedProducts.map((product) => (
+          {product.map((product) => (
             <ProductCard key={product.id} {...product} />
           ))}
         </div>
