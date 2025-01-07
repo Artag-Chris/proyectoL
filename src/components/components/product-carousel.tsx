@@ -12,7 +12,7 @@ interface Product {
   id: number
   name: string
   price: number
-  image: string
+  imageUrl: string
   description: string
 }
 
@@ -76,7 +76,7 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
                 <div className="relative w-full h-48">
                   <Link href={`/product/${product.id}`}>
                   <Image
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     fill
                     style={{ objectFit: 'cover' }}

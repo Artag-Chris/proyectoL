@@ -42,9 +42,9 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-   if (!loading){
+  if (!loading) {
     console.log(data)
-   }
+  }
   return (
     <main className="min-h-screen flex flex-col bg-gradient-custom">
       <PageTransition />
@@ -59,17 +59,17 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Categorías
         </h2>
-        
+
         {/* <Categories /> */}
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Últimos productos vendidos
         </h2>
-        { /* 
-          <Suspense fallback={<div>Cargando...</div>}>
+
+        <Suspense fallback={<div>Cargando...</div>}>
           <ProductCarousel product={soldProducts} />
-        </Suspense>*/
-         }
+        </Suspense>
+
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Lo último en llegar
         </h2>
