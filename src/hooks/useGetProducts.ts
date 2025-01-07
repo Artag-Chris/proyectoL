@@ -22,21 +22,14 @@ const useGetProducts = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:45623/api/productos/');
-                
-                
                 if (!response.data.products && !response.data.soldProducts) {
                     setData({ product, soldProducts });
                 } else {
-                   // console.log("en hook")
-                    const{product,soldProducts}=response.data
-                    console.log("esta es la data")
-                    console.log(response.data)
-                    setData({product,soldProducts});
+                    const { product, soldProducts } = response.data
+                    setData({ product, soldProducts });
                 }
             } catch (err) {
                 console.error('Error fetching data, using dummy data', err);
-                console.log(err)
-                console.log("en error")
                 setData({ product, soldProducts });
                 setError('Error fetching data, using dummy data');
             } finally {
