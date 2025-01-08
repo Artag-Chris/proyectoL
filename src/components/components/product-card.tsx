@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import useCartStore from "@/utils/store/cartStore";
+// Asegúrate de ajustar la ruta según tu estructura de carpetas
 
 interface ProductCardProps {
   id: number;
@@ -25,46 +27,56 @@ export function ProductCard({
   imageUrl,
   description,
 }: ProductCardProps) {
+  const addItem = useCartStore((state) => state.addItem);
+
+  const handleAddToCart = () => {
+    addItem({ id, name, quantity: 1, price, imageUrl });
+  };
+
   return (
-    <Link href={`/product/${id}`}>
-      <motion.div
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.4,
-          scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
-        }}
-        className="w-full h-full"
-      >
-        <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
-          <div className="relative flex-grow">
-            <Image
-              src={imageUrl}
-              alt={name}
-              fill
-              style={{ objectFit: "cover" }}
-              className="rounded-t-lg"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4"
-            >
-              <CardTitle className="text-lg font-semibold text-white mb-2">
-                {name}
-              </CardTitle>
-              <p className="text-sm text-white/80 line-clamp-2">{description}</p>
-            </motion.div>
-          </div>
-          <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
-            <span className="text-xl font-bold text-white">${price}</span>
-            <Button className="bg-orange-500 hover:bg-orange-600 text-white">
-              Añadir al carrito
-            </Button>
-          </CardFooter>
-        </Card>
-      </motion.div>
-    </Link>
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{
+        duration: 0.4,
+        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+      }}
+      className="w-full h-full"
+    >
+      <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
+        <div className="relative flex-grow">
+          <Image
+            src={imageUrl}
+            alt={name}
+            fill
+            style={{ objectFit: "cover" }}
+            className="rounded-t-lg"
+          />
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4"
+          >
+            <CardTitle className="text-lg font-semibold text-white mb-2">
+              {name}
+            </CardTitle>
+            <p className="text-sm text-white/80 line-clamp-2">{description}</p>
+          </motion.div>
+        </div>
+        <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
+          <span className="text-xl font-bold text-white">${price}</span>
+          <Button
+            className="bg-orange-500 hover:bg-orange-600 text-white"
+            onClick={(e) => {
+              e.preventDefault();
+              handleAddToCart();
+            }}
+          >
+            Añadir al carrito
+          </Button>
+        </CardFooter>
+      </Card>
+    </motion.div>
   );
 }
