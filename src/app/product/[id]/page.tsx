@@ -26,6 +26,7 @@ export default function ProductPage() {
         name: product.name,
         quantity,
         price: product.price,
+        imageUrl: product.imageUrl || '/placeholder.svg' // Agrega el campo imageUrl
       });
       console.log(product)
     }

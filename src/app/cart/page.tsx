@@ -13,14 +13,14 @@ import { Navbar } from '@/components/components/navbar'
 import useCartStore from '@/utils/store/cartStore'
 // Ajusta la ruta según sea necesario
 const Product = [
-  { id: 1, name: 'Producto 1', price: 10.99, image: '/placeholder.svg' },
-  { id: 2, name: 'Producto 2', price: 12.99, image: '/placeholder.svg' },
-  { id: 3, name: 'Producto 3', price: 8.99, image: '/placeholder.svg' },
-  { id: 4, name: 'Producto 4', price: 15.99, image: '/placeholder.svg' },
+  { id: 1, name: 'Producto 1', price: 10.99, imageUrl: '/placeholder.svg' },
+  { id: 2, name: 'Producto 2', price: 12.99, imageUrl: '/placeholder.svg' },
+  { id: 3, name: 'Producto 3', price: 8.99, imageUrl: '/placeholder.svg' },
+  { id: 4, name: 'Producto 4', price: 15.99, imageUrl: '/placeholder.svg' },
 ]
 
 export default function CartPage() {
-  const { items, addItem, removeItem, clearCart } = useCartStore()
+  const { items, addItem, removeItem } = useCartStore()
 
   const updateQuantity = (id: number, change: number) => {
     const item = items.find(item => item.id === id)
@@ -47,7 +47,7 @@ export default function CartPage() {
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center py-4 border-b last:border-b-0">
                     <div className="flex-shrink-0 w-24 h-24 mr-4">
-                      <Image src={'/placeholder.svg?height=600&width=600' } alt={item.name} width={96} height={96} className="rounded-md" />
+                      <Image src={item.imageUrl } alt={item.name} width={96} height={96} className="rounded-md" />
                     </div>
                     <div className="flex-grow">
                       <h3 className="text-lg font-semibold text-black">{item.name}</h3>
@@ -118,7 +118,7 @@ export default function CartPage() {
                 <Card className="glass-card h-full flex flex-col">
                   <CardContent className="p-4 flex-grow">
                     <div className="relative w-full h-40 mb-4">
-                      <Image src={product.image} alt={product.name} fill className="object-cover rounded-md" />
+                      <Image src={product.imageUrl} alt={product.name} fill className="object-cover rounded-md" />
                     </div>
                     <h3 className="text-sm font-semibold mb-2 text-black">{product.name}</h3>
                     <p className="text-black/80">${product.price.toFixed(2)}</p>
