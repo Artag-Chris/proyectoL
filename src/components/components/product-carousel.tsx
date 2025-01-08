@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { ChevronLeft, ChevronRight, } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import useCartStore from '@/utils/store/cartStore'
+// Importa el store del carrito
 
 interface Product {
   id: number
@@ -23,6 +25,7 @@ interface ProductCarouselProps {
 export function ProductCarousel({ product }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
+  const addItem = useCartStore((state) => state.addItem) // Obtén la función addItem del store
 
   const nextSlide = useCallback(() => {
     if (isAutoPlay) {
@@ -64,13 +67,11 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
       {/* Carousel Content */}
       <div className="relative z-10">
         <motion.div
-        
          className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {product.map((product) => (
             <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            
              key={product.id} className="w-full flex-shrink-0 p-4">
               <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
                 <div className="relative w-full h-48">
@@ -92,7 +93,10 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <span className="text-xl font-bold text-amber-800">${product.price.toFixed(2)}</span>
-                  <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                  <Button 
+                    className="bg-orange-500 hover:bg-orange-600 text-white"
+                    onClick={() => addItem({ id: product.id, name: product.name, quantity: 1, price: product.price, imageUrl: product.imageUrl })}
+                  >
                     Añadir al carrito
                   </Button>
                 </CardFooter>
@@ -110,4 +114,3 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
     </div>
   )
 }
-
