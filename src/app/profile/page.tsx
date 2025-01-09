@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -13,7 +13,6 @@ import { Label } from "@/components/ui/label"
 import { ShoppingBag, Settings, User } from 'lucide-react'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
-import { useEffect } from 'react'
 
 // Datos dummy para pedidos recientes
 const recentOrders = [
@@ -26,18 +25,12 @@ export default function ProfilePage() {
   const { data: session, status } = useSession()
   const router = useRouter()
 
-
-  useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/auth')
-    }
-  }, [status, router])
-
   if (status === 'loading') {
     return <div>Cargando...</div>
   }
 
   if (status === 'unauthenticated') {
+    router.push('/auth')
     return null
   }
 
@@ -69,19 +62,15 @@ export default function ProfilePage() {
 
           {/* Pestañas de contenido */}
           <div className="md:col-span-2">
-            <Tabs defaultValue="orders">
+            <Tabs defaultValue="account">
               <TabsList className="w-full justify-start mb-4">
-                <TabsTrigger value="orders">
-                  <ShoppingBag className="w-4 h-4 mr-2" />
-                  Pedidos
-                </TabsTrigger>
                 <TabsTrigger value="account">
                   <User className="w-4 h-4 mr-2" />
                   Cuenta
                 </TabsTrigger>
-                <TabsTrigger value="settings">
-                  <Settings className="w-4 h-4 mr-2" />
-                  Configuración
+                <TabsTrigger value="orders">
+                  <ShoppingBag className="w-4 h-4 mr-2" />
+                  Pedidos
                 </TabsTrigger>
               </TabsList>
 
@@ -122,43 +111,37 @@ export default function ProfilePage() {
               <TabsContent value="account">
                 <Card className="glass-card">
                   <CardHeader>
-                    <CardTitle>Detalles de la Cuenta</CardTitle>
-                    <CardDescription>Actualiza tu información personal</CardDescription>
+                    <CardTitle className="text-black">Detalles de la Cuenta</CardTitle>
+                    <CardDescription className="text-black">Actualiza tu información personal</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Nombre</Label>
-                      <Input id="name" defaultValue={session?.user?.name || ''} />
+                      <Label htmlFor="firstName" className="text-black">Nombre</Label>
+                      <Input id="firstName" defaultValue={session?.user?.name?.split(' ')[0] || ''} className="text-black" />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="email">Correo Electrónico</Label>
-                      <Input id="email" defaultValue={session?.user?.email || ''} />
+                      <Label htmlFor="lastName" className="text-black">Apellido</Label>
+                      <Input id="lastName" defaultValue={session?.user?.name?.split(' ')[1] || ''} className="text-black" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-black">Correo Electrónico</Label>
+                      <Input id="email" disabled defaultValue={session?.user?.email || ''} className="text-black" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-black">Número de Teléfono</Label>
+                      <Input id="phone" type="tel" className="text-black" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="address" className="text-black">Dirección</Label>
+                      <Input id="address" className="text-black" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="password" className="text-black">Contraseña</Label>
+                      <Input id="password" type="password" disabled className="text-black" />
                     </div>
                   </CardContent>
                   <CardFooter>
                     <Button className="w-full">Guardar Cambios</Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-
-              <TabsContent value="settings">
-                <Card className="glass-card">
-                  <CardHeader>
-                    <CardTitle>Configuración de la Cuenta</CardTitle>
-                    <CardDescription>Gestiona las preferencias de tu cuenta</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="marketing">Recibir correos de marketing</Label>
-                      <Input type="checkbox" id="marketing" />
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <Label htmlFor="notifications">Notificaciones push</Label>
-                      <Input type="checkbox" id="notifications" />
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full">Guardar Preferencias</Button>
                   </CardFooter>
                 </Card>
               </TabsContent>
@@ -170,4 +153,3 @@ export default function ProfilePage() {
     </div>
   )
 }
-

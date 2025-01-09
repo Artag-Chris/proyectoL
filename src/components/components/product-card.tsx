@@ -10,7 +10,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import useCartStore from "@/utils/store/cartStore";
-// Asegúrate de ajustar la ruta según tu estructura de carpetas
+
 
 interface ProductCardProps {
   id: number;

@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight, } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import useCartStore from '@/utils/store/cartStore'
-// Importa el store del carrito
+
 
 interface Product {
   id: number
@@ -25,7 +25,7 @@ interface ProductCarouselProps {
 export function ProductCarousel({ product }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isAutoPlay, setIsAutoPlay] = useState(true)
-  const addItem = useCartStore((state) => state.addItem) // Obtén la función addItem del store
+  const addItem = useCartStore((state) => state.addItem) 
 
   const nextSlide = useCallback(() => {
     if (isAutoPlay) {
