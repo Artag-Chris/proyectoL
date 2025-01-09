@@ -11,7 +11,6 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import useCartStore from "@/utils/store/cartStore";
 
-
 interface ProductCardProps {
   id: number;
   name: string;
@@ -44,26 +43,28 @@ export function ProductCard({
       className="w-full h-full"
     >
       <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
-        <div className="relative flex-grow">
-          <Image
-            src={imageUrl}
-            alt={name}
-            fill
-            style={{ objectFit: "cover" }}
-            className="rounded-t-lg"
-          />
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4"
-          >
-            <CardTitle className="text-lg font-semibold text-white mb-2">
-              {name}
-            </CardTitle>
-            <p className="text-sm text-white/80 line-clamp-2">{description}</p>
-          </motion.div>
-        </div>
+        <Link href={`/product/${id}`} passHref>
+          
+            <Image
+              src={imageUrl}
+              alt={name}
+              fill
+              style={{ objectFit: "cover" }}
+              className="rounded-t-lg"
+            />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
+              className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4"
+            >
+              <CardTitle className="text-lg font-semibold text-white mb-2">
+                {name}
+              </CardTitle>
+              <p className="text-sm text-white/80 line-clamp-2">{description}</p>
+            </motion.div>
+         
+        </Link>
         <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
           <span className="text-xl font-bold text-white">${price}</span>
           <Button
