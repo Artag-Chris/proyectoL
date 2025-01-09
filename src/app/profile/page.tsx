@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -24,6 +25,13 @@ const recentOrders = [
 export default function ProfilePage() {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const [formData, setFormData] = useState({
+    firstName: session?.user?.name?.split(' ')[0] || '',
+    lastName: session?.user?.name?.split(' ')[1] || '',
+    email: session?.user?.email || '',
+    phone: '',
+    address: ''
+  })
 
   if (status === 'loading') {
     return <div>Cargando...</div>
@@ -32,6 +40,35 @@ export default function ProfilePage() {
   if (status === 'unauthenticated') {
     router.push('/auth')
     return null
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target
+    setFormData(prevState => ({
+      ...prevState,
+      [id]: value
+    }))
+  }
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`http://localhost:45623/api/usuarios/cliente/${session?.user?.email}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      if (!response.ok) {
+        throw new Error('Error al actualizar los datos')
+      }
+
+      alert('Datos actualizados correctamente')
+    } catch (error) {
+      console.error(error)
+      alert('Hubo un error al actualizar los datos')
+    }
   }
 
   return (
@@ -117,23 +154,23 @@ export default function ProfilePage() {
                   <CardContent className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName" className="text-black">Nombre</Label>
-                      <Input id="firstName" defaultValue={session?.user?.name?.split(' ')[0] || ''} className="text-black" />
+                      <Input id="firstName" value={formData.firstName} onChange={handleChange} className="text-black" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="lastName" className="text-black">Apellido</Label>
-                      <Input id="lastName" defaultValue={session?.user?.name?.split(' ')[1] || ''} className="text-black" />
+                      <Input id="lastName" value={formData.lastName} onChange={handleChange} className="text-black" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email" className="text-black">Correo Electrónico</Label>
-                      <Input id="email" disabled defaultValue={session?.user?.email || ''} className="text-black" />
+                      <Input id="email" disabled value={formData.email} className="text-black" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone" className="text-black">Número de Teléfono</Label>
-                      <Input id="phone" type="tel" className="text-black" />
+                      <Input id="phone" type="tel" value={formData.phone} onChange={handleChange} className="text-black" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="address" className="text-black">Dirección</Label>
-                      <Input id="address" className="text-black" />
+                      <Input id="address" value={formData.address} onChange={handleChange} className="text-black" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="password" className="text-black">Contraseña</Label>
@@ -141,7 +178,7 @@ export default function ProfilePage() {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    <Button className="w-full">Guardar Cambios</Button>
+                    <Button className="w-full" onClick={handleSubmit}>Guardar Cambios</Button>
                   </CardFooter>
                 </Card>
               </TabsContent>
