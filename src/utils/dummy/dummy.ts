@@ -77,12 +77,12 @@ export const product = [
   ];
 
   export const categories = [
-    { name: "Ropa", description: "Moderna y colorida, para todas las ocasiones." },
-    { name: "Hogar", description: "Artículos esenciales y decorativos para el hogar." },
-    { name: "Deportes", description: "Equipamiento y ropa deportiva de alta calidad." },
-    { name: "Belleza", description: "Productos de belleza y cuidado personal." },
-    { name: "Velas Aromaticas", description: "Velas con fragancias relajantes y energizantes." },
-    { name: "Dulces", description: "Deliciosos dulces y golosinas para todos los gustos." }
+    { name: "Ropa", description: "Moderna y colorida, para todas las ocasiones.",isAvailable: true,id:1 },
+    { name: "Hogar", description: "Artículos esenciales y decorativos para el hogar.",isAvailable: true,id:2 },
+    { name: "Deportes", description: "Equipamiento y ropa deportiva de alta calidad." ,isAvailable: false,id:3 },
+    { name: "Belleza", description: "Productos de belleza y cuidado personal.",isAvailable: true, id:4  },
+    { name: "Velas Aromaticas", description: "Velas con fragancias relajantes y energizantes.",isAvailable: true,id:5  },
+    { name: "Dulces", description: "Deliciosos dulces y golosinas para todos los gustos.",isAvailable: false, id:6  },
   ];
 
   export const relatedProducts = [

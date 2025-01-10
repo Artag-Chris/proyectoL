@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,45 +7,42 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import PageTransition from "@/components/transitions/PageTransition";
-
-// Datos dummy para categorías
-const initialCategories = [
-  {
-    id: 1,
-    name: "Velas Aromáticas",
-    description: "Velas con fragancias naturales",
-    isAvailable: true,
-  },
-  {
-    id: 2,
-    name: "Difusores",
-    description: "Difusores de aceites esenciales",
-    isAvailable: true,
-  },
-  {
-    id: 3,
-    name: "Accesorios",
-    description: "Accesorios para velas y aromaterapia",
-    isAvailable: false,
-  },
-];
+import useGetCategories from "@/hooks/useGetCategory";
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState(initialCategories);
+  const { data: { categories = [] } = {}, loading, error } = useGetCategories();
+  const [addCategory, setAddCategory] = useState(categories);
   const [newCategory, setNewCategory] = useState({
     name: "",
     description: "",
     isAvailable: true,
   });
 
+  useEffect(() => {
+    // Actualizar addCategory cuando categories cambie
+    setAddCategory(categories);
+  }, [categories]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setCategories([
-      ...categories,
-      { ...newCategory, id: categories.length + 1 },
+    setAddCategory([
+      ...addCategory,
+      { ...newCategory, id: addCategory.length + 1 },
     ]);
     setNewCategory({ name: "", description: "", isAvailable: true });
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[var(--color-primary)]"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div className="space-y-10">
@@ -56,7 +52,7 @@ export default function CategoriesPage() {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((category) => (
+        {addCategory.map((category) => (
           <CategoryCard key={category.id} category={category} />
         ))}
       </div>

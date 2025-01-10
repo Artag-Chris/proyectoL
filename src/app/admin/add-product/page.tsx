@@ -12,8 +12,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import PageTransition from '@/components/transitions/PageTransition'
 import { FadeInTransition } from '@/components/transitions/FadeIn'
-
-const categories = ['Electrónicos', 'Ropa', 'Hogar', 'Velas', 'Accesorios']
+import useGetCategories from '@/hooks/useGetCategory'
 
 export default function AddProductPage() {
   const [name, setName] = useState('')
@@ -26,7 +25,7 @@ export default function AddProductPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState('')
-  const router = useRouter()
+  const {data: {categories}}= useGetCategories()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -132,8 +131,8 @@ export default function AddProductPage() {
                   </SelectTrigger>
                   <SelectContent>
                     {categories.map((cat) => (
-                      <SelectItem key={cat} value={cat}>
-                        {cat}
+                      <SelectItem key={categories.indexOf(cat)} value={cat.name}>
+                        {cat.name}
                       </SelectItem>
                     ))}
                   </SelectContent>
