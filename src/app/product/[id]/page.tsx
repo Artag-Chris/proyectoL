@@ -11,7 +11,6 @@ import useGetProductById from '@/hooks/useGetProductById'
 import { useParams } from 'next/navigation'
 import useCartStore from '@/utils/store/cartStore'
 
-
 export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
   const { id } = useParams();
@@ -30,7 +29,6 @@ export default function ProductPage() {
       });
       console.log(product)
     }
-
   };
 
   return (
@@ -44,6 +42,7 @@ export default function ProductPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="relative aspect-square rounded-lg overflow-hidden shadow-lg"
+            style={{ position: 'relative' }} // Añadir posición relativa
           >
             {product && (
               <Image
@@ -51,7 +50,7 @@ export default function ProductPage() {
                 alt={product.name || 'Product Image'}
                 fill
                 className="object-cover"
-                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             )}
           </motion.div>

@@ -42,7 +42,6 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  
   return (
     <main className="min-h-screen flex flex-col bg-gradient-custom">
       <PageTransition />
