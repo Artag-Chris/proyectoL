@@ -17,7 +17,7 @@ export function Categories() {
             <motion.button
               whileHover={{
                 scale: 1.05,
-                backgroundColor: "var(--color-secondary/80)",
+            //    backgroundColor: "var(--color-secondary/80)",
               }}
               whileTap={{ scale: 0.95 }}
               className="bg-secondary text-secondary-foreground font-semibold px-4 py-2 rounded-lg"

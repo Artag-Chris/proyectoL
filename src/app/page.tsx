@@ -26,8 +26,8 @@ const containerVariants = {
 
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const { data, loading, error } = useGetProducts();
-  const { product, soldProducts } = data;
+  const { data, loading } = useGetProducts();
+  const { soldProducts } = data;
 
   useEffect(() => {
     const handleScroll = () => {

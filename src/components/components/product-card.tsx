@@ -44,13 +44,14 @@ export function ProductCard({
     >
       <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
         <Link href={`/product/${id}`} passHref>
-          
+          <div className="relative w-full h-48" style={{ position: 'relative' }}>
             <Image
               src={imageUrl}
               alt={name}
               fill
               style={{ objectFit: "cover" }}
               className="rounded-t-lg"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <motion.div
               initial={{ opacity: 0 }}
@@ -63,7 +64,7 @@ export function ProductCard({
               </CardTitle>
               <p className="text-sm text-white/80 line-clamp-2">{description}</p>
             </motion.div>
-         
+          </div>
         </Link>
         <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
           <span className="text-xl font-bold text-white">${price}</span>

@@ -47,7 +47,9 @@ export default function CartPage() {
                 {items.map((item) => (
                   <div key={item.id} className="flex items-center py-4 border-b last:border-b-0">
                     <div className="flex-shrink-0 w-24 h-24 mr-4">
-                      <Image src={item.imageUrl } alt={item.name} width={96} height={96} className="rounded-md" />
+                      <Image
+                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                       src={item.imageUrl } alt={item.name} width={96} height={96} className="rounded-md" />
                     </div>
                     <div className="flex-grow">
                       <h3 className="text-lg font-semibold text-black">{item.name}</h3>
@@ -118,7 +120,9 @@ export default function CartPage() {
                 <Card className="glass-card h-full flex flex-col">
                   <CardContent className="p-4 flex-grow">
                     <div className="relative w-full h-40 mb-4">
-                      <Image src={product.imageUrl} alt={product.name} fill className="object-cover rounded-md" />
+                      <Image
+                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                       src={product.imageUrl} alt={product.name} fill className="object-cover rounded-md" />
                     </div>
                     <h3 className="text-sm font-semibold mb-2 text-black">{product.name}</h3>
                     <p className="text-black/80">${product.price.toFixed(2)}</p>
