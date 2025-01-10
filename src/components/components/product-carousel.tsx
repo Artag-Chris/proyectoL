@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import useCartStore from "@/utils/store/cartStore";
 
@@ -31,22 +31,26 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const addItem = useCartStore((state) => state.addItem);
+  const displayedProducts = product.slice(0, 6);
 
   const nextSlide = useCallback(() => {
     if (isAutoPlay) {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % product.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % displayedProducts.length);
     }
   }, [isAutoPlay, product.length]);
 
   const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + product.length) % product.length
-    );
-    setIsAutoPlay(false);
-  };
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + displayedProducts.length) % displayedProducts.length)
+    setIsAutoPlay(false)
+  }
 
   const manualNextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % product.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % displayedProducts.length)
+    setIsAutoPlay(false)
+  }
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
     setIsAutoPlay(false);
   };
 
@@ -75,76 +79,71 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
 
       {/* Carousel Content */}
       <div className="relative z-10">
-        <motion.div
-          className="flex transition-transform duration-500 ease-in-out"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          {product.map((product) => (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              key={product.id}
-              className="w-full flex-shrink-0 p-4"
-            >
-              <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
-                <div className="relative w-full h-48" style={{ position: 'relative' }}>
-                  <Link href={`/product/${product.id}`}>
+        <AnimatePresence initial={false} custom={currentIndex}>
+          <motion.div
+            key={currentIndex}
+            custom={currentIndex}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {displayedProducts.map((product) => (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                key={product.id}
+                className="w-full flex-shrink-0 p-4"
+              >
+                <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
+                  <div className="relative w-full h-48">
                     <Image
                       src={product.imageUrl}
                       alt={product.name}
                       fill
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: 'cover' }}
                       className="rounded-t-md"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                  </Link>
-                </div>
-                <CardHeader>
-                  <CardTitle className="text-lg font-semibold text-amber-800">
-                    {product.name}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-amber-700 line-clamp-2">
-                    {product.description}
-                  </p>
-                </CardContent>
-                <CardFooter className="flex justify-between items-center">
-                  <span className="text-xl font-bold text-amber-800">
-                    ${product.price.toFixed(2)}
-                  </span>
-                  <Button
-                    className="bg-orange-500 hover:bg-orange-600 text-white"
-                    onClick={() =>
-                      addItem({
-                        id: product.id,
-                        name: product.name,
-                        quantity: 1,
-                        price: product.price,
-                        imageUrl: product.imageUrl,
-                      })
-                    }
-                  >
-                    Añadir al carrito
-                  </Button>
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
-        </motion.div>
-        <Button
-          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50"
-          onClick={prevSlide}
-        >
+                  </div>
+                  <CardHeader>
+                    <CardTitle className="text-lg font-semibold text-amber-800">{product.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-amber-700 line-clamp-2">{product.description}</p>
+                  </CardContent>
+                  <CardFooter className="flex justify-between items-center">
+                    <span className="text-xl font-bold text-amber-800">${product.price.toFixed(2)}</span>
+                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                      Añadir al carrito
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+        <Button className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={prevSlide}>
           <ChevronLeft className="h-6 w-6" />
         </Button>
-        <Button
-          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50"
-          onClick={manualNextSlide}
-        >
+        <Button className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={manualNextSlide}>
           <ChevronRight className="h-6 w-6" />
         </Button>
+
+        {/* Navigation Dots */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {displayedProducts.map((_, index) => (
+            <button
+              key={index}
+              className={`w-3 h-3 rounded-full ${
+                index === currentIndex ? 'bg-orange-500' : 'bg-gray-300'
+              }`}
+              onClick={() => goToSlide(index)}
+            />
+          ))}
+        </div>
       </div>
     </div>
-  );
+  )
 }
