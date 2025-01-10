@@ -1,94 +1,89 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import PageTransition from "@/components/transitions/PageTransition";
-import { FadeInTransition } from "@/components/transitions/FadeIn";
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import PageTransition from '@/components/transitions/PageTransition'
+import { FadeInTransition } from '@/components/transitions/FadeIn'
 
-const categories = ["Electrónicos", "Ropa", "Hogar", "Velas", "Accesorios"];
+const categories = ['Electrónicos', 'Ropa', 'Hogar', 'Velas', 'Accesorios']
 
 export default function AddProductPage() {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [desCategory, setDesCategory] = useState("");
-  const [stock, setStock] = useState("");
-  const [image, setImage] = useState<File | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState("");
-  const router = useRouter();
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState('')
+  const [category, setCategory] = useState('')
+  const [desCategory, setDesCategory] = useState('')
+  const [stock, setStock] = useState('')
+  const [image, setImage] = useState<File | null>(null)
+  const [imagePreview, setImagePreview] = useState<string | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalContent, setModalContent] = useState('')
+  const router = useRouter()
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setImage(file)
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    } else {
+      setImage(null)
+      setImagePreview(null)
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("price", price);
-    formData.append("category", category);
-    formData.append("desCategory", desCategory);
-    formData.append("stock", stock);
+    const formData = new FormData()
+    formData.append('name', name)
+    formData.append('description', description)
+    formData.append('price', price)
+    formData.append('category', category)
+    formData.append('desCategory', desCategory)
+    formData.append('stock', stock)
     if (image) {
-      formData.append("file", image);
+      formData.append('file', image)
     }
 
     try {
-      const response = await fetch(
-        "http://localhost:45623/api/productos/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
+      const response = await fetch('http://localhost:45623/api/productos/upload', {
+        method: 'POST',
+        body: formData,
+      })
 
-      const data = await response.json();
-      setModalContent(JSON.stringify(data, null, 2));
-      setIsModalOpen(true);
+      const data = await response.json()
+      setModalContent(JSON.stringify(data, null, 2))
+      setIsModalOpen(true)
 
       if (response.ok) {
         // Limpiar el formulario después de un envío exitoso
-        setName("");
-        setDescription("");
-        setPrice("");
-        setCategory("");
-        setDesCategory("");
-        setStock("");
-        setImage(null);
+        setName('')
+        setDescription('')
+        setPrice('')
+        setCategory('')
+        setDesCategory('')
+        setStock('')
+        setImage(null)
+        setImagePreview(null)
       }
     } catch (error) {
-      console.error("Error adding product:", error);
-      setModalContent(
-        "Error al agregar el producto. Por favor, intente de nuevo."
-      );
-      setIsModalOpen(true);
+      console.error('Error adding product:', error)
+      setModalContent('Error al agregar el producto. Por favor, intente de nuevo.')
+      setIsModalOpen(true)
     }
-  };
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 to-yellow-200 p-4">
@@ -169,10 +164,23 @@ export default function AddProductPage() {
                   id="image"
                   type="file"
                   accept="image/png,image/jpeg,image/jpg"
-                  onChange={(e) => setImage(e.target.files?.[0] || null)}
+                  onChange={handleImageChange}
                   required
                 />
               </div>
+              {imagePreview && (
+                <div className="mt-4">
+                  <Label>Vista previa de la imagen</Label>
+                  <div className="relative w-full h-64 mt-2 rounded-lg overflow-hidden">
+                    <Image
+                      src={imagePreview}
+                      alt="Vista previa"
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
+                </div>
+              )}
               <Button type="submit" className="w-full">
                 Agregar Producto
               </Button>
@@ -194,5 +202,5 @@ export default function AddProductPage() {
         </DialogContent>
       </Dialog>
     </div>
-  );
+  )
 }
