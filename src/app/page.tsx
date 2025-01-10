@@ -100,7 +100,7 @@ export default function Home() {
         {/* Nueva sección hero con CTA */}
         <div
           className="mt-16 relative bg-cover bg-center py-24 rounded-lg overflow-hidden"
-          style={{ backgroundImage: "url('/candles-background.jpg')" }}
+        //  style={{ backgroundImage: "url('/candles-background.jpg')" }}
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 text-center">

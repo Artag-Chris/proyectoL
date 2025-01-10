@@ -22,6 +22,8 @@ import { sendUserDataToBackend } from '@/utils/functions/sendUserLogin'
 export function Navbar() {
   const { data: session, status } = useSession()
   const [isAdmin, setIsAdmin] = useState(false)
+  
+  
 
   useEffect(() => {
     const checkSession = async () => {
