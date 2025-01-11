@@ -5,11 +5,23 @@ import PageTransition from "@/components/transitions/PageTransition";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useGetUsuarios, { Usuarios } from "@/hooks/useGetUsuarios";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 
 export default function UsersPage() {
   //arreglar esta pagina para mostrar los usuarios
-  const {data:{usuarios:Usuarios},loading,error} =useGetUsuarios()
+  const {data,loading,error} =useGetUsuarios()
+  const [usuarios, setUsuarios] = useState('');
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+  
+  //usar un use effect para traer los usuarios de la api
 
   return (
     <div className="space-y-10">
@@ -17,7 +29,7 @@ export default function UsersPage() {
       <h1 className="text-3xl font-bold text-[var(--color-text)]">Usuarios</h1>
 
       {<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Usuarios.map((user:Usuarios) => (
+        {data.usuarios.map((user:Usuarios) => (
           <UserCard key={user.id} user={user} />
         ))}
       </div> }
