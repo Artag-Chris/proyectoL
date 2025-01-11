@@ -30,6 +30,22 @@ export default function CategoriesPage() {
       { ...newCategory, id: addCategory.length + 1 },
     ]);
     setNewCategory({ name: "", description: "", isAvailable: true });
+    const sendData = async () => {
+      try {
+        const response = await fetch("http://localhost:45623/api/productos/createcategory", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newCategory),
+        });
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    sendData();
   };
 
   if (loading) {
