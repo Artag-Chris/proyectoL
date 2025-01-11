@@ -114,3 +114,41 @@ export const product = [
     imageUrl: '/placeholder.svg?height=600&width=600',
   }
   
+  export  const usuarios = [
+  {
+    id: 1,
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 2,
+    name: "Bob Smith",
+    email: "bob@example.com",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 3,
+    name: "Charlie Brown",
+    email: "charlie@example.com",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 4,
+    name: "Diana Ross",
+    email: "diana@example.com",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 5,
+    name: "Ethan Hunt",
+    email: "ethan@example.com",
+    image: "/placeholder.svg",
+  },
+  {
+    id: 6,
+    name: "Fiona Apple",
+    email: "fiona@example.com",
+    image: "/placeholder.svg",
+  },
+];
