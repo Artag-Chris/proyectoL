@@ -37,7 +37,7 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
     if (isAutoPlay) {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % displayedProducts.length);
     }
-  }, [isAutoPlay, product.length]);
+  }, [isAutoPlay, displayedProducts.length]);
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + displayedProducts.length) % displayedProducts.length)
@@ -98,15 +98,17 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
                 className="w-full flex-shrink-0 p-4"
               >
                 <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
-                  <div className="relative w-full h-48">
-                    <Image
-                      src={product.imageUrl}
-                      alt={product.name}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      className="rounded-t-md"
-                    />
-                  </div>
+                  <Link href={`/product/${product.id}`} passHref>
+                    <div className="relative w-full h-48 cursor-pointer">
+                      <Image
+                        src={product.imageUrl}
+                        alt={product.name}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        className="rounded-t-md"
+                      />
+                    </div>
+                  </Link>
                   <CardHeader>
                     <CardTitle className="text-lg font-semibold text-amber-800">{product.name}</CardTitle>
                   </CardHeader>
@@ -115,7 +117,10 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
                   </CardContent>
                   <CardFooter className="flex justify-between items-center">
                     <span className="text-xl font-bold text-amber-800">${product.price.toFixed(2)}</span>
-                    <Button className="bg-orange-500 hover:bg-orange-600 text-white">
+                    <Button
+                      className="bg-orange-500 hover:bg-orange-600 text-white"
+                      onClick={() => addItem({ id: product.id, name: product.name, quantity: 1, price: product.price, imageUrl: product.imageUrl })}
+                    >
                       Añadir al carrito
                     </Button>
                   </CardFooter>
