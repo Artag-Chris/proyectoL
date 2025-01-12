@@ -87,7 +87,7 @@ export default function Home() {
               whileTap={{ scale: 0.95 }}
               key={product.id}
               className={`
-                backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
+                backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg border-4 border-black
                 ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
                 ${index === 1 ? "md:col-span-2" : ""}
                 ${index === 3 ? "md:row-span-2" : ""}

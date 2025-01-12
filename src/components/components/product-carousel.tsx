@@ -71,7 +71,7 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
           alt="Candles Background"
           fill
           style={{ objectFit: 'cover' }}
-          className="opacity-40"
+          className="opacity-70"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
         />
@@ -118,7 +118,7 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
                   <CardFooter className="flex justify-between items-center">
                     <span className="text-xl font-bold text-amber-800">${product.price.toFixed(2)}</span>
                     <Button
-                      className="bg-orange-500 hover:bg-orange-600 text-white"
+                      className="bg-orange-500 hover:bg-orange-600 text-white border-black border-2"
                       onClick={() => addItem({ id: product.id, name: product.name, quantity: 1, price: product.price, imageUrl: product.imageUrl })}
                     >
                       Añadir al carrito
