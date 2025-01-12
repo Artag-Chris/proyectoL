@@ -42,9 +42,9 @@ export function ProductCard({
       }}
       className="w-full h-full"
     >
-      <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent">
+      <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent relative">
         <Link href={`/product/${id}`} passHref>
-          <div className="relative w-full h-48" style={{ position: 'relative' }}>
+          <div className="relative w-full h-64 md:h-80 lg:h-96">
             <Image
               src={imageUrl}
               alt={name}
@@ -66,10 +66,10 @@ export function ProductCard({
             </motion.div>
           </div>
         </Link>
-        <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md">
+        <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md mt-auto">
           <span className="text-xl font-bold text-white">${price}</span>
           <Button
-            className="bg-orange-500 hover:bg-orange-600 text-white"
+            className="bg-orange-500 hover:bg-orange-600 text-white absolute bottom-4 right-4"
             onClick={(e) => {
               e.preventDefault();
               handleAddToCart();

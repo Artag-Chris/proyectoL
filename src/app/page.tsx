@@ -13,6 +13,7 @@ import { ProductCarousel } from "@/components/components/product-carousel";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 import useGetProducts from "../hooks/useGetProducts";
+import Typography from "@/components/animations/typografy";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -50,14 +51,15 @@ export default function Home() {
       </FadeInTransition>
       <div className="container mx-auto px-4 flex-grow">
         <h1 className="text-4xl font-bold text-center my-8 text-[var(--color-text)]">
-          Bienvenido a AromaFlame
+          Bienvenido a <br />
+          <Typography text=" AromaFlame" speed={500} delay={2000} spaceBefore={true} color="red"/>
         </h1>
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Categorías
         </h2>
 
-        { <Categories /> }
+        {<Categories />}
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Últimos productos vendidos
@@ -74,33 +76,34 @@ export default function Home() {
           <div className="text-center text-xl">Cargando productos...</div>
         ) : (
           <motion.div
-            className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]"
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-          >
-            {soldProducts.map((product, index) => (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                key={product.id}
-                className={`
-                  backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
-                  ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
-                  ${index === 1 ? "md:col-span-2" : ""}
-                  ${index === 3 ? "md:row-span-2" : ""}
-                  ${index === 5 ? "md:col-span-2" : ""}
-                `}
-              >
-                <ProductCard {...product} />
-              </motion.div>
-            ))}
-          </motion.div>
+          className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {soldProducts.map((product, index) => (
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              key={product.id}
+              className={`
+                backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg
+                ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
+                ${index === 1 ? "md:col-span-2" : ""}
+                ${index === 3 ? "md:row-span-2" : ""}
+                ${index === 5 ? "md:col-span-2" : ""}
+              `}
+              style={{ height: '100%' }}
+            >
+              <ProductCard {...product} />
+            </motion.div>
+          ))}
+        </motion.div>
         )}
         {/* Nueva sección hero con CTA */}
         <div
           className="mt-16 relative bg-cover bg-center py-24 rounded-lg overflow-hidden"
-        //  style={{ backgroundImage: "url('/candles-background.jpg')" }}
+          //  style={{ backgroundImage: "url('/candles-background.jpg')" }}
         >
           <div className="absolute inset-0 bg-black opacity-50"></div>
           <div className="relative z-10 text-center">
