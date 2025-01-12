@@ -63,22 +63,22 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
   }, [nextSlide]);
 
   return (
-    <div className="relative overflow-hidden rounded-lg border-2 border-black">
+    <div className="relative overflow-hidden rounded-lg border-2 border-black p-4 border-4">
       {/* Background Image */}
-      <div className="absolute inset-0 z-0" style={{ height: '100vh', position: 'absolute' }}>
+      <div className="absolute inset-0 z-0" style={{ height: '120vh', position: 'absolute' }}>
         <Image
           src="https://d1ih8jugeo2m5m.cloudfront.net/2024/10/velas_aromaticas-768x512.jpg"
           alt="Candles Background"
           fill
           style={{ objectFit: 'cover' }}
-          className="opacity-20"
+          className="opacity-40"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           priority
         />
       </div>
 
       {/* Carousel Content */}
-      <div className="relative z-10 h-96">
+      <div className="relative z-10 h-full flex items-center justify-center">
         <AnimatePresence initial={false} custom={currentIndex}>
           <motion.div
             key={currentIndex}
@@ -95,9 +95,9 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 key={product.id}
-                className="w-full flex-shrink-0 p-4"
+                className="w-full flex-shrink-0 p-4 mb-4 flex items-start justify-center"
               >
-                <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-none shadow-lg">
+                <Card className="w-full max-w-sm mx-auto overflow-hidden backdrop-blur-md bg-white/30 border-black border-2 shadow-lg">
                   <Link href={`/product/${product.id}`} passHref>
                     <div className="relative w-full h-48 cursor-pointer">
                       <Image
