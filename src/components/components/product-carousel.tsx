@@ -78,7 +78,7 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
       </div>
 
       {/* Carousel Content */}
-      <div className="relative z-10">
+      <div className="relative z-10 h-96">
         <AnimatePresence initial={false} custom={currentIndex}>
           <motion.div
             key={currentIndex}
@@ -130,19 +130,19 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
         <Button className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={manualNextSlide}>
           <ChevronRight className="h-6 w-6" />
         </Button>
+      </div>
 
-        {/* Navigation Dots */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-          {displayedProducts.map((_, index) => (
-            <button
-              key={index}
-              className={`w-3 h-3 rounded-full ${
-                index === currentIndex ? 'bg-orange-500' : 'bg-gray-300'
-              }`}
-              onClick={() => goToSlide(index)}
-            />
-          ))}
-        </div>
+      {/* Navigation Dots */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+        {displayedProducts.map((_, index) => (
+          <button
+            key={index}
+            className={`w-3 h-3 rounded-full ${
+              index === currentIndex ? 'bg-orange-500' : 'bg-gray-300'
+            }`}
+            onClick={() => goToSlide(index)}
+          />
+        ))}
       </div>
     </div>
   )
