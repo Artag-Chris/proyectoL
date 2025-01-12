@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { ShoppingCart, User, Flame, LogOut, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import {
   DropdownMenu,
@@ -63,11 +63,20 @@ export function Navbar() {
               <Link href="/cart">
                 <Button variant="ghost" size="icon" className="text-[var(--foreground)]">
                   <ShoppingCart className="h-6 w-6" />
-                  {cartItemCount > 0 && (
-                    <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
-                      {cartItemCount}
-                    </span>
-                  )}
+                  <AnimatePresence>
+                    {cartItemCount > 0 && (
+                      <motion.span
+                        key={cartItemCount} // This ensures the animation runs every time the count changes
+                        initial={{ scale: 1.5, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 1.5, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="absolute top-0 right-0 inline-flex items-center justify-center px-1.5 py-0.5 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full"
+                      >
+                        {cartItemCount}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </Button>
               </Link>
             </motion.div>
