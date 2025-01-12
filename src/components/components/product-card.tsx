@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Card, CardFooter, CardTitle } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,7 +26,7 @@ export function ProductCard({ id, name, price, imageUrl, description }: ProductC
       animate={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 0.4,
-        scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+        scale: { type: "spring", stiffness: 260, damping: 20 },
       }}
       className="w-full h-full"
     >
@@ -38,7 +38,7 @@ export function ProductCard({ id, name, price, imageUrl, description }: ProductC
               alt={name}
               fill
               style={{ objectFit: "cover" }}
-              className=""  // Eliminar bordes redondeados
+              className="w-full h-full"  // Asegura que la imagen ocupe todo el espacio sin bordes redondeados
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <motion.div
