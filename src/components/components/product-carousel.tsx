@@ -63,7 +63,7 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
   }, [nextSlide]);
 
   return (
-    <div className="relative overflow-hidden rounded-lg">
+    <div className="relative overflow-hidden rounded-lg border-2 border-black">
       {/* Background Image */}
       <div className="absolute inset-0 z-0" style={{ height: '100vh', position: 'absolute' }}>
         <Image
@@ -129,12 +129,22 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
             ))}
           </motion.div>
         </AnimatePresence>
-        <Button className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={prevSlide}>
+        <motion.button
+          className="absolute top-1/2 left-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg p-3 m-2 border-2 border-black"
+          onClick={prevSlide}
+          whileHover={{ scale: 0.9 }}
+          whileTap={{ scale: 0.8 }}
+        >
           <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <Button className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-orange-500/50 hover:bg-orange-600/50" onClick={manualNextSlide}>
+        </motion.button>
+        <motion.button
+          className="absolute top-1/2 right-4 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg p-3 m-2 border-2 border-black"
+          onClick={manualNextSlide}
+          whileHover={{ scale: 0.9 }}
+          whileTap={{ scale: 0.8 }}
+        >
           <ChevronRight className="h-6 w-6" />
-        </Button>
+        </motion.button>
       </div>
 
       {/* Navigation Dots */}
