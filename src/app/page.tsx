@@ -14,6 +14,7 @@ import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 import useGetProducts from "../hooks/useGetProducts";
 import Typography from "@/components/animations/typografy";
+import {BentoSection} from "@/components/components/Bento";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -75,30 +76,7 @@ export default function Home() {
         {loading ? (
           <div className="text-center text-xl">Cargando productos...</div>
         ) : (
-          <motion.div
-          className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[200px]"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {soldProducts.map((product, index) => (
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              key={product.id}
-              className={`
-                backdrop-blur-md bg-white/30 rounded-lg overflow-hidden shadow-lg border-4 border-black
-                ${index === 0 ? "md:col-span-2 md:row-span-2" : ""}
-                ${index === 1 ? "md:col-span-2" : ""}
-                ${index === 3 ? "md:row-span-2" : ""}
-                ${index === 5 ? "md:col-span-2" : ""}
-              `}
-              style={{ height: '100%' }}
-            >
-              <ProductCard {...product} />
-            </motion.div>
-          ))}
-        </motion.div>
+          <BentoSection soldProducts={soldProducts} containerVariants={containerVariants} />
         )}
         {/* Nueva sección hero con CTA */}
         <div

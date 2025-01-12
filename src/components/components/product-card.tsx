@@ -1,13 +1,7 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Card, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import useCartStore from "@/utils/store/cartStore";
 
@@ -19,13 +13,7 @@ interface ProductCardProps {
   description: string;
 }
 
-export function ProductCard({
-  id,
-  name,
-  price,
-  imageUrl,
-  description,
-}: ProductCardProps) {
+export function ProductCard({ id, name, price, imageUrl, description }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = () => {
@@ -50,7 +38,7 @@ export function ProductCard({
               alt={name}
               fill
               style={{ objectFit: "cover" }}
-              className="rounded-t-lg"
+              className=""  // Eliminar bordes redondeados
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <motion.div
@@ -69,7 +57,7 @@ export function ProductCard({
         <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md mt-auto">
           <span className="text-xl font-bold text-white">${price}</span>
           <Button
-            className="bg-orange-500 hover:bg-orange-600 text-white absolute bottom-4 right-4"
+            className="bg-orange-500 hover:bg-orange-600 text-white"
             onClick={(e) => {
               e.preventDefault();
               handleAddToCart();
