@@ -3,7 +3,6 @@ import { FadeInTransition } from "../transitions/FadeIn";
 import Link from "next/link";
 import useGetCategories from "@/hooks/useGetCategory";
 
-
 //aqui usaremos el hook de traer las categorias de la base de datos para renderizarlos
 //een el componente de categorias
 
@@ -17,10 +16,9 @@ export function Categories() {
             <motion.button
               whileHover={{
                 scale: 1.05,
-            //    backgroundColor: "var(--color-secondary/80)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="bg-secondary text-secondary-foreground font-semibold px-4 py-2 rounded-lg"
+              className="bg-secondary text-secondary-foreground font-semibold px-4 py-2 rounded-lg border-2 border-black"
             >
               {category.name}
             </motion.button>

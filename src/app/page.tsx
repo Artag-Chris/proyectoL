@@ -44,7 +44,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen flex flex-col bg-gradient-custom">
+    <main className="min-h-screen flex flex-col bg-white">
       <PageTransition />
       <FadeInTransition position="bottom">
         <Navbar />
@@ -59,7 +59,7 @@ export default function Home() {
           Categorías
         </h2>
 
-        {<Categories />}
+        <Categories />
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
           Últimos productos vendidos
