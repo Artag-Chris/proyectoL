@@ -32,29 +32,29 @@ export function ProductCard({ id, name, price, imageUrl, description }: ProductC
     >
       <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent relative">
         <Link href={`/product/${id}`} passHref>
-          <div className="relative w-full h-64 md:h-80 lg:h-96">
+          <div className="relative w-full h-72 md:h-96 lg:h-[30rem]">
             <Image
               src={imageUrl}
               alt={name}
               fill
               style={{ objectFit: "cover" }}
-              className="w-full h-full"  // Asegura que la imagen ocupe todo el espacio sin bordes redondeados
+              className="w-full h-full"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4"
+              className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-center items-center p-4 z-10"
             >
-              <CardTitle className="text-lg font-semibold text-white mb-2">
+              <CardTitle className="text-2xl font-semibold text-white mb-2">
                 {name}
               </CardTitle>
-              <p className="text-sm text-white/80 line-clamp-2">{description}</p>
+              <p className="text-lg text-white/80 text-center">{description}</p>
             </motion.div>
           </div>
         </Link>
-        <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md mt-auto">
+        {/* <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md mt-auto">
           <span className="text-xl font-bold text-white">${price}</span>
           <Button
             className="bg-orange-500 hover:bg-orange-600 text-white"
@@ -65,7 +65,7 @@ export function ProductCard({ id, name, price, imageUrl, description }: ProductC
           >
             Añadir al carrito
           </Button>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </motion.div>
   );
