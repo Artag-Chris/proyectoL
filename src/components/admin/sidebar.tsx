@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
-import { LayoutDashboard, Package, ShoppingCart, Users, FolderPlus, PlusCircle, Menu } from 'lucide-react'
+import { LayoutDashboard, Package, ShoppingCart, Users, FolderPlus, PlusCircle, Menu, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
@@ -44,6 +44,12 @@ const routes = [
     icon: Users,
     href: '/admin/users',
     color: "text-blue-700",
+  },
+  {
+    label: 'Volver al Inicio',
+    icon: Home,
+    href: '/',
+    color: "text-red-700",
   },
 ]
 
@@ -108,4 +114,3 @@ function SidebarContent({ pathname, setIsOpen }: SidebarContentProps) {
     </div>
   )
 }
-
