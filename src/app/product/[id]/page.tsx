@@ -10,6 +10,7 @@ import { Navbar } from '@/components/components/navbar'
 import useGetProductById from '@/hooks/useGetProductById'
 import { useParams } from 'next/navigation'
 import useCartStore from '@/utils/store/cartStore'
+import BorderAnimation from '@/components/animations/borders'
 
 export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
@@ -35,6 +36,7 @@ export default function ProductPage() {
     <div className="min-h-screen bg-[var(--color-background)]">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
+        <BorderAnimation borderColor="black" borderWidth="5px" duration={9}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
           {/* Imagen del producto */}
           <motion.div
@@ -135,6 +137,7 @@ export default function ProductPage() {
 */              }
           </div>
         </section>
+        </BorderAnimation>
       </main>
       <Footer />
     </div>
