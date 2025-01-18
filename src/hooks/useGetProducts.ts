@@ -8,6 +8,7 @@ interface Product {
     price: number;
     imageUrl: string;
     description: string;
+    isAvailable?: boolean;
 }
 
 const useGetProducts = () => {

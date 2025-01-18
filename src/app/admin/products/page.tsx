@@ -12,57 +12,21 @@ import Image from "next/image";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 import { motion } from "framer-motion";
-
-// Datos dummy para productos
-const products = [
-  {
-    id: 1,
-    name: "Vela Aromática Lavanda",
-    price: 19.99,
-    image: "/placeholder.svg",
-    available: true,
-  },
-  {
-    id: 2,
-    name: "Difusor de Aceites",
-    price: 29.99,
-    image: "/placeholder.svg",
-    available: true,
-  },
-  {
-    id: 3,
-    name: "Set de Velas de Soja",
-    price: 24.99,
-    image: "/placeholder.svg",
-    available: false,
-  },
-  {
-    id: 4,
-    name: "Vela de Masaje",
-    price: 34.99,
-    image: "/placeholder.svg",
-    available: true,
-  },
-  {
-    id: 5,
-    name: "Vela en Tarro de Cristal",
-    price: 14.99,
-    image: "/placeholder.svg",
-    available: false,
-  },
-  {
-    id: 6,
-    name: "Pack de Velas Tea Light",
-    price: 9.99,
-    image: "/placeholder.svg",
-    available: true,
-  },
-];
+import useGetProducts from "@/hooks/useGetProducts";
 
 export default function ProductsPage() {
-  const availableProducts = products.filter((product) => product.available);
-  const unavailableProducts = products.filter((product) => !product.available);
-  
+  const { data, loading, error } = useGetProducts();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  const availableProducts = data.product.filter((product) => product.isAvailable);
+  const unavailableProducts = data.product.filter((product) => !product.isAvailable);
 
   return (
     <div className="space-y-10">
@@ -75,8 +39,8 @@ export default function ProductsPage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {availableProducts.map((product) => (
-            <FadeInTransition position="right">
-            <ProductCard key={product.id} product={product} />
+            <FadeInTransition position="right" key={product.id}>
+              <ProductCard product={product} />
             </FadeInTransition>
           ))}
         </div>
@@ -88,8 +52,8 @@ export default function ProductsPage() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {unavailableProducts.map((product) => (
-             <FadeInTransition position="bottom">
-            <ProductCard key={product.id} product={product} />
+            <FadeInTransition position="bottom" key={product.id}>
+              <ProductCard product={product} />
             </FadeInTransition>
           ))}
         </div>
@@ -100,37 +64,26 @@ export default function ProductsPage() {
 
 function ProductCard({ product }: any) {
   return (
-    <motion.div
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    >
-
-    <Card className="overflow-hidden backdrop-blur-md bg-white/10 border-none">
-      <div className="relative h-48">
-        <Image
-          src={product.image}
-          alt={product.name}
-          layout="fill"
-          objectFit="cover"
-           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
-      </div>
-      <CardHeader>
-        <CardTitle className="text-lg text-[var(--color-text)]">
-          {product.name}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-[var(--color-text)]/80">
-          ${product.price.toFixed(2)}
-        </p>
-      </CardContent>
-      <CardFooter className="justify-between">
-        <Badge variant={product.available ? "default" : "destructive"}>
-          {product.available ? "Disponible" : "No Disponible"}
-        </Badge>
-      </CardFooter>
-    </Card>
+    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+      <Card className="overflow-hidden backdrop-blur-md bg-white/10 border-none">
+        <div className="relative h-48">
+          <Image
+            src={product.imageUrl}
+            alt={product.name}
+            layout="fill"
+            objectFit="cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+        <CardHeader>
+          <CardTitle className="text-lg text-[var(--color-text)]">
+            {product.name}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-[var(--color-text)]/80">${product.price.toFixed(2)}</p>
+        </CardContent>
+      </Card>
     </motion.div>
   );
 }
