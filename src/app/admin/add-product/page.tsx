@@ -25,7 +25,13 @@ export default function AddProductPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState('')
-  const {data: {categories}}= useGetCategories()
+  const { data, loading, error } = useGetCategories()
+
+  useEffect(() => {
+    if (data && data.categories.length > 0 && !category) {
+      setCategory(data.categories[0].name)
+    }
+  }, [data, category])
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -71,7 +77,7 @@ export default function AddProductPage() {
         setName('')
         setDescription('')
         setPrice('')
-        setCategory('')
+        setCategory(data.categories?.[0]?.name || '')
         setDesCategory('')
         setStock('')
         setImage(null)
@@ -82,6 +88,14 @@ export default function AddProductPage() {
       setModalContent('Error al agregar el producto. Por favor, intente de nuevo.')
       setIsModalOpen(true)
     }
+  }
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>
   }
 
   return (
@@ -125,14 +139,14 @@ export default function AddProductPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="category">Categoría</Label>
-                <Select onValueChange={setCategory} required>
+                <Select onValueChange={setCategory} value={category} required>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecciona una categoría" />
                   </SelectTrigger>
                   <SelectContent>
-                    {categories.map((cat) => (
-                      <SelectItem key={categories.indexOf(cat)} value={cat.name}>
-                        {cat.name}
+                    {data?.categories?.map((cat) => (
+                      <SelectItem key={cat.id || 'default-id'} value={cat.name || 'default-name'}>
+                        {cat.name || 'Default Name'}
                       </SelectItem>
                     ))}
                   </SelectContent>

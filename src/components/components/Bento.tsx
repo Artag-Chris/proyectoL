@@ -36,7 +36,7 @@ export function BentoSection({ soldProducts, containerVariants }: BentoSectionPr
         animate="visible"
       >
         <AnimatePresence>
-          {products.map((product, index) => (
+          {products.slice(0, 10).map((product, index) => (
             <motion.div
               layout
               whileHover={{ scale: 1.05 }}
