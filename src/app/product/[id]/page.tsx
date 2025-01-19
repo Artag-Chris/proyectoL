@@ -28,7 +28,7 @@ export default function ProductPage() {
         price: product.price,
         imageUrl: product.imageUrl || '/placeholder.svg' // Agrega el campo imageUrl
       });
-      console.log(product)
+ 
     }
   };
 

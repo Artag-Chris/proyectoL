@@ -1,97 +1,83 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { useParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Navbar } from "@/components/components/navbar";
-import { Footer } from "@/components/components/footer";
-import { ProductCard } from "@/components/components/product-card";
-import PageTransition from "@/components/transitions/PageTransition";
-import { FadeInTransition } from "@/components/transitions/FadeIn";
-import { product } from "@/utils/dummy/dummy";
+import { useState, useEffect } from 'react'
+import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import PageTransition from '@/components/transitions/PageTransition'
+import { FadeInTransition } from '@/components/transitions/FadeIn'
+import useGetCategoryProducts from '@/hooks/useGetCategoryProducts'
 
-// aca se mirara el parametro de la url y se pedira a la api los datos de la categoria y sus productos
-//relacionados para mostrarlos en la pagina
-//se usara un hook especifico
-//se crearan unas tarjetas especificas para mostrar los productos seran distintas a la pagina principal
-//con el fin de crear una sesacion de exploracion al usuario
-//cuando se haga click en un producto se redirigira a la pagina de detalle del producto
-// Datos dummy para la demostración
+export default function CategoryPage({ params }) {
+  const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [loadingMessage, setLoadingMessage] = useState<string | null>(null);
 
-
-export default function CategoryPage() {
-  const params = useParams();
-  const [sortBy, setSortBy] = useState("name");
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const filteredProducts = product.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if (sortBy === "price") {
-      return a.price - b.price;
-    } else {
-      return a.name.localeCompare(b.name);
+  useEffect(() => {
+    if (params && params.slug) {
+      const storedCategories = localStorage.getItem('categories');
+      if (storedCategories) {
+        const categories = JSON.parse(storedCategories);
+        const category = categories.find((cat: { name: string }) => cat.name === params.slug);
+        if (category) {
+          setCategoryId(category.id);
+        }
+      }
     }
-  });
+  }, [params]);
+
+  useEffect(() => {
+    if (categoryId !== null) {
+      setLoadingMessage(`Cargando: ${params.slug}`);
+      const timer = setTimeout(() => {
+        setLoadingMessage(null);
+      }, 2000); // Tiempo mínimo de espera de 2 segundos
+
+      return () => clearTimeout(timer);
+    }
+  }, [categoryId, params.slug]);
+
+  console.log(params.slug)
+  const { products, loading, error } = useGetCategoryProducts(categoryId);
+
+  if (loading || loadingMessage) {
+    return <div>{loadingMessage || 'Loading...'}</div>
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>
+  }
+
+  if (!products || products.length === 0) {
+    return <div>No products found for this category.</div>
+  }
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-orange-400 to-yellow-200">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-400 to-yellow-200 p-4">
       <PageTransition />
-      <FadeInTransition position="bottom">
-        <Navbar />
-      </FadeInTransition>
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center my-8 text-white">
-          Categoría: {params.slug}
-        </h1>
-
-        <div className="backdrop-blur-md bg-white/30 rounded-lg p-6 mb-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <Input
-              type="text"
-              placeholder="Buscar productos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full md:w-1/2"
-            />
-            <div className="flex items-center gap-2">
-              <span className="text-white">Ordenar por:</span>
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Ordenar por" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="name">Nombre</SelectItem>
-                  <SelectItem value="price">Precio</SelectItem>
-                </SelectContent>
-              </Select>
+      <FadeInTransition position="right">
+        <Card className="w-full max-w-2xl backdrop-blur-md bg-white/30 border-none shadow-lg">
+          <CardHeader>
+            <CardTitle>Productos de la Categoría</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {products.map((product) => (
+                <div key={product.id} className="border p-4 rounded-lg shadow-md">
+                  <Image src={product.imageUrl} alt={product.name} width={200} height={200} />
+                  <h2 className="text-xl font-bold">{product.name}</h2>
+                  <p>{product.description}</p>
+                  <p className="text-lg font-semibold">${product.price}</p>
+                </div>
+              ))}
             </div>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {product.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
-        </div>
-
-        {sortedProducts.length === 0 && (
-          <p className="text-center text-white text-xl mt-8">
-            No se encontraron productos que coincidan con tu búsqueda.
-          </p>
-        )}
-      </main>
-      <Footer />
+          </CardContent>
+        </Card>
+      </FadeInTransition>
     </div>
-  );
+  )
 }
