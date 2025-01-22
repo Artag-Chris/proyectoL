@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,35 +14,22 @@ import PageTransition from '@/components/transitions/PageTransition'
 import { FadeInTransition } from '@/components/transitions/FadeIn'
 import useGetCategoryProducts from '@/hooks/useGetCategoryProducts'
 
-export default function CategoryPage({ params }) {
-  const [categoryId, setCategoryId] = useState<number | null>(null);
+export default function CategoryPage() {
+  const { id } = useParams();
+  const categoryId = id ? id.toString() : '';
   const [loadingMessage, setLoadingMessage] = useState<string | null>(null);
 
   useEffect(() => {
-    if (params && params.slug) {
-      const storedCategories = localStorage.getItem('categories');
-      if (storedCategories) {
-        const categories = JSON.parse(storedCategories);
-        const category = categories.find((cat: { name: string }) => cat.name === params.slug);
-        if (category) {
-          setCategoryId(category.id);
-        }
-      }
-    }
-  }, [params]);
-
-  useEffect(() => {
-    if (categoryId !== null) {
-      setLoadingMessage(`Cargando: ${params.slug}`);
+    if (categoryId) {
+      setLoadingMessage(`Cargando: ${categoryId}`);
       const timer = setTimeout(() => {
         setLoadingMessage(null);
       }, 2000); // Tiempo mínimo de espera de 2 segundos
 
       return () => clearTimeout(timer);
     }
-  }, [categoryId, params.slug]);
+  }, [categoryId]);
 
-  console.log(params.slug)
   const { products, loading, error } = useGetCategoryProducts(categoryId);
 
   if (loading || loadingMessage) {

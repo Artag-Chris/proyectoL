@@ -34,7 +34,7 @@ export function Categories() {
     <FadeInTransition position="bottom">
       <div className="flex flex-wrap justify-center gap-4 my-8">
         {Array.isArray(categories) && categories.map((category) => (
-          <Link href={`/category/${category.name}`} key={category.id}>
+          <Link href={`/category/${category.id}`} key={category.id}>
             <motion.button
               whileHover={{
                 scale: 1.05,

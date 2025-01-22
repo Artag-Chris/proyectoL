@@ -9,19 +9,12 @@ interface Product {
   description: string;
 }
 
-interface Category {
-  id: string;
-  name: string;
-}
-
-export default function useGetCategoryProducts(categoryId: number | null) {
+export default function useGetCategoryProducts(categoryId: string) {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+// console.log('categoryId:', categoryId);
   useEffect(() => {
-    if (categoryId === null) return;
-
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`http://localhost:45623/api/productos/categoria/${categoryId}`);
@@ -29,7 +22,9 @@ export default function useGetCategoryProducts(categoryId: number | null) {
         if (!response.data) {
           setProducts([]);
         } else {
-          setProducts(response.data.productos);
+          console.log(response.data)
+          
+          setProducts(response.data);
         }
       } catch (err) {
         console.error('Error fetching products:', err);
