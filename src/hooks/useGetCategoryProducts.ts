@@ -18,11 +18,11 @@ export default function useGetCategoryProducts(categoryId: string) {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`http://localhost:45623/api/productos/categoria/${categoryId}`);
-        console.log('Response:', response);
+     
         if (!response.data) {
           setProducts([]);
         } else {
-          console.log(response.data)
+      
           
           setProducts(response.data);
         }
