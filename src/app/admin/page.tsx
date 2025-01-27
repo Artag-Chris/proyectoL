@@ -11,6 +11,13 @@ import { DollarSign, Users, ShoppingBag, Activity } from "lucide-react";
 import Image from "next/image";
 import PageTransition from "@/components/transitions/PageTransition";
 
+/**
+ *  este componente me toca crear alguna forma de  que pueda colocar la informacion manualmente
+ * para que pueda ser mostrada en el dashboard y ella poder tener la forma de actualizar 
+ * sus datos
+ * 
+ */
+
 const data = [
   { month: "Jan", revenue: 4000 },
   { month: "Feb", revenue: 1800 },
