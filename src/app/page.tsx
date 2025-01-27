@@ -14,7 +14,7 @@ import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 import useGetProducts from "../hooks/useGetProducts";
 import Typography from "@/components/animations/typografy";
-import {BentoSection} from "@/components/components/Bento";
+import { BentoSection } from "@/components/components/Bento";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -53,7 +53,13 @@ export default function Home() {
       <div className="container mx-auto px-4 flex-grow">
         <h1 className="text-4xl font-bold text-center my-8 text-[var(--color-text)]">
           Bienvenido a <br />
-          <Typography text=" AromaFlame" speed={500} delay={2000} spaceBefore={true} color="red"/>
+          <Typography
+            text=" AromaFlame"
+            speed={500}
+            delay={2000}
+            spaceBefore={true}
+            color="red"
+          />
         </h1>
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
@@ -76,7 +82,10 @@ export default function Home() {
         {loading ? (
           <div className="text-center text-xl">Cargando productos...</div>
         ) : (
-          <BentoSection soldProducts={soldProducts} containerVariants={containerVariants} />
+          <BentoSection
+            soldProducts={soldProducts}
+            containerVariants={containerVariants}
+          />
         )}
         {/* Nueva sección hero con CTA */}
         <div

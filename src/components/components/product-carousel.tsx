@@ -30,6 +30,7 @@ interface ProductCarouselProps {
 export function ProductCarousel({ product }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const addItem = useCartStore((state) => state.addItem);
   const displayedProducts = product.slice(0, 6);
 
@@ -61,6 +62,14 @@ export function ProductCarousel({ product }: ProductCarouselProps) {
 
     return () => clearInterval(timer);
   }, [nextSlide]);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [product]);
+
+  if (isLoading) {
+    return <div className="h-0"></div>; // Ocultar el componente mientras carga
+  }
 
   return (
     <div className="relative overflow-hidden rounded-lg border-2 border-black p-4 border-4">
