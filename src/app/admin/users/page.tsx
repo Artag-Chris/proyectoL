@@ -12,7 +12,7 @@ export default function UsersPage() {
 
   useEffect(() => {
     refreshData();
-  }, [refreshData]);
+  }, [refreshData]);  
 
   if (loading) {
     return <div>Loading...</div>;
