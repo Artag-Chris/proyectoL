@@ -28,6 +28,7 @@ export default function AddProductPage() {
   const { data, loading, error } = useGetCategories()
 
   useEffect(() => {
+    console.log(data)
     if (data && data.categories.length > 0 && !category) {
       setCategory(data.categories[0].name)
     }

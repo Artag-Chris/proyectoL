@@ -21,13 +21,11 @@ const useGetCategories = () => {
             try {
                 const response = await axios.get('http://localhost:45623/api/productos/categorias');
                 console.log('Response:', response);
-                if (response.data.categories.length === 0) {
+                if (!response.data || !response.data.categories || response.data.categories.length === 0) {
                     setData({ categories: dummyCategories });
                 } else {
                     setData(response.data);
                 }
-                localStorage.setItem('categories', JSON.stringify(response.data));
-                localStorage.setItem('categoriesTimestamp', Date.now().toString());
             } catch (err) {
                 console.error('Error fetching data, using dummy data', err);
                 setData({ categories: dummyCategories });
@@ -37,17 +35,7 @@ const useGetCategories = () => {
             }
         };
 
-        const storedCategories = localStorage.getItem('categories');
-        const storedTimestamp = localStorage.getItem('categoriesTimestamp');
-        const currentTime = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-
-        if (storedCategories && storedTimestamp && currentTime - parseInt(storedTimestamp) < twentyFourHours) {
-            setData(JSON.parse(storedCategories));
-            setLoading(false);
-        } else {
-            fetchData();
-        }
+        fetchData();
     }, []);
 
     return { data, loading, error };
