@@ -11,7 +11,7 @@ import { Separator } from '@/components/ui/separator'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
 import useCartStore from '@/utils/store/cartStore'
-// Ajusta la ruta según sea necesario
+
 const Product = [
   { id: 1, name: 'Producto 1', price: 10.99, imageUrl: '/placeholder.svg' },
   { id: 2, name: 'Producto 2', price: 12.99, imageUrl: '/placeholder.svg' },
@@ -20,12 +20,12 @@ const Product = [
 ]
 
 export default function CartPage() {
-  const { items, addItem, removeItem } = useCartStore()
+  const { items, removeItem, updateItemQuantity, addItem } = useCartStore()
 
   const updateQuantity = (id: number, change: number) => {
     const item = items.find(item => item.id === id)
     if (item) {
-      addItem({ ...item, quantity: item.quantity + change })
+      updateItemQuantity(id, item.quantity + change)
     }
   }
 
