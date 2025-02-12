@@ -10,12 +10,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-
-import { ShoppingBag, Settings, User } from 'lucide-react'
+import { ShoppingBag, User } from 'lucide-react'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
 
-// Datos dummy para pedidos recientes
 const recentOrders = [
   { id: '1', date: '2023-05-15', total: 59.99, status: 'Entregado' },
   { id: '2', date: '2023-06-02', total: 89.99, status: 'En camino' },

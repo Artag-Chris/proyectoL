@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -74,7 +73,7 @@ export default function AddProductPage() {
       setIsModalOpen(true)
 
       if (response.ok) {
-        // Limpiar el formulario después de un envío exitoso
+
         setName('')
         setDescription('')
         setPrice('')

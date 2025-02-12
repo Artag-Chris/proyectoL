@@ -8,7 +8,6 @@ import Link from "next/link";
 import { Categories } from "@/components/components/categories";
 import { Footer } from "@/components/components/footer";
 import { Navbar } from "@/components/components/navbar";
-import { ProductCard } from "@/components/components/product-card";
 import { ProductCarousel } from "@/components/components/product-carousel";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
