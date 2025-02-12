@@ -1,12 +1,6 @@
 import { create } from 'zustand';
+import { CartState } from '../interfaces/cartInterfaces';
 
-interface CartState {
-    items: { id: number; name: string; quantity: number; price: number; imageUrl: string }[];
-    addItem: (item: { id: number; name: string; quantity: number; price: number; imageUrl: string }) => void;
-    removeItem: (id: number) => void;
-    clearCart: () => void;
-    updateItemQuantity: (id: number, quantity: number) => void;
-}
 
 const useCartStore = create<CartState>((set) => ({
     items: [],
