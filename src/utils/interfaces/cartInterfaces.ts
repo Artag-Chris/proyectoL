@@ -7,18 +7,13 @@ export interface CartItem {
 }
 
 export interface Order {
-    items: CartItem[];
+    items: CartState['items'];
     total: number;
     shipping: number;
-    userData: {
-        name: string;
-        email: string;
-        address: string;
-        phone: string;
-    };
+    userData: UserData;
     status: string;
     createdAt: string;
-}
+  }
 
 export interface CartState {
     items: { id: number; name: string; quantity: number; price: number; imageUrl: string }[];
@@ -27,3 +22,10 @@ export interface CartState {
     clearCart: () => void;
     updateItemQuantity: (id: number, quantity: number) => void;
 }
+
+export interface UserData {
+    name: string;
+    email: string;
+    address: string;
+    phone: string;
+  }
