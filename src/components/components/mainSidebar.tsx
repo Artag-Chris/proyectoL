@@ -9,6 +9,14 @@ import { useSession } from "next-auth/react"
 import Image from "next/image"
 
 const MainSidebar: React.FC = () => {
+    /********************************************************************************************************** 
+    main sidebar del layout princpipal de la aplicacion, se muestra en la parte izquierda de la pantalla
+    necesito colocarle link a las categorias  a la pagina de categorias y crear alguna forma de pagina
+    de ultimos productos para que pueda ver los productos que se han subido recientemente o ultimas ventas
+    necesito arreglar o cambiar el boton de cerrar el sidebar ya que esta lejos y bien feo
+    necesito que al darle click afuera del sidebar se cierre 
+    necesito que tenga un z index mayor que todo para que no se chocken los estilos y se vea feo
+    ************************************************************************************************************/
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const { data: session } = useSession()
 
