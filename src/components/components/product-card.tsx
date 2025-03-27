@@ -1,72 +1,80 @@
-import { motion } from "framer-motion";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import useCartStore from "@/utils/store/cartStore";
+"use client"
+
+import { motion } from "framer-motion"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import Image from "next/image"
+import Link from "next/link"
+import useCartStore from "@/utils/store/cartStore"
 
 interface ProductCardProps {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-  description: string;
+  id: number
+  name: string
+  price: number
+  imageUrl: string
+  description: string
+  isFeatured?: boolean
 }
 
-export function ProductCard({ id, name, price, imageUrl, description }: ProductCardProps) {
-  const addItem = useCartStore((state) => state.addItem);
+export function ProductCard({ id, name, price, imageUrl, description, isFeatured = false }: ProductCardProps) {
+  const addItem = useCartStore((state) => state.addItem)
 
   const handleAddToCart = () => {
-    addItem({ id, name, quantity: 1, price, imageUrl });
-  };
+    addItem({ id, name, quantity: 1, price, imageUrl })
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{
-        duration: 0.4,
-        scale: { type: "spring", stiffness: 260, damping: 20 },
-      }}
-      className="w-full h-full"
-    >
-      <Card className="w-full h-full flex flex-col justify-between overflow-hidden border-none bg-transparent relative">
-        <Link href={`/product/${id}`} passHref>
-          <div className="relative w-full h-72 md:h-96 lg:h-[30rem]">
-            <Image
-              src={imageUrl}
-              alt={name}
-              fill
-              style={{ objectFit: "cover" }}
-              className="w-full h-full"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-center items-center p-4 z-10"
-            >
-              <CardTitle className="text-2xl font-semibold text-white mb-2">
-                {name}
-              </CardTitle>
-              <p className="text-lg text-white/80 text-center">{description}</p>
-            </motion.div>
-          </div>
-        </Link>
-        {/* <CardFooter className="flex justify-between items-center p-4 bg-white/30 backdrop-blur-md mt-auto">
-          <span className="text-xl font-bold text-white">${price}</span>
-          <Button
-            className="bg-orange-500 hover:bg-orange-600 text-white"
-            onClick={(e) => {
-              e.preventDefault();
-              handleAddToCart();
-            }}
-          >
-            Añadir al carrito
-          </Button>
-        </CardFooter> */}
-      </Card>
-    </motion.div>
-  );
+    <Card className="w-full h-full overflow-hidden border-0 bg-transparent group relative">
+      <Link href={`/product/${id}`} className="absolute inset-0 z-10">
+        <span className="sr-only">View {name}</span>
+      </Link>
+
+      <div className="relative w-full h-full overflow-hidden">
+        {/* Image container with proper aspect ratio */}
+        <div className="relative w-full h-full">
+          <Image
+            src={imageUrl || "/placeholder.svg"}
+            alt={name}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+            priority={isFeatured}
+          />
+        </div>
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-90" />
+
+        {/* Content overlay */}
+        <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-6 text-white">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <h3 className={`font-bold mb-1 line-clamp-2 ${isFeatured ? "text-2xl md:text-3xl" : "text-lg md:text-xl"}`}>
+              {name}
+            </h3>
+
+            <p className={`line-clamp-2 text-white/80 mb-2 ${isFeatured ? "md:line-clamp-3" : "hidden sm:block"}`}>
+              {description}
+            </p>
+
+            <div className="flex items-center justify-between mt-2">
+              <span className="text-lg font-bold">${price.toFixed(2)}</span>
+
+              <Button
+                size="sm"
+                className="bg-primary hover:bg-primary/90 text-white z-20 relative opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0"
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  handleAddToCart()
+                }}
+              >
+                Añadir
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </Card>
+  )
 }
+
