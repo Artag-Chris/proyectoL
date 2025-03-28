@@ -7,6 +7,14 @@ interface Product {
   price: number;
   imageUrl: string;
   description: string;
+  tags?: string[];
+  isSale?: boolean;
+  stock?: number;
+  categoryId?: number;
+  discount?: boolean;
+  isNew?: boolean;
+  rating?: number;
+  category?: any;
 }
 
 export default function useGetCategoryProducts(categoryId: string) {
