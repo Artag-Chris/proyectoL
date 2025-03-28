@@ -1,72 +1,84 @@
-import { motion } from "framer-motion";
-import React from "react";
+"use client"
+
+import type React from "react"
+
+import { useEffect, useRef, useState } from "react"
+import { motion } from "framer-motion"
 
 interface BorderAnimationProps {
-  children: React.ReactNode;
-  borderColor?: string;
-  borderWidth?: string;
-  duration?: number;
+  children: React.ReactNode
+  borderColor?: string
+  borderWidth?: string
+  duration?: number
 }
 
-const BorderAnimation: React.FC<BorderAnimationProps> = ({
+export default function BorderAnimation({
   children,
   borderColor = "black",
   borderWidth = "2px",
-  duration = 2,
-}) => {
-  const borderVariants = {
-    hidden: {
-      pathLength: 0,
-      opacity: 0,
-    },
+  duration = 6,
+}: BorderAnimationProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
+
+  useEffect(() => {
+    if (containerRef.current) {
+      const updateDimensions = () => {
+        if (containerRef.current) {
+          setDimensions({
+            width: containerRef.current.offsetWidth,
+            height: containerRef.current.offsetHeight,
+          })
+        }
+      }
+
+      updateDimensions()
+      window.addEventListener("resize", updateDimensions)
+
+      return () => {
+        window.removeEventListener("resize", updateDimensions)
+      }
+    }
+  }, [])
+
+  const pathLength = (dimensions.width + dimensions.height) * 2
+  const pathVariants = {
+    hidden: { pathLength: 0 },
     visible: {
       pathLength: 1,
-      opacity: 1,
       transition: {
-        duration: duration,
+        duration,
         ease: "easeInOut",
+        repeat: Number.POSITIVE_INFINITY,
       },
     },
-  };
+  }
 
   return (
-    <div className="relative">
-      <motion.svg
-        className="absolute inset-0"
-        initial="hidden"
-        animate="visible"
-        variants={borderVariants}
-        style={{
-          width: "100%",
-          height: "100%",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          borderRadius: "inherit",
-          boxSizing: "border-box",
-        }}
-      >
-        <motion.rect
-          x="0"
-          y="0"
+    <div ref={containerRef} className="relative">
+      {dimensions.width > 0 && dimensions.height > 0 && (
+        <svg
+          className="absolute inset-0 pointer-events-none z-10"
           width="100%"
           height="100%"
-          rx="inherit"
-          ry="inherit"
-          fill="none"
-          stroke={borderColor}
-          strokeWidth={borderWidth}
-          strokeDasharray="0 1"
-          strokeDashoffset="0"
-          animate={{
-            strokeDasharray: ["0 1", "1 0"],
-            transition: { duration: duration, ease: "easeInOut" },
-          }}
-        />
-      </motion.svg>
-      <div className="relative z-10">{children}</div>
+          viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        >
+          <motion.rect
+            x="0"
+            y="0"
+            width={dimensions.width}
+            height={dimensions.height}
+            fill="none"
+            stroke={borderColor}
+            strokeWidth={borderWidth}
+            initial="hidden"
+            animate="visible"
+            variants={pathVariants}
+            style={{ strokeDasharray: pathLength, strokeDashoffset: pathLength }}
+          />
+        </svg>
+      )}
+      {children}
     </div>
-  );
-};
-
-export default BorderAnimation;
+  )
+}

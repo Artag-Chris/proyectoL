@@ -15,16 +15,18 @@ const useGetProductById = (id: number) => {
   const [data, setData] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!id) return;
 
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`http://localhost:45623/api/productos/${id}`);
         console.log(response.data)
         if (!response.data) {
-          setData(  producto);
+          setData(producto);
         } else {
           setData(response.data);
         }
@@ -34,13 +36,14 @@ const useGetProductById = (id: number) => {
         setError('Error fetching data, using dummy data');
       } finally {
         setLoading(false);
+        setIsLoading(false);
       }
     };
 
     fetchData();
   }, [id]);
 
-  return { data, loading, error };
+  return { data, loading, error, isLoading };
 };
 
 export default useGetProductById;
