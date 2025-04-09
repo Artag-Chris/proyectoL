@@ -28,7 +28,7 @@ const containerVariants = {
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const { data, loading } = useGetProducts();
-  const { soldProducts } = data;
+  const { product,soldProducts } = data;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,7 +72,7 @@ export default function Home() {
         </h2>
 
         <Suspense fallback={<div>Cargando...</div>}>
-          <ProductCarousel product={soldProducts} />
+          <ProductCarousel product={product} />
         </Suspense>
 
         <h2 className="text-2xl font-semibold mt-12 mb-6 text-[var(--color-text)]">
@@ -82,7 +82,7 @@ export default function Home() {
           <div className="text-center text-xl">Cargando productos...</div>
         ) : (
           <BentoSection
-            soldProducts={soldProducts}
+            soldProducts={product}
             containerVariants={containerVariants}
           />
         )}

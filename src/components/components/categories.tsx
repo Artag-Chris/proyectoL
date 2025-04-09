@@ -62,7 +62,9 @@ export function Categories() {
         
         <div className="flex flex-wrap justify-center gap-4 my-8">
           {Array.isArray(visibleCategories) && visibleCategories.map((category) => (
-            <Link href={`/category/${category.id}`} key={category.id}>
+            <
+            // href={`/category/${category.id}`} key={category.id}
+             >
               <motion.button
                 whileHover={{
                   scale: 1.05,
@@ -77,7 +79,9 @@ export function Categories() {
               >
                 {category.name}
               </motion.button>
-            </Link>
+            </
+           // Link
+            >
           ))}
         </div>
 

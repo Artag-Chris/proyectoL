@@ -1,5 +1,6 @@
 export const product = [
     {
+      categoryId:1,
       id: 1,
       name: "Vela Aromática Lavanda",
       price: 19.99,
@@ -8,6 +9,7 @@ export const product = [
         "Vela aromática de lavanda hecha a mano con cera de soja natural y aceites esenciales.",
     },
     {
+      categoryId:1,
       id: 2,
       name: "Set de Velas de Vainilla",
       price: 29.99,
@@ -16,6 +18,7 @@ export const product = [
         "Set de 3 velas de vainilla con diferentes tamaños, perfectas para crear un ambiente acogedor.",
     },
     {
+      categoryId:1,
       id: 3,
       name: "Difusor de Aceites Esenciales",
       price: 39.99,
@@ -24,6 +27,7 @@ export const product = [
         "Difusor ultrasónico para aceites esenciales con luz LED de colores cambiantes.",
     },
     {
+      categoryId:1,
       id: 4,
       name: "Vela de Soja Cítrica",
       price: 24.99,
@@ -32,6 +36,7 @@ export const product = [
         "Vela de soja con aroma cítrico refrescante, ideal para energizar espacios.",
     },
     {
+      categoryId:1,
       id: 5,
       name: "Set de Mini Velas Aromáticas",
       price: 34.99,
@@ -40,6 +45,7 @@ export const product = [
         "Set de 6 mini velas aromáticas con diferentes fragancias para variar el ambiente.",
     },
     {
+      categoryId:1,
       id: 6,
       name: "Vela de Madera y Ámbar",
       price: 27.99,
@@ -51,6 +57,7 @@ export const product = [
   
   export const soldProducts = [
     {
+      categoryId:1,
       id: 7,
       name: "Vela Aromática de Jazmín",
       price: 22.99,
@@ -59,6 +66,7 @@ export const product = [
         "Vela aromática con fragancia de jazmín, perfecta para relajarse después de un largo día.",
     },
     {
+      categoryId:1,
       id: 8,
       name: "Set de Velas Flotantes",
       price: 19.99,
@@ -67,6 +75,7 @@ export const product = [
         "Set de 12 velas flotantes sin aroma, ideales para decorar piscinas o centros de mesa.",
     },
     {
+      categoryId:1,
       id: 9,
       name: "Vela de Masaje",
       price: 32.99,

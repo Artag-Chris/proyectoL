@@ -30,16 +30,19 @@ export function BentoSection({
     },
   },
 }: BentoSectionProps) {
-  const [products, setProducts] = useState(soldProducts)
+  const [product, setProducts] = useState(soldProducts)
+  useEffect(() => {
+    setProducts(soldProducts)
+  }, [soldProducts])
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const shuffled = [...products].sort(() => Math.random() - 0.5)
+      const shuffled = [...product].sort(() => Math.random() - 0.5)
       setProducts(shuffled)
     }, 5000) // Cambia los elementos cada 5 segundos
 
     return () => clearInterval(interval)
-  }, [products])
+  }, [product])
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -50,7 +53,7 @@ export function BentoSection({
         animate="visible"
       >
         <AnimatePresence>
-          {products.slice(0, 10).map((product, index) => {
+          {product.slice(0, 10).map((product, index) => {
             // Define grid positions based on index
             const gridClasses = getGridClasses(index)
 
