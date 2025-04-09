@@ -24,7 +24,7 @@ export function ProductCard({ id, name, price, imageUrl, description, isFeatured
   }
 
   return (
-    <Card className="w-full h-full overflow-hidden border-0 bg-transparent group relative">
+    <Card className="w-full h-full overflow-hidden border border-white/20 bg-transparent backdrop-blur-sm group relative hover:border-white/40 transition-colors duration-300">
       <Link href={`/product/${id}`} className="absolute inset-0 z-10">
         <span className="sr-only">View {name}</span>
       </Link>
