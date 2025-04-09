@@ -158,6 +158,7 @@ export default function CategoryPage() {
           >
             {filteredProducts.map((product) => (
               <motion.div key={product.id} variants={itemVariants} whileHover="hover" className="h-full">
+                 <Link href={`/product/${product.id}`} >
                 <Card className="h-full overflow-hidden bg-white/80 backdrop-blur-sm border-none shadow-lg hover:shadow-xl transition-all duration-300">
                   <div className="relative h-48 overflow-hidden bg-orange-100">
                     <Image
@@ -200,6 +201,7 @@ export default function CategoryPage() {
                     </Button>
                   </CardFooter>
                 </Card>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
