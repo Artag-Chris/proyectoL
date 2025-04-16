@@ -30,7 +30,7 @@ const containerVariants = {
 export default function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false)
   const { data, loading } = useGetProducts()
-  const { product, soldProducts } = data
+  const { product, } = data
 
   useEffect(() => {
     const handleScroll = () => {

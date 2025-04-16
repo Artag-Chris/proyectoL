@@ -16,39 +16,10 @@ import { Separator } from "@/components/ui/separator"
 
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
+import {colors, RELATED_PRODUCTS, REVIEWS, sizes} from "@/utils/dummy/dummy";
 
 // Mock data for reviews
-const REVIEWS = [
-  {
-    id: 1,
-    author: "María García",
-    rating: 5,
-    comment: "Excelente producto, superó mis expectativas. La calidad es increíble y el aroma dura muchísimo.",
-    date: "2 semanas atrás",
-  },
-  {
-    id: 2,
-    author: "Carlos Rodríguez",
-    rating: 4,
-    comment:
-      "Muy buen producto, me encanta el aroma. Solo le quito una estrella porque el envío tardó un poco más de lo esperado.",
-    date: "1 mes atrás",
-  },
-  {
-    id: 3,
-    author: "Ana Martínez",
-    rating: 5,
-    comment: "Increíble calidad, definitivamente compraré más. El aroma es sutil pero duradero.",
-    date: "2 meses atrás",
-  },
-]
 
-// Mock data for related products
-const RELATED_PRODUCTS = [
-  { id: 101, name: "Vela Aromática Lavanda", price: 24.99, imageUrl: "/placeholder.svg?height=400&width=400" },
-  { id: 102, name: "Vela Aromática Vainilla", price: 22.99, imageUrl: "/placeholder.svg?height=400&width=400" },
-  { id: 103, name: "Vela Aromática Canela", price: 26.99, imageUrl: "/placeholder.svg?height=400&width=400" },
-]
 
 export default function ProductPage() {
   const [quantity, setQuantity] = useState(1)
@@ -73,15 +44,7 @@ export default function ProductPage() {
       ]
     : ["/placeholder.svg?height=600&width=600"]
 
-  // Available colors and sizes
-  const colors = [
-    { name: "Amber", value: "bg-amber-500" },
-    { name: "Rose", value: "bg-rose-500" },
-    { name: "Emerald", value: "bg-emerald-500" },
-    { name: "Indigo", value: "bg-indigo-500" },
-  ]
 
-  const sizes = ["Small", "Medium", "Large"]
 
   const handleAddToCart = () => {
     if (product) {

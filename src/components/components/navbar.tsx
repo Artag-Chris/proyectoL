@@ -42,7 +42,7 @@ export function Navbar() {
       }
     }
     checkSession()
-  }, [status])
+  }, [session, status])
 
   useEffect(() => {
     const handleScroll = () => {

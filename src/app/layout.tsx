@@ -1,7 +1,7 @@
 'use client'
 import './globals.css'
 import { Poppins } from 'next/font/google'
-import { ThemeProvider } from "../components/components/theme-provider";
+import { ThemeProvider } from "@/components/components/theme-provider";
 import { SessionProvider } from 'next-auth/react';
 import { FloatingLoginButton } from '@/components/components/loginreminder';
 import MainSidebar from '@/components/components/mainSidebar';
