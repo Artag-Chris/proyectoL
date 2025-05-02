@@ -203,3 +203,16 @@ export const colors = [
 ]
 
 export const sizes = ["Small", "Medium", "Large"]
+
+export const recentOrders = [
+  { id: '1', date: '2023-05-15', total: 59.99, status: 'Entregado' },
+  { id: '2', date: '2023-06-02', total: 89.99, status: 'En camino' },
+  { id: '3', date: '2023-06-20', total: 39.99, status: 'Procesando' },
+]
+
+export const ProductRecomended = [
+  { id: 1, name: 'Producto 1', price: 10.99, imageUrl: '/placeholder.svg' },
+  { id: 2, name: 'Producto 2', price: 12.99, imageUrl: '/placeholder.svg' },
+  { id: 3, name: 'Producto 3', price: 8.99, imageUrl: '/placeholder.svg' },
+  { id: 4, name: 'Producto 4', price: 15.99, imageUrl: '/placeholder.svg' },
+]

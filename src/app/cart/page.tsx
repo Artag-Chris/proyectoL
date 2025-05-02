@@ -1,8 +1,6 @@
 'use client'
 
-import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Trash2, Plus, Minus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,13 +9,9 @@ import { Separator } from '@/components/ui/separator'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
 import useCartStore from '@/utils/store/cartStore'
+import { ProductRecomended } from '@/utils/dummy/dummy'
 
-const Product = [
-  { id: 1, name: 'Producto 1', price: 10.99, imageUrl: '/placeholder.svg' },
-  { id: 2, name: 'Producto 2', price: 12.99, imageUrl: '/placeholder.svg' },
-  { id: 3, name: 'Producto 3', price: 8.99, imageUrl: '/placeholder.svg' },
-  { id: 4, name: 'Producto 4', price: 15.99, imageUrl: '/placeholder.svg' },
-]
+
 
 export default function CartPage() {
   const { items, removeItem, updateItemQuantity, addItem } = useCartStore()
@@ -115,7 +109,7 @@ export default function CartPage() {
         <section className="mt-16">
           <h2 className="text-2xl font-bold mb-6 text-black">Productos Recomendados</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {Product.map((product) => (
+            {ProductRecomended .map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}

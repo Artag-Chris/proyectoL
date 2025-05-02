@@ -13,12 +13,9 @@ import { Label } from "@/components/ui/label"
 import { ShoppingBag, User } from 'lucide-react'
 import { Footer } from '@/components/components/footer'
 import { Navbar } from '@/components/components/navbar'
+import { recentOrders } from '@/utils/dummy/dummy'
 
-const recentOrders = [
-  { id: '1', date: '2023-05-15', total: 59.99, status: 'Entregado' },
-  { id: '2', date: '2023-06-02', total: 89.99, status: 'En camino' },
-  { id: '3', date: '2023-06-20', total: 39.99, status: 'Procesando' },
-]
+
 
 export default function ProfilePage() {
   const { data: session, status } = useSession()

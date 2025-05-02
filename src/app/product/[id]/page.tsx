@@ -13,12 +13,9 @@ import { useParams } from "next/navigation"
 import useCartStore from "@/utils/store/cartStore"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
 import {colors, RELATED_PRODUCTS, REVIEWS, sizes} from "@/utils/dummy/dummy";
-
-// Mock data for reviews
 
 
 export default function ProductPage() {
@@ -56,10 +53,8 @@ export default function ProductPage() {
         imageUrl: product.imageUrl || "/placeholder.svg",
       })
 
-      // Show success animation
       setAddedToCart(true)
 
-      // Show toast notification
       toast({
         title: "¡Añadido al carrito!",
         description: `${quantity} x ${product.name} (${selectedSize}, ${selectedColor})`,
@@ -102,7 +97,7 @@ export default function ProductPage() {
     }
   }
 
-  // Loading skeleton
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-amber-50 to-orange-50">
