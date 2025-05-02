@@ -16,7 +16,7 @@ import { monthlyData, recentSales } from "./dummy/adminDummy";
  *  este componente me toca crear alguna forma de  que pueda colocar la informacion manualmente
  * para que pueda ser mostrada en el dashboard y ella poder tener la forma de actualizar 
  * sus datos
- * 
+ *  TODO modularizar este componente por partes para que sea mas facil de modificar
  */
 
 export default function AdminDashboard() {
@@ -40,9 +40,11 @@ export default function AdminDashboard() {
                ingresos totales
               </span>
               <span className="text-2xl font-bold text-[var(--color-text)]">
+                {/* aqui vendra una funcion que diga cuando ingreso totalmente */}
                 $45,231.89
               </span>
               <span className="text-xs text-[var(--color-text)]/60">
+              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
                 +20.1% from last month
               </span>
             </div>
@@ -56,9 +58,11 @@ export default function AdminDashboard() {
                 suscripciones
               </span>
               <span className="text-2xl font-bold text-[var(--color-text)]">
+                {/* aqui vendra una funcion que diga cuantas personas se han suscrito */}
                 +2,350
               </span>
               <span className="text-xs text-[var(--color-text)]/60">
+              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
                 +180.1% from last month
               </span>
             </div>
@@ -72,11 +76,13 @@ export default function AdminDashboard() {
                 ventas
               </span>
               <span className="text-2xl font-bold text-[var(--color-text)]">
+                {/* aqui vendra una funcion que diga cuantas ventas se han realizado */}
                 +12,234
               </span>
               <span className="text-xs text-[var(--color-text)]/60">
-                cuanto porcentaje aun aunmentado las ventas
-
+              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
+                +15.1% from last month
+                cuanto porcentaje an mentado las ventas
               </span>
             </div>
             <ShoppingBag className="h-8 w-8 text-[var(--color-text)]" />
@@ -86,6 +92,7 @@ export default function AdminDashboard() {
           <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex flex-col space-y-2">
               <span className="text-sm font-medium text-[var(--color-text)]/60">
+              {/* nose como hacer esta funcion tal vez websocket*/}
                 cuantas personas estan online
               </span>
               <span className="text-2xl font-bold text-[var(--color-text)]">
