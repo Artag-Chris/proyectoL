@@ -12,10 +12,11 @@ import Image from "next/image";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 import { motion } from "framer-motion";
-import useGetProducts from "@/hooks/useGetProducts";
+import useGetAllProducts from "@/hooks/useGetAllProducts";
+
 
 export default function ProductsPage() {
-  const { data, loading, error } = useGetProducts();
+  const { data, loading, error } = useGetAllProducts();
 
   if (loading) {
     return <div>Loading...</div>;
