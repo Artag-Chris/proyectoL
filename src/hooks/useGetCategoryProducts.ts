@@ -40,7 +40,7 @@ export default function useGetCategoryProducts(categoryId: string) {
       } finally {
         setLoading(false);
       }
-    };
+    };  
  
     fetchProducts();
   }, [categoryId]);
