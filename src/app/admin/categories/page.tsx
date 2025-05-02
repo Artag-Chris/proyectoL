@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import PageTransition from "@/components/transitions/PageTransition";
 import useGetCategories from "@/hooks/useGetCategory";
+import { CategoryCard } from "@/components/admin/CategoryCard";
 
 export default function CategoriesPage() {
   const { data: { categories = [] } = {}, loading, error } = useGetCategories();
@@ -19,7 +20,7 @@ export default function CategoriesPage() {
   });
 
   useEffect(() => {
-    // Actualizar addCategory cuando categories cambie
+    
     setAddCategory(categories);
   }, [categories]);
 
@@ -133,29 +134,3 @@ export default function CategoriesPage() {
   );
 }
 
-function CategoryCard({ category }: any) {
-  return (
-    <Card className="backdrop-blur-md bg-white/10 border-none">
-      <CardHeader>
-        <CardTitle className="text-lg text-[var(--color-text)]">
-          {category.name}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="text-[var(--color-text)]/80 mb-2">
-          {category.description}
-        </p>
-        <div className="flex items-center space-x-2">
-          <div
-            className={`w-3 h-3 rounded-full ${
-              category.isAvailable ? "bg-green-500" : "bg-red-500"
-            }`}
-          ></div>
-          <span className="text-[var(--color-text)]/80">
-            {category.isAvailable ? "Disponible" : "No Disponible"}
-          </span>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
