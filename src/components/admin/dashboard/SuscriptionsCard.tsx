@@ -1,32 +1,54 @@
 import { Card } from '@/components/ui/card'
 import { Users } from 'lucide-react'
 import React from 'react'
+import { motion } from 'framer-motion'
+import CountUp from 'react-countup'
 
 function SuscriptionsCard() {
-    /*
-    componente que se encargara de de mostrar el interes en la tienda  
-    */
+  const totalSubscriptions = 2350
+  const percentageIncrease = 180.1
+
   return (
-    <>
-    <Card className="backdrop-blur-md bg-white/10 border-none">
-          <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-            <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">
-                suscripciones
-              </span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Card className="backdrop-blur-md bg-white/10 border-none">
+        <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
+          <div className="flex flex-col space-y-2">
+            <span className="text-sm font-medium text-[var(--color-text)]/60">
+              suscripciones
+            </span>
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 0.3 }}
+            >
               <span className="text-2xl font-bold text-[var(--color-text)]">
-                {/* aqui vendra una funcion que diga cuantas personas se han suscrito */}
-                +2,350
+                +<CountUp end={totalSubscriptions} duration={2.5} separator="," />
               </span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
               <span className="text-xs text-[var(--color-text)]/60">
-              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
-                +180.1% from last month
+                +<CountUp end={percentageIncrease} duration={2.2} decimals={1} />% from last month
               </span>
-            </div>
-            <Users className="h-8 w-8 text-[var(--color-text)]" />
+            </motion.div>
           </div>
-        </Card>
-        </>
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: 'spring', stiffness: 120, damping: 10 }}
+          >
+            <Users className="h-8 w-8 text-[var(--color-text)]" />
+          </motion.div>
+        </div>
+      </Card>
+    </motion.div>
   )
 }
 
