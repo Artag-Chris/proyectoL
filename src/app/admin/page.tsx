@@ -9,11 +9,12 @@ import OnlineStatsCard from "@/components/admin/dashboard/OnlineStatsCard";
 import GraphMetricCard from "@/components/admin/dashboard/GraphMetricCard";
 import RecentSales from "@/components/admin/dashboard/RecentSales";
 
-/**
- *  este componente me toca crear alguna forma de  que pueda colocar la informacion manualmente
- * para que pueda ser mostrada en el dashboard y ella poder tener la forma de actualizar 
- * sus datos
- *  TODO modularizar este componente por partes para que sea mas facil de modificar
+/*
+  Este componente es la página principal del panel de administración.
+  Contiene las tarjetas de métricas, gráficos y estadísticas rápidas.
+  Se utiliza para mostrar información relevante sobre el rendimiento de la aplicación.
+  El diseño es responsivo y se adapta a diferentes tamaños de pantalla.
+  Las tarjetas utilizan animaciones para mejorar la experiencia del usuario.
  */
 
 export default function AdminDashboard() {
