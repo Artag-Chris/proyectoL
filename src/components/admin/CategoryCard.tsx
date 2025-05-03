@@ -32,7 +32,7 @@ export function CategoryCard({ category }: CategoryCardProps) {
 
     try {
       // Llamada a la API para actualizar el estado
-      const response = await fetch(`http://localhost:45623/api/productos/updatecategory/${category.id}`, {
+      const response = await fetch(`http://localhost:45623/api/productos/category/update/${category.id}`, { // Updated to use category.id
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
