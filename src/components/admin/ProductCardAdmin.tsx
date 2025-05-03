@@ -11,6 +11,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
+import axios from "axios"
 
 // Definimos una interfaz para el tipo de producto
 export interface Product {
@@ -40,22 +41,19 @@ export function ProductCardAdmin({ product }: ProductCardAdminProps) {
     setIsUpdating(true)
 
     try {
-      // Llamada a la API para actualizar el estado
-      const response = await fetch(`/api/products/${product.id}/availability`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ isAvailable: newState }),
+      // Llamada a la API usando axios para actualizar el estado
+      const response = await axios.put(`http://localhost:45623/api/productos/update/${product.id}`, {
+        isAvailable: newState
       })
 
-      if (!response.ok) {
-        throw new Error("Error al actualizar la disponibilidad")
+      if (response.status === 200) {
+        // Actualizar el estado local después de una actualización exitosa
+        setIsAvailable(newState)
+        toast.success(`Producto ${newState ? "activado" : "desactivado"} correctamente`)
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       }
-
-      // Actualizar el estado local después de una actualización exitosa
-      setIsAvailable(newState)
-      toast.success(`Producto ${newState ? "activado" : "desactivado"} correctamente`)
     } catch (error) {
       console.error("Error:", error)
       toast.error("No se pudo actualizar el estado del producto")
