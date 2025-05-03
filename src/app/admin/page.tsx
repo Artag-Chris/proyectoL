@@ -11,6 +11,8 @@ import { DollarSign, Users, ShoppingBag, Activity } from "lucide-react";
 import Image from "next/image";
 import PageTransition from "@/components/transitions/PageTransition";
 import { monthlyData, recentSales } from "./dummy/adminDummy";
+import DashboardDate from "@/components/admin/dashboard/DashboardDate";
+import TotalIncomeCard from "@/components/admin/dashboard/TotalIncomeCard";
 
 /**
  *  este componente me toca crear alguna forma de  que pueda colocar la informacion manualmente
@@ -23,34 +25,10 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-8">
       <PageTransition />
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-[var(--color-text)]">
-          Dashboard
-        </h1>
-        <div className="backdrop-blur-md bg-white/10 rounded-lg px-4 py-2 text-[var(--color-text)]">
-          Jan 20, 2023 - Feb 09, 2023
-        </div>
-      </div>
+      <DashboardDate />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="backdrop-blur-md bg-white/10 border-none">
-          <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-            <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">
-               ingresos totales
-              </span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">
-                {/* aqui vendra una funcion que diga cuando ingreso totalmente */}
-                $45,231.89
-              </span>
-              <span className="text-xs text-[var(--color-text)]/60">
-              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
-                +20.1% from last month
-              </span>
-            </div>
-            <DollarSign className="h-8 w-8 text-[var(--color-text)]" />
-          </div>
-        </Card>
+       <TotalIncomeCard/>
         <Card className="backdrop-blur-md bg-white/10 border-none">
           <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
             <div className="flex flex-col space-y-2">
