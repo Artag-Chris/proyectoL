@@ -13,6 +13,9 @@ import PageTransition from "@/components/transitions/PageTransition";
 import { monthlyData, recentSales } from "./dummy/adminDummy";
 import DashboardDate from "@/components/admin/dashboard/DashboardDate";
 import TotalIncomeCard from "@/components/admin/dashboard/TotalIncomeCard";
+import SuscriptionsCard from "@/components/admin/dashboard/SuscriptionsCard";
+import SellsCard from "@/components/admin/dashboard/SellsCard";
+import OnlineStatsCard from "@/components/admin/dashboard/OnlineStatsCard";
 
 /**
  *  este componente me toca crear alguna forma de  que pueda colocar la informacion manualmente
@@ -26,63 +29,12 @@ export default function AdminDashboard() {
     <div className="space-y-8">
       <PageTransition />
       <DashboardDate />
-
+      {/* vistas rapidas */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
        <TotalIncomeCard/>
-        <Card className="backdrop-blur-md bg-white/10 border-none">
-          <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-            <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">
-                suscripciones
-              </span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">
-                {/* aqui vendra una funcion que diga cuantas personas se han suscrito */}
-                +2,350
-              </span>
-              <span className="text-xs text-[var(--color-text)]/60">
-              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
-                +180.1% from last month
-              </span>
-            </div>
-            <Users className="h-8 w-8 text-[var(--color-text)]" />
-          </div>
-        </Card>
-        <Card className="backdrop-blur-md bg-white/10 border-none">
-          <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-            <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">
-                ventas
-              </span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">
-                {/* aqui vendra una funcion que diga cuantas ventas se han realizado */}
-                +12,234
-              </span>
-              <span className="text-xs text-[var(--color-text)]/60">
-              {/* aqui vendra una funcion que diga cuanto en diferencia al mes pasado */}
-                +15.1% from last month
-                cuanto porcentaje an mentado las ventas
-              </span>
-            </div>
-            <ShoppingBag className="h-8 w-8 text-[var(--color-text)]" />
-          </div>
-        </Card>
-        <Card className="backdrop-blur-md bg-white/10 border-none">
-          <div className="p-6 flex flex-row items-center justify-between space-y-0 pb-2">
-            <div className="flex flex-col space-y-2">
-              <span className="text-sm font-medium text-[var(--color-text)]/60">
-              {/* nose como hacer esta funcion tal vez websocket*/}
-                cuantas personas estan online
-              </span>
-              <span className="text-2xl font-bold text-[var(--color-text)]">
-                +573
-              </span>
-              <span className="text-xs text-[var(--color-text)]/60">
-                aqui van cuantos se han suscripto en el mes
-              </span>
-            </div>
-            <Activity className="h-8 w-8 text-[var(--color-text)]" />
-          </div>
-        </Card>
+        <SuscriptionsCard/>
+        <SellsCard/>
+        <OnlineStatsCard/>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
