@@ -25,14 +25,14 @@ import { cn } from "@/lib/utils"
 interface RightColumnFormProps {
   formData: any
   errors: any
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, 
-                setFormData: React.Dispatch<React.SetStateAction<any>>,
-                setErrors: React.Dispatch<React.SetStateAction<any>>,
-                errors: any) => void
-  handleCategoryChange: (value: string, 
-                        setFormData: React.Dispatch<React.SetStateAction<any>>) => void
-  handleAvailabilityChange: (checked: boolean, 
-                            setFormData: React.Dispatch<React.SetStateAction<any>>) => void
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    setFormData: React.Dispatch<React.SetStateAction<any>>,
+    setErrors: React.Dispatch<React.SetStateAction<any>>,
+    errors: any) => void
+  handleCategoryChange: (value: string,
+    setFormData: React.Dispatch<React.SetStateAction<any>>) => void
+  handleAvailabilityChange: (checked: boolean,
+    setFormData: React.Dispatch<React.SetStateAction<any>>) => void
   handleSave: () => void
   handleCancel: () => void
   categoriesData: any
@@ -42,7 +42,9 @@ interface RightColumnFormProps {
   setFormData: React.Dispatch<React.SetStateAction<any>>
   setErrors: React.Dispatch<React.SetStateAction<any>>
 }
-
+/*
+no funciona el boton de guardar asi que lo dejare para despues
+*/
 function RightColumnFormComponent({
   formData,
   errors,
@@ -143,8 +145,8 @@ function RightColumnFormComponent({
                 <Label htmlFor="categoryId" className={cn(errors.categoryId && "text-red-500")}>
                   Categoría *
                 </Label>
-                <Select 
-                  value={formData.categoryId.toString()} 
+                <Select
+                  value={formData.categoryId.toString()}
                   onValueChange={(value) => handleCategoryChange(value, setFormData)}
                 >
                   <SelectTrigger className={cn("bg-white", errors.categoryId && "border-red-500")}>
@@ -200,16 +202,16 @@ function RightColumnFormComponent({
 
           {/* Botones de acción */}
           <div className="flex justify-end gap-3 mt-6">
-            <Button 
-              variant="outline" 
-              onClick={handleCancel} 
+            <Button
+              variant="outline"
+              onClick={handleCancel}
               className="min-w-[150px]"
             >
               Cancelar
             </Button>
-            <Button 
-              onClick={handleSave} 
-              disabled={isSaving || !hasChanges} 
+            <Button
+              onClick={handleSave}
+              disabled={isSaving || !hasChanges}
               className="min-w-[150px]"
             >
               {isSaving ? (

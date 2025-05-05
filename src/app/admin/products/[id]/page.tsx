@@ -1,40 +1,20 @@
 "use client"
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import Image from "next/image"
-import { motion, AnimatePresence } from "framer-motion"
-import { Save, Trash2, ChevronLeft, AlertCircle, Loader2, Plus, X, ImageIcon } from "lucide-react"
+import { AlertCircle, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Separator } from "@/components/ui/separator"
-import { Badge } from "@/components/ui/badge"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
 import useGetProductById from "@/hooks/useGetProductById"
 import useGetCategories from "@/hooks/useGetCategory"
-import { cn } from "@/lib/utils"
-import { toast } from "sonner"
 import { handleSave } from "@/utils/functions/handleProductAdminsave"
-import { handleCancel, handleRemoveImage, handleImageUpload, handleChange, handleCategoryChange, handleAvailabilityChange, handleDelete } from "@/utils/functions/handleProductAdminMethods"
+import { handleCancel, handleChange, handleCategoryChange, handleAvailabilityChange, handleDelete } from "@/utils/functions/handleProductAdminMethods"
 import HeaderEdit from "@/components/admin/editProduct/HeaderEdit"
 import LeftColumnImageComponent from "@/components/admin/editProduct/LeftColumnImageComponent"
 import RightColumnFormComponent from "@/components/admin/editProduct/RigtColumnFormComponent"
 import DeleteDialog from "@/components/admin/editProduct/DeleteDialog"
+import UndoneChangesDialog from "@/components/admin/editProduct/UndoneChangesDialog"
 
 interface ProductImage {
   id?: number
@@ -215,28 +195,11 @@ export default function EditProductPage() {
       />
 
       {/* Diálogo de confirmación para descartar cambios */}
-      <Dialog open={showDiscardDialog} onOpenChange={setShowDiscardDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>¿Descartar cambios?</DialogTitle>
-            <DialogDescription>Tienes cambios sin guardar. ¿Estás seguro de que quieres salir?</DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDiscardDialog(false)}>
-              Seguir editando
-            </Button>
-            <Button
-              variant="default"
-              onClick={() => {
-                setShowDiscardDialog(false)
-                router.back()
-              }}
-            >
-              Descartar cambios
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <UndoneChangesDialog
+        open={showDiscardDialog}
+        onOpenChange={setShowDiscardDialog}
+        onConfirm={() => router.back()} // o tu lógica para descartar cambios
+      />
     </div>
   )
 }
