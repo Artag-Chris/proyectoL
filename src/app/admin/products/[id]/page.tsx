@@ -34,6 +34,7 @@ import { handleCancel, handleRemoveImage, handleImageUpload, handleChange, handl
 import HeaderEdit from "@/components/admin/editProduct/HeaderEdit"
 import LeftColumnImageComponent from "@/components/admin/editProduct/LeftColumnImageComponent"
 import RightColumnFormComponent from "@/components/admin/editProduct/RigtColumnFormComponent"
+import DeleteDialog from "@/components/admin/editProduct/DeleteDialog"
 
 interface ProductImage {
   id?: number
@@ -206,29 +207,12 @@ export default function EditProductPage() {
       </div>
 
       {/* Diálogo de confirmación para eliminar */}
-      <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle className="text-xl">¿Eliminar producto?</DialogTitle>
-            <DialogDescription>
-              Esta acción no se puede deshacer. El producto será eliminado permanentemente.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex items-center p-4 border rounded-lg bg-red-50 border-red-200 text-red-800">
-            <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0" />
-            <p className="text-sm">Se eliminarán todas las imágenes y datos asociados a este producto.</p>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>
-              Cancelar
-            </Button>
-            <Button variant="destructive" onClick={() => handleDelete(parsedId!, setShowDeleteDialog)} className="flex items-center gap-2">
-              <Trash2 className="h-4 w-4" />
-              Eliminar Producto
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DeleteDialog
+        open={showDeleteDialog}
+        onOpenChange={setShowDeleteDialog}
+        onDelete={(productId) => handleDelete(productId, setShowDeleteDialog)}
+        productId={parsedId!}
+      />
 
       {/* Diálogo de confirmación para descartar cambios */}
       <Dialog open={showDiscardDialog} onOpenChange={setShowDiscardDialog}>
