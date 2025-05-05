@@ -45,7 +45,7 @@ export function UserCard({ user }: UserCardProps) {
 
     try {
       // Llamada a la API para actualizar el estado
-      const response = await fetch(`/api/users/${user.id}/availability`, {
+      const response = await fetch(`http://localhost:45623/api/usuarios/cliente/${user.email}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

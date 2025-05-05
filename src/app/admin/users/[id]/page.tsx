@@ -45,7 +45,7 @@ import {
 export default function UserDetailsPage() {
   const params = useParams()
   const router = useRouter()
-  const userId = params.id as string
+  const userId = params.id 
 
   const [activeTab, setActiveTab] = useState("basic")
   const [isLoading, setIsLoading] = useState(true)
@@ -72,7 +72,7 @@ export default function UserDetailsPage() {
     async function fetchUserData() {
       setIsLoading(true)
       try {
-        const response = await fetch(`/api/users/${userId}`)
+        const response = await fetch(`http://localhost:45623/api/usuarios/admin/user/${userId}` )
 
         if (!response.ok) {
           throw new Error("No se pudo cargar la información del usuario")
