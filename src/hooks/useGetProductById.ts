@@ -9,6 +9,11 @@ export interface Product {
   price: number;
   stock?: number;
   imageUrl?: string;
+  isAvailable?: boolean;
+  categoryId?: number;
+  createdAt?: string;
+  
+  updatedAt?: string;
 }
 
 const useGetProductById = (id: number) => {
