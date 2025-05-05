@@ -9,7 +9,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import useGetProductById from "@/hooks/useGetProductById"
 import useGetCategories from "@/hooks/useGetCategory"
 import { handleSave } from "@/utils/functions/handleProductAdminsave"
-import { handleCancel, handleChange, handleCategoryChange, handleAvailabilityChange, handleDelete } from "@/utils/functions/handleProductAdminMethods"
+import { handleCancel, handleChange, handleCategoryChange,
+  handleAvailabilityChange, handleDelete } from "@/utils/functions/handleProductAdminMethods"
 import HeaderEdit from "@/components/admin/editProduct/HeaderEdit"
 import LeftColumnImageComponent from "@/components/admin/editProduct/LeftColumnImageComponent"
 import RightColumnFormComponent from "@/components/admin/editProduct/RigtColumnFormComponent"
@@ -25,10 +26,13 @@ interface ProductImage {
 }
 
 export default function EditProductPage() {
+/*
+TODO: Organizar la navegación de los hijos de este componente
+*/
+
   const router = useRouter()
   const { id } = useParams()
   const parsedId = id ? Number.parseInt(id as string, 10) : null
-
   const { data: product, isLoading: isLoadingProduct } = useGetProductById(parsedId || 0)
   const { data: categoriesData, loading: isLoadingCategories } = useGetCategories()
 
