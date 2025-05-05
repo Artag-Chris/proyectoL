@@ -30,6 +30,8 @@ import useGetCategories from "@/hooks/useGetCategory"
 import { cn } from "@/lib/utils"
 import { toast } from "sonner"
 import { handleSave } from "@/utils/functions/handleProductAdminsave"
+import { handleCancel, handleRemoveImage, handleImageUpload, handleChange, handleCategoryChange, handleAvailabilityChange, handleDelete } from "@/utils/functions/handleProductAdminMethods"
+import HeaderEdit from "@/components/admin/editProduct/HeaderEdit"
 
 interface ProductImage {
   id?: number
@@ -119,113 +121,6 @@ export default function EditProductPage() {
     }
   }, [formData, images, product])
 
-  // Manejar cambios en los campos del formulario
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "number" ? Number.parseFloat(value) : value,
-    }))
-
-    // Limpiar error si el campo se está editando
-    if (errors[name]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev }
-        delete newErrors[name]
-        return newErrors
-      })
-    }
-  }
-
-  // Manejar cambio en el switch de disponibilidad
-  const handleAvailabilityChange = (checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      isAvailable: checked,
-    }))
-  }
-
-  // Manejar cambio de categoría
-  const handleCategoryChange = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      categoryId: Number.parseInt(value, 10),
-    }))
-  }
-
-  // Manejar subida de imágenes
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-
-    const newImages: ProductImage[] = []
-
-    Array.from(files).forEach((file) => {
-      const imageUrl = URL.createObjectURL(file)
-      newImages.push({
-        url: imageUrl,
-        productId: parsedId || 0,
-        isNew: true,
-        file,
-      })
-    })
-
-    setImages((prev) => [...prev, ...newImages])
-    setActiveImageIndex(images.length) // Seleccionar la primera imagen nueva
-
-    // Resetear el input
-    e.target.value = ""
-  }
-
-  // Eliminar una imagen
-  const handleRemoveImage = (index: number) => {
-    setImages((prev) => {
-      const newImages = [...prev]
-      newImages.splice(index, 1)
-      return newImages
-    })
-
-    // Ajustar el índice activo si es necesario
-    if (activeImageIndex >= images.length - 1) {
-      setActiveImageIndex(Math.max(0, images.length - 2))
-    }
-  }
-
- 
-
-  // Eliminar producto
-  const handleDelete = async () => {
-    //Todo no se aplicara un borrado fisico solo soft delete
-    try {
-      const response = await fetch(`http://localhost:45623/api/productos/${parsedId}`, {
-        method: "DELETE",
-      })
-
-      if (!response.ok) {
-        throw new Error("Error al eliminar el producto")
-      }
-
-      toast.success("Producto eliminado correctamente")
-
-      // Redirigir a la lista de productos
-      router.push("/admin/products")
-    } catch (error) {
-      console.error("Error al eliminar:", error)
-      toast.error("Error al eliminar el producto")
-    } finally {
-      setShowDeleteDialog(false)
-    }
-  }
-
-  // Cancelar edición
-  const handleCancel = () => {
-    if (hasChanges) {
-      setShowDiscardDialog(true)
-    } else {
-      router.back()
-    }
-  }
 
   // Mostrar estado de carga
   if (isLoadingProduct || isLoadingCategories) {
@@ -261,40 +156,21 @@ export default function EditProductPage() {
     <div className="min-h-screen p-6 bg-gradient-to-br from-orange-400/40 to-yellow-200/40">
       <div className="max-w-7xl mx-auto">
         {/* Cabecera */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" onClick={handleCancel} className="h-10 w-10 rounded-full">
-              <ChevronLeft className="h-5 w-5" />
-            </Button>
-            <h1 className="text-2xl font-bold">Editar Producto</h1>
-            <Badge variant="outline" className="ml-2 bg-primary/10 text-primary">
-              ID: {parsedId}
-            </Badge>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={handleCancel} className="gap-2">
-              Cancelar
-            </Button>
-            <Button variant="destructive" onClick={() => setShowDeleteDialog(true)} className="gap-2">
-              <Trash2 className="h-4 w-4" />
-              Eliminar
-            </Button>
-            <Button onClick={() => handleSave(formData, images, setIsSaving, setErrors, setHasChanges, parsedId ? parsedId : 0)} disabled={isSaving || !hasChanges} className="gap-2">
-              {isSaving ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Guardando...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Guardar Cambios
-                </>
-              )}
-            </Button>
-          </div>
-        </div>
+        <HeaderEdit
+          parsedId={parsedId!}
+          handleCancel={(hasChanges, setShow) => handleCancel(hasChanges, setShowDiscardDialog)}
+          handleSave={() => handleSave(formData, images, setIsSaving, setErrors, setHasChanges, parsedId || 0)}
+          handleDelete={() => handleDelete(parsedId!, setShowDeleteDialog)}
+          setShowDeleteDialog={setShowDeleteDialog}
+          setShowDiscardDialog={setShowDiscardDialog}
+          setIsSaving={setIsSaving}
+          setErrors={setErrors}
+          setHasChanges={setHasChanges}
+          formData={formData}
+          images={images}
+          isSaving={isSaving}
+          hasChanges={hasChanges}
+        />
 
         {/* Contenido principal */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
@@ -360,7 +236,7 @@ export default function EditProductPage() {
                       </button>
                       <button
                         className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full p-0.5 shadow-sm hover:bg-red-600"
-                        onClick={() => handleRemoveImage(index)}
+                        onClick={() => handleRemoveImage(index, setImages, setActiveImageIndex, activeImageIndex, images)}
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -379,7 +255,7 @@ export default function EditProductPage() {
                       type="file"
                       accept="image/png,image/jpeg,image/jpg"
                       className="hidden"
-                      onChange={handleImageUpload}
+                      onChange={(e) => handleImageUpload(e, setImages, setActiveImageIndex, parsedId!, images)}
                       multiple
                     />
                     <Plus className="h-5 w-5 text-gray-400" />
@@ -420,7 +296,7 @@ export default function EditProductPage() {
                         id="name"
                         name="name"
                         value={formData.name}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e, setFormData, setErrors, errors)}
                         className={cn("bg-white", errors.name && "border-red-500")}
                         placeholder="Ej: Camiseta Premium de Algodón"
                       />
@@ -434,7 +310,7 @@ export default function EditProductPage() {
                         id="description"
                         name="description"
                         value={formData.description || ""}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e, setFormData, setErrors, errors)}
                         className="bg-white min-h-[150px]"
                         placeholder="Describe las características y beneficios del producto..."
                       />
@@ -453,7 +329,7 @@ export default function EditProductPage() {
                           type="number"
                           step="0.01"
                           value={formData.price}
-                          onChange={handleChange}
+                          onChange={(e) => handleChange(e, setFormData, setErrors, errors)}
                           className={cn("bg-white pl-7", errors.price && "border-red-500")}
                           placeholder="0.00"
                         />
@@ -473,7 +349,7 @@ export default function EditProductPage() {
                         name="stock"
                         type="number"
                         value={formData.stock}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e, setFormData, setErrors, errors)}
                         className={cn("bg-white", errors.stock && "border-red-500")}
                         placeholder="Cantidad disponible"
                       />
@@ -485,7 +361,7 @@ export default function EditProductPage() {
                       <Label htmlFor="categoryId" className={cn(errors.categoryId && "text-red-500")}>
                         Categoría *
                       </Label>
-                      <Select value={formData.categoryId.toString()} onValueChange={handleCategoryChange}>
+                      <Select value={formData.categoryId.toString()} onValueChange={(value) => handleCategoryChange(value, setFormData,)}>
                         <SelectTrigger className={cn("bg-white", errors.categoryId && "border-red-500")}>
                           <SelectValue placeholder="Selecciona una categoría" />
                         </SelectTrigger>
@@ -507,7 +383,7 @@ export default function EditProductPage() {
                         <Switch
                           id="isAvailable"
                           checked={formData.isAvailable}
-                          onCheckedChange={handleAvailabilityChange}
+                          onCheckedChange={(checked) => handleAvailabilityChange(checked, setFormData)}
                           className="data-[state=checked]:bg-green-500"
                         />
                       </div>
@@ -540,10 +416,10 @@ export default function EditProductPage() {
 
                 {/* Botones de acción */}
                 <div className="flex justify-end gap-3 mt-6">
-                  <Button variant="outline" onClick={handleCancel}>
+                  <Button variant="outline" onClick={() => handleCancel(hasChanges, setShowDiscardDialog)} className="min-w-[150px]">
                     Cancelar
                   </Button>
-                  <Button onClick={() => handleSave(formData, images, setIsSaving, setErrors, setHasChanges, parsedId?parsedId:0)} disabled={isSaving || !hasChanges} className="min-w-[150px]">
+                  <Button onClick={() => handleSave(formData, images, setIsSaving, setErrors, setHasChanges, parsedId ? parsedId : 0)} disabled={isSaving || !hasChanges} className="min-w-[150px]">
                     {isSaving ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -580,7 +456,8 @@ export default function EditProductPage() {
             <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>
               Cancelar
             </Button>
-            <Button variant="destructive" onClick={handleDelete}>
+            <Button variant="destructive" onClick={() => handleDelete(parsedId!, setShowDeleteDialog)} className="flex items-center gap-2">
+              <Trash2 className="h-4 w-4" />
               Eliminar Producto
             </Button>
           </DialogFooter>
