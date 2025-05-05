@@ -4,38 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
+import { orders } from "../dummy/adminDummy";
 
-// Datos dummy para pedidos
-const orders = [
-  {
-    id: 1,
-    user: "Alice Johnson",
-    items: ["Vela Aromática Lavanda", "Difusor de Aceites"],
-    total: 49.98,
-    status: "Pendiente",
-  },
-  {
-    id: 2,
-    user: "Bob Smith",
-    items: ["Set de Velas de Soja", "Vela de Masaje"],
-    total: 59.98,
-    status: "Entregado",
-  },
-  {
-    id: 3,
-    user: "Charlie Brown",
-    items: ["Vela en Tarro de Cristal", "Pack de Velas Tea Light"],
-    total: 24.98,
-    status: "Pendiente",
-  },
-  {
-    id: 4,
-    user: "Diana Ross",
-    items: ["Difusor de Aceites", "Vela Aromática Vainilla"],
-    total: 54.98,
-    status: "Entregado",
-  },
-];
+
 
 export default function OrdersPage() {
   const pendingOrders = orders.filter((order) => order.status === "Pendiente");

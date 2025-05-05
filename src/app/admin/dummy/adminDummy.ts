@@ -41,3 +41,33 @@ export const recentSales = [
     { month: "Dec", revenue: 3800 },
   ];
   
+ export const orders = [
+  {
+    id: 1,
+    user: "Alice Johnson",
+    items: ["Vela Aromática Lavanda", "Difusor de Aceites"],
+    total: 49.98,
+    status: "Pendiente",
+  },
+  {
+    id: 2,
+    user: "Bob Smith",
+    items: ["Set de Velas de Soja", "Vela de Masaje"],
+    total: 59.98,
+    status: "Entregado",
+  },
+  {
+    id: 3,
+    user: "Charlie Brown",
+    items: ["Vela en Tarro de Cristal", "Pack de Velas Tea Light"],
+    total: 24.98,
+    status: "Pendiente",
+  },
+  {
+    id: 4,
+    user: "Diana Ross",
+    items: ["Difusor de Aceites", "Vela Aromática Vainilla"],
+    total: 54.98,
+    status: "Entregado",
+  },
+];
