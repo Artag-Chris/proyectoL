@@ -221,6 +221,7 @@ export default function EditProductPage() {
 
   // Guardar cambios
   const handleSave = async () => {
+    //Todo aun no implementado pero necesitaremos crear una ruta para subir las otras imagenes especificas
     if (!validateForm()) {
       toast.error("Por favor, corrige los errores antes de guardar")
       return
@@ -252,7 +253,7 @@ export default function EditProductPage() {
       await Promise.all(uploadPromises)
 
       // Actualizar el producto
-      const response = await fetch(`http://localhost:45623/api/productos/${parsedId}`, {
+      const response = await fetch(`http://localhost:45623/api/productos/update/${parsedId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -288,6 +289,7 @@ export default function EditProductPage() {
 
   // Eliminar producto
   const handleDelete = async () => {
+    //Todo no se aplicara un borrado fisico solo soft delete
     try {
       const response = await fetch(`http://localhost:45623/api/productos/${parsedId}`, {
         method: "DELETE",
