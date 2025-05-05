@@ -65,12 +65,18 @@ export function CreateUserForm({ onSuccess }: CreateUserFormProps) {
     setIsSubmitting(true)
 
     try {
-      // Crear FormData para enviar la imagen
+      // Crear un objeto FormData
       const formDataToSend = new FormData()
 
-      // Añadir todos los campos del formulario
+      // Añadir todos los campos del formulario como strings
       Object.entries(formData).forEach(([key, value]) => {
-        formDataToSend.append(key, value.toString())
+        // Convertir booleanos a strings para asegurar compatibilidad
+        if (typeof value === "boolean") {
+          formDataToSend.append(key, value ? "true" : "false")
+        } else {
+          // Asegurarse de que el valor no sea undefined o null
+          formDataToSend.append(key, value === null || value === undefined ? "" : String(value))
+        }
       })
 
       // Añadir la imagen si existe
@@ -78,15 +84,34 @@ export function CreateUserForm({ onSuccess }: CreateUserFormProps) {
         formDataToSend.append("profileImage", profileImage)
       }
 
-      // Enviar datos a la API
-      const response = await fetch("/api/users", {
+      // Depuración - mostrar los valores que se están enviando
+      console.log("Enviando datos:")
+      for (const [key, value] of formDataToSend.entries()) {
+        console.log(`${key}: ${value instanceof File ? `File: ${value.name}` : value}`)
+      }
+
+      // Enviar la petición sin especificar Content-Type (el navegador lo añadirá automáticamente)
+      const response = await fetch("http://localhost:45623/api/usuarios/admin/usuario", {
         method: "POST",
         body: formDataToSend,
+        // No incluir Content-Type para que el navegador lo establezca correctamente con el boundary
       })
 
+      // Verificar la respuesta del servidor
+      const responseText = await response.text()
+      console.log("Respuesta del servidor:", responseText)
+
+      let responseData
+      try {
+        // Intentar parsear como JSON si es posible
+        responseData = JSON.parse(responseText)
+      } catch (e) {
+        // Si no es JSON, usar el texto como está
+        responseData = { message: responseText }
+      }
+
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.message || "Error al crear el usuario")
+        throw new Error(responseData.message || "Error al crear el usuario")
       }
 
       toast.success("Usuario creado correctamente")
