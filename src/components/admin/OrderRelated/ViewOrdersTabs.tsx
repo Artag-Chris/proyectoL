@@ -18,9 +18,6 @@ interface ViewOrdersTabProps {
   searchTerm: string
   statusFilter: string
   sortOrder: string
-  sortedOrders: any[]
-  pendingOrders: any[]
-  deliveredOrders: any[]
   orders: any[]
   setSearchTerm: (value: string) => void
   setStatusFilter: (value: string) => void
@@ -31,14 +28,37 @@ export function ViewOrdersTab({
   searchTerm,
   statusFilter,
   sortOrder,
-  sortedOrders,
-  pendingOrders,
-  deliveredOrders,
   orders,
   setSearchTerm,
   setStatusFilter,
   setSortOrder
 }: ViewOrdersTabProps) {
+
+    const filteredOrders = orders.filter((order) => {
+      const matchesStatus = statusFilter === "all" || order.status === statusFilter
+      const matchesSearch =
+        order.id.toString().includes(searchTerm) ||
+        order.user.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.items.some((item:any) => item.toLowerCase().includes(searchTerm.toLowerCase()))
+  
+      return matchesStatus && matchesSearch
+    })
+  
+    // Sort orders based on sort order
+    const sortedOrders = [...filteredOrders].sort((a, b) => {
+      if (sortOrder === "newest") {
+        return b.id - a.id // Assuming higher ID means newer
+      } else if (sortOrder === "oldest") {
+        return a.id - b.id
+      } else if (sortOrder === "highest") {
+        return b.total - a.total
+      } else {
+        return a.total - b.total
+      }
+    })
+     // Group orders by status for the view tab
+  const pendingOrders = sortedOrders.filter((order) => order.status === "Pendiente")
+  const deliveredOrders = sortedOrders.filter((order) => order.status === "Entregado")
   return (
     <TabsContent value="view-orders" className="space-y-8 mt-0">
       {/* Filtros */}
@@ -178,3 +198,4 @@ const EmptyState = ({ status }: { status: string }) => (
     </p>
   </Card>
 )
+
