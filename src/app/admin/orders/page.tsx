@@ -15,6 +15,7 @@ import { ViewOrdersTab } from "@/components/admin/OrderRelated/ViewOrdersTabs"
 import CreateOrder from "@/components/admin/OrderRelated/CreateOrder"
 import ModifyOrder from "@/components/admin/OrderRelated/ModifyOrder"
 import ShoppingCartsView from "@/components/admin/OrderRelated/ShoppingCartsView"
+import { FadeInTransition } from "@/components/transitions/FadeIn"
 
 export default function OrdersPage() {
   const [activeTab, setActiveTab] = useState("view-orders")
@@ -34,7 +35,8 @@ export default function OrdersPage() {
             {orders.length}
           </Badge>
         </div>
-
+        {/* Tabs */}
+        <FadeInTransition position="bottom">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid grid-cols-4 mb-8">
             <TabsTrigger value="view-orders" className="flex items-center gap-2">
@@ -54,6 +56,7 @@ export default function OrdersPage() {
               <span>Carritos</span>
             </TabsTrigger>
           </TabsList>
+        
 
           {/* View Orders Tab */}
           <ViewOrdersTab
@@ -75,6 +78,7 @@ export default function OrdersPage() {
           {/* Shopping Carts Tab */}
           <ShoppingCartsView />
         </Tabs>
+        </FadeInTransition>
       </div>
     </div>
   )
