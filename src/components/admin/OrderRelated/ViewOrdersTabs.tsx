@@ -1,5 +1,4 @@
 import { FadeInTransition } from "@/components/transitions/FadeIn"
-
 import { TabsContent } from "@radix-ui/react-tabs"
 import { Search, Filter, ArrowUpDown, Clock, CheckCircle2 } from "lucide-react"
 import { OrderCard } from "./OrderCard"
@@ -7,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@radix-ui/react-dropdown-menu"
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@radix-ui/react-select"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
 interface Order {
   id: string
   status: 'Pendiente' | 'Entregado' | 'Cancelado'
