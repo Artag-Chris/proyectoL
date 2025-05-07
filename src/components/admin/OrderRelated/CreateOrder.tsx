@@ -3,34 +3,23 @@
 import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import {
   PlusCircle,
-  Search,
-  User,
-  ShoppingBag,
   ArrowRight,
-  Loader2,
-  Package,
   ArrowLeft,
-  CreditCard,
-  Truck,
   CheckCircle,
 } from "lucide-react"
 import { toast } from "sonner"
 import PageTransition from "@/components/transitions/PageTransition"
-import { SelectableUserCard, type User as UserType } from "./SelectedUserForOrder"
-import Image from "next/image"
+import { type User as UserType } from "./SelectedUserForOrder"
 import useGetUsuarios from "@/hooks/useGetUsuarios"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Product } from "../ProductCardAdmin"
-import { SelectableProductCard } from "./SelectedProductsForOrder"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
 import useGetAllProducts from "@/hooks/useGetAllProducts"
 import StepOneUser from "./steps/StepOneUser"
 import StepTwoProducts from "./steps/StepTwoProducts"
+import StepThreePaymentMethod from "./steps/StepThreePaymentMethod"
 
 
 // Tipo para productos seleccionados con cantidad
@@ -41,7 +30,7 @@ interface SelectedProduct extends Product {
 export default function CreateOrderPage() {
   // Estados para el flujo de creación de pedido
   const [currentStep, setCurrentStep] = useState<"user" | "products" | "payment">("user")
-  const { data: users, loading, error, refreshData } = useGetUsuarios()
+  const { data: users, loading } = useGetUsuarios()
   const [selectedUser, setSelectedUser] = useState<UserType | null>(null)
   const [searchUserTerm, setSearchUserTerm] = useState("")
   const [searchProductTerm, setSearchProductTerm] = useState("")
@@ -249,99 +238,15 @@ export default function CreateOrderPage() {
 
             {/* Paso 3: Método de pago y estado del pedido */}
             {currentStep === "payment" && (
-              <div className="space-y-6">
-                <div>
-                  <h2 className="text-xl font-medium flex items-center gap-2 mb-4">
-                    <CreditCard className="h-5 w-5 text-primary" />
-                    Finalizar Pedido
-                  </h2>
-
-                  {/* Resumen del pedido */}
-                  <div className="bg-muted/30 p-4 rounded-md mb-6">
-                    <h3 className="font-medium mb-3">Resumen del pedido</h3>
-
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center gap-2">
-                        <User className="h-4 w-4 text-primary" />
-                        <span className="font-medium">Cliente:</span>
-                        <span>
-                          {selectedUser?.firstName} {selectedUser?.lastName}
-                        </span>
-                      </div>
-
-                      <div className="flex items-start gap-2">
-                        <ShoppingBag className="h-4 w-4 text-primary mt-1" />
-                        <div>
-                          <span className="font-medium">Productos:</span>
-                          <ul className="mt-1 space-y-1 text-sm">
-                            {selectedProducts.map((product) => (
-                              <li key={product.id} className="flex justify-between">
-                                <span>
-                                  {product.name} x {product.quantity}
-                                </span>
-                                <span>
-                                  $
-                                  {(
-                                    (product.discount
-                                      ? product.price - (product.price * product.discount) / 100
-                                      : product.price) * product.quantity
-                                  ).toFixed(2)}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-
-                      <div className="flex justify-between pt-2 border-t">
-                        <span className="font-bold">Total:</span>
-                        <span className="font-bold">${calculateOrderTotal().toFixed(2)}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Método de pago */}
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium flex items-center gap-1">
-                        <CreditCard className="h-4 w-4" />
-                        Método de pago
-                      </label>
-                      <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                        <SelectTrigger className="bg-white/50">
-                          <SelectValue placeholder="Selecciona un método de pago" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="credit_card">Tarjeta de crédito</SelectItem>
-                          <SelectItem value="debit_card">Tarjeta de débito</SelectItem>
-                          <SelectItem value="cash">Efectivo</SelectItem>
-                          <SelectItem value="transfer">Transferencia bancaria</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Estado del pedido */}
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium flex items-center gap-1">
-                        <Truck className="h-4 w-4" />
-                        Estado del pedido
-                      </label>
-                      <Select value={orderStatus} onValueChange={setOrderStatus}>
-                        <SelectTrigger className="bg-white/50">
-                          <SelectValue placeholder="Selecciona un estado" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="pending">Pendiente</SelectItem>
-                          <SelectItem value="processing">En proceso</SelectItem>
-                          <SelectItem value="shipped">Enviado</SelectItem>
-                          <SelectItem value="delivered">Entregado</SelectItem>
-                          <SelectItem value="cancelled">Cancelado</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <StepThreePaymentMethod
+              selectedUser={selectedUser}
+              selectedProducts={selectedProducts}
+              paymentMethod={paymentMethod}
+              orderStatus={orderStatus}
+              calculateOrderTotal={calculateOrderTotal}
+              setPaymentMethod={setPaymentMethod}
+              setOrderStatus={setOrderStatus}
+            />
             )}
           </CardContent>
 
