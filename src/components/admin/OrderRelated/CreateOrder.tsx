@@ -5,6 +5,12 @@ import { PlusCircle, ShoppingBag } from 'lucide-react'
 import React from 'react'
 
 function CreateOrder() {
+  //Todo: traer la forma de renderizar unos usuarios
+  //Todo: guardar el usuario 
+  //Todo: renderizar los productos y guardarlos en alguna variable de forma que los acepte el backend
+  //Todo: la pagina debera tener algo al final para entender que ya estan listo los items del pedido 
+  //Todo: colocar el medio de pago y el estado del pedido 
+  //Todo: enviar el pedido al backend y recibir la respuesta
   return (
     <>
     <TabsContent value="create-order" className="mt-0">
