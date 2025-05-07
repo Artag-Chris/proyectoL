@@ -23,7 +23,7 @@ interface ViewOrdersTabProps {
   setSortOrder: (value: string) => void
 }
 
-export function ViewOrdersTab({
+export default function ViewOrdersTabs({
   searchTerm,
   statusFilter,
   sortOrder,
