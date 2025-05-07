@@ -106,6 +106,7 @@ function StepThreePaymentMethod({
                 <SelectValue placeholder="Selecciona un estado" />
               </SelectTrigger>
               <SelectContent position="popper" sideOffset={5}>
+                {/* esto se cambiara segun necesidad y se le dara un valor segun el backend*/}
                 <SelectItem value="pending">Pendiente</SelectItem>
                 <SelectItem value="processing">En proceso</SelectItem>
                 <SelectItem value="shipped">Enviado</SelectItem>

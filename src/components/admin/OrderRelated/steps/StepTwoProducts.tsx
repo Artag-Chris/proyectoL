@@ -164,9 +164,16 @@ function StepTwoProducts({
                   key={product.id}
                   product={product as any}
                   isSelected={!!selectedProduct}
-                  quantity={selectedProduct?.quantity || 1}
+                  quantity={selectedProduct?.quantity || 0}
                   onSelect={() => onSelectProduct(product)}
-                  onQuantityChange={(quantity) => onQuantityChange(product.id, quantity as any)}
+                  onQuantityChange={(newQuantity: any) => {
+                    if (newQuantity > 0) {
+                      onQuantityChange(product.id, newQuantity)
+                    } else {
+                      // Eliminar producto si la cantidad llega a 0
+                      onSelectProduct(product)
+                    }
+                  }}
                 />
               )
             })}

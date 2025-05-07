@@ -76,20 +76,21 @@ export default function CreateOrderPage() {
       toast.info("Selecciona los productos para el pedido")
     }
   }
+  
 
   // Manejar la selección de un producto
-  const handleSelectProduct = (product: Product) => {
-    const isAlreadySelected = selectedProducts.some((p) => p.id === product.id)
-
-    if (isAlreadySelected) {
-      // Si ya está seleccionado, lo quitamos
-      setSelectedProducts(selectedProducts.filter((p) => p.id !== product.id))
-    } else {
-      // Si no está seleccionado, lo añadimos con cantidad 1
-      setSelectedProducts([...selectedProducts, { ...product, quantity: 1 }])
-    }
+  const handleSelectProduct = (product: any) => {
+    setSelectedProducts(prev => {
+      const exists = prev.some(p => p.id === product.id)
+      if (exists) {
+        // Remover producto si ya está seleccionado
+        return prev.filter(p => p.id !== product.id)
+      } else {
+        // Agregar producto con cantidad inicial 1
+        return [...prev, { ...product, quantity: 1 }]
+      }
+    })
   }
-
   // Manejar cambio de cantidad de un producto
   const handleQuantityChange = (product: Product, quantity: number) => {
     setSelectedProducts(selectedProducts.map((p) => (p.id === product.id ? { ...p, quantity } : p)))
@@ -165,6 +166,7 @@ export default function CreateOrderPage() {
       console.error(error)
     }
   }
+  
 
   return (
     <div className="p-6 min-h-screen bg-gradient-to-br from-orange-400/40 to-yellow-200/40">
