@@ -1,3 +1,4 @@
+import { type User as UserType } from "../../../components/admin/OrderRelated/SelectedUserForOrder"
 export const recentSales = [
     {
       name: "Olivia Martin",
@@ -71,3 +72,40 @@ export const recentSales = [
     status: "Entregado",
   },
 ];
+
+export const mockUsers: UserType[] = [
+  {
+    id: 1,
+    email: "cliente1@example.com",
+    firstName: "Juan",
+    lastName: "Pérez",
+    address: "Calle Principal 123, Ciudad de México",
+    phoneNumber: "+52 555 123 4567",
+    createdAt: "2023-01-15",
+  },
+  {
+    id: 2,
+    email: "cliente2@example.com",
+    firstName: "María",
+    lastName: "González",
+    address: "Av. Reforma 456, Guadalajara",
+    phoneNumber: "+52 333 987 6543",
+    createdAt: "2023-03-22",
+  },
+  {
+    id: 3,
+    email: "cliente3@example.com",
+    firstName: "Carlos",
+    lastName: "Rodríguez",
+    address: "Blvd. Insurgentes 789, Monterrey",
+    phoneNumber: "+52 818 456 7890",
+    createdAt: "2023-05-10",
+  },
+  {
+    id: 4,
+    email: "cliente4@example.com",
+    firstName: "Ana",
+    lastName: "Martínez",
+    createdAt: "2023-07-05",
+  },
+]

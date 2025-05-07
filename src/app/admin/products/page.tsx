@@ -3,7 +3,7 @@
 import PageTransition from "@/components/transitions/PageTransition";
 import { FadeInTransition } from "@/components/transitions/FadeIn";
 import useGetAllProducts from "@/hooks/useGetAllProducts";
-import { Product, ProductCardAdmin } from "@/components/admin/ProductCardAdmin";
+import { ProductCardAdmin } from "@/components/admin/ProductCardAdmin";
 
 
 export default function ProductsPage() {
