@@ -9,6 +9,7 @@ import {
   ArrowRight,
   ArrowLeft,
   CheckCircle,
+  Loader2,
 } from "lucide-react"
 import { toast } from "sonner"
 import PageTransition from "@/components/transitions/PageTransition"
@@ -20,6 +21,7 @@ import useGetAllProducts from "@/hooks/useGetAllProducts"
 import StepOneUser from "./steps/StepOneUser"
 import StepTwoProducts from "./steps/StepTwoProducts"
 import StepThreePaymentMethod from "./steps/StepThreePaymentMethod"
+import { sendOrder } from "@/utils/functions/handleCreateOrder"
 
 
 // Tipo para productos seleccionados con cantidad
@@ -37,6 +39,7 @@ export default function CreateOrderPage() {
   const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([])
   const [paymentMethod, setPaymentMethod] = useState<string>("")
   const [orderStatus, setOrderStatus] = useState<string>("pending")
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   // Hook para obtener productos (simulado para este ejemplo)
   const { data: productos, loading: loadingProducts, error: errorProducts } = useGetAllProducts()
@@ -76,7 +79,27 @@ export default function CreateOrderPage() {
       toast.info("Selecciona los productos para el pedido")
     }
   }
-  
+  const handleCreateOrder = async () => {
+    setIsSubmitting(true)
+    try {
+      await sendOrder({
+        selectedUser,
+        selectedProducts,
+        paymentMethod,
+        orderStatus,
+        calculateOrderTotal,
+        resetForm: () => {
+          setSelectedUser(null)
+          setSelectedProducts([])
+          setPaymentMethod("")
+          setOrderStatus("pending")
+          setCurrentStep("user")
+        }
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   // Manejar la selección de un producto
   const handleSelectProduct = (product: any) => {
@@ -124,49 +147,7 @@ export default function CreateOrderPage() {
   }
 
   // Crear el pedido
-  const handleCreateOrder = async () => {
-    if (!selectedUser || selectedProducts.length === 0 || !paymentMethod || !orderStatus) {
-      toast.error("Por favor completa todos los campos requeridos")
-      return
-    }
 
-    // Aquí iría la lógica para enviar el pedido al backend
-    try {
-      // Simulación de envío
-      toast.loading("Creando pedido...")
-
-      // Formato del pedido para enviar al backend
-      const orderData = {
-        userId: selectedUser.id,
-        products: selectedProducts.map((p) => ({
-          productId: p.id,
-          quantity: p.quantity,
-          price: p.discount ? p.price - (p.price * p.discount) / 100 : p.price,
-        })),
-        total: calculateOrderTotal(),
-        paymentMethod,
-        status: orderStatus,
-      }
-
-      // Simulación de respuesta exitosa
-      setTimeout(() => {
-        toast.dismiss()
-        toast.success("¡Pedido creado correctamente!")
-        console.log("Datos del pedido:", orderData)
-
-        // Resetear el formulario
-        setSelectedUser(null)
-        setSelectedProducts([])
-        setPaymentMethod("")
-        setOrderStatus("pending")
-        setCurrentStep("user")
-      }, 1500)
-    } catch (error) {
-      toast.error("Error al crear el pedido")
-      console.error(error)
-    }
-  }
-  
 
   return (
     <div className="p-6 min-h-screen bg-gradient-to-br from-orange-400/40 to-yellow-200/40">
@@ -281,10 +262,23 @@ export default function CreateOrderPage() {
             )}
 
             {currentStep === "payment" && (
-              <Button onClick={handleCreateOrder} disabled={!paymentMethod || !orderStatus} className="gap-2">
-                <CheckCircle className="h-4 w-4" />
-                Crear Pedido
-              </Button>
+              <Button 
+              onClick={handleCreateOrder} 
+              disabled={!paymentMethod || !orderStatus || isSubmitting}
+              className="gap-2"
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Creando pedido...
+                </>
+              ) : (
+                <>
+                  <CheckCircle className="h-4 w-4" />
+                  Confirmar Pedido
+                </>
+              )}
+            </Button>
             )}
           </CardFooter>
         </Card>
