@@ -31,7 +31,7 @@ export default function OrdersPage() {
               searchTerm={searchTerm}
               statusFilter={statusFilter}
               sortOrder={sortOrder}
-              orders={orders}
+            
               setSearchTerm={setSearchTerm}
               setStatusFilter={setStatusFilter}
               setSortOrder={setSortOrder}
