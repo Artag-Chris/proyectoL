@@ -34,7 +34,7 @@ const useGetUsuarios = () => {
         if (response.data.length === 0) {
           setData({ usuarios: [] });
         } else {
-       //   console.log('Data fetched successfully', response.data);
+
           setData({ usuarios: response.data });
           localStorage.setItem('usuarios', JSON.stringify(response.data));
           localStorage.setItem('usuariosTimestamp', now.toString());

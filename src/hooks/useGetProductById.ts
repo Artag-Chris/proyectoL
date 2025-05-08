@@ -29,7 +29,7 @@ const useGetProductById = (id: number) => {
       setIsLoading(true);
       try {
         const response = await axios.get(`http://localhost:45623/api/productos/${id}`);
-        console.log(response.data)
+        
         if (!response.data) {
           setData(producto);
         } else {

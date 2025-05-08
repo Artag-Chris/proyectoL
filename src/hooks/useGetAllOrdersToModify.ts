@@ -13,7 +13,6 @@ const useGetAllOrdersToModify = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:45623/api/pedidos/all`);
-                console.log('API Response:', response.data);
                 
                 // Si la respuesta es directamente un objeto de orden
                 if (response.data && !Array.isArray(response.data) && 'id' in response.data) {

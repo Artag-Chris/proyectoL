@@ -20,7 +20,7 @@ const useGetCategories = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:45623/api/productos/categorias');
-                console.log('Response:', response);
+                
                 if (!response.data || !response.data.categories || response.data.categories.length === 0) {
                     setData({ categories: dummyCategories });
                 } else {
