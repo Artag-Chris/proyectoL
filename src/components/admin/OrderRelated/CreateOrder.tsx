@@ -104,20 +104,31 @@ export default function CreateOrderPage() {
   // Manejar la selección de un producto
   const handleSelectProduct = (product: any) => {
     setSelectedProducts(prev => {
-      const exists = prev.some(p => p.id === product.id)
+      const exists = prev.some(p => p.id === product.id);
       if (exists) {
-        // Remover producto si ya está seleccionado
-        return prev.filter(p => p.id !== product.id)
+        // Solo remueve el producto si explícitamente se deselecciona
+        return prev.filter(p => p.id !== product.id);
       } else {
-        // Agregar producto con cantidad inicial 1
-        return [...prev, { ...product, quantity: 1 }]
+        // Añade el producto con cantidad inicial 1
+        return [...prev, { ...product, quantity: 1 }];
       }
-    })
-  }
-  // Manejar cambio de cantidad de un producto
+    });
+  };
   const handleQuantityChange = (product: Product, quantity: number) => {
-    setSelectedProducts(selectedProducts.map((p) => (p.id === product.id ? { ...p, quantity } : p)))
-  }
+    setSelectedProducts(prev => {
+      const existingProductIndex = prev.findIndex(p => p.id === product.id);
+      
+      if (existingProductIndex >= 0) {
+        // Si el producto existe, actualiza su cantidad
+        const newProducts = [...prev];
+        newProducts[existingProductIndex] = { ...prev[existingProductIndex], quantity };
+        return newProducts;
+      }
+      
+      // Si el producto no existe, añádelo con la cantidad especificada
+      return [...prev, { ...product, quantity }];
+    });
+  };
 
   // Calcular el total del pedido
   const calculateOrderTotal = () => {

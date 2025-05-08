@@ -53,7 +53,7 @@ function StepTwoProducts({
   onResetSearch
 }: StepTwoProductsProps) {
   const calculateProductTotal = (product: ProductType) => {
-    const price = product.discount 
+    const price = product.discount
       ? product.price - (product.price * product.discount) / 100
       : product.price
     return (price * product.quantity).toFixed(2)
@@ -102,7 +102,7 @@ function StepTwoProducts({
               <ShoppingBag className="h-4 w-4" />
               Productos seleccionados: {selectedProducts.length}
             </h3>
-            
+
             <ScrollArea className="h-24 rounded-md border p-2">
               <div className="space-y-1">
                 {selectedProducts.map((product) => (
@@ -121,7 +121,7 @@ function StepTwoProducts({
                       </div>
                       <span className="font-medium">{product.name}</span>
                     </div>
-                    
+
                     <div className="flex items-center gap-2">
                       <span>
                         {product.quantity} x $
@@ -138,7 +138,7 @@ function StepTwoProducts({
                 ))}
               </div>
             </ScrollArea>
-            
+
             <div className="flex justify-end mt-2">
               <Badge className="bg-primary">
                 Total: ${calculateOrderTotal().toFixed(2)}
@@ -163,16 +163,11 @@ function StepTwoProducts({
                 <SelectableProductCard
                   key={product.id}
                   product={product as any}
-                  isSelected={!!selectedProduct}
-                  quantity={selectedProduct?.quantity || 0}
+                  isSelected={!!selectedProducts.find(p => p.id === product.id)}
+                  quantity={selectedProducts.find(p => p.id === product.id)?.quantity || 1}
                   onSelect={() => onSelectProduct(product)}
-                  onQuantityChange={(newQuantity: any) => {
-                    if (newQuantity > 0) {
-                      onQuantityChange(product.id, newQuantity)
-                    } else {
-                      // Eliminar producto si la cantidad llega a 0
-                      onSelectProduct(product)
-                    }
+                  onQuantityChange={(p: any, newQuantity: number) => {
+                    onQuantityChange(p, newQuantity);
                   }}
                 />
               )

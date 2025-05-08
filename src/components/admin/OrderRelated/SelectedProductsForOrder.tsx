@@ -44,26 +44,26 @@ export function SelectableProductCard({
 
   // Manejar cambios de cantidad
   const handleIncrement = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     if (product.stock && quantity < product.stock) {
-      onQuantityChange(product, quantity + 1)
+      onQuantityChange(product, quantity + 1);
     }
-  }
+  };
 
   const handleDecrement = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     if (quantity > 1) {
-      onQuantityChange(product, quantity - 1)
+      onQuantityChange(product, quantity - 1);
     }
-  }
+  };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.stopPropagation()
-    const newQuantity = Number.parseInt(e.target.value) || 1
-    const maxQuantity = product.stock || 999
-    const validQuantity = Math.min(Math.max(1, newQuantity), maxQuantity)
-    onQuantityChange(product, validQuantity)
-  }
+    e.stopPropagation();
+    const newQuantity = Number.parseInt(e.target.value) || 1;
+    const maxQuantity = product.stock || 999;
+    const validQuantity = Math.min(Math.max(1, newQuantity), maxQuantity);
+    onQuantityChange(product, validQuantity);
+  };
 
   return (
     <motion.div
