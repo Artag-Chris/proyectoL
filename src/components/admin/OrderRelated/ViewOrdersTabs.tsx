@@ -32,7 +32,6 @@ export default function ViewOrdersTabs({
   setSortOrder,
 }: ViewOrdersTabProps) {
   const { data, loading, error } = useGetAllOrders()
-  console.log("Data fetched from API:", data)
 
   // Helper function to map orderStatusId to status text
   const getOrderStatusText = (statusId: number): string => {

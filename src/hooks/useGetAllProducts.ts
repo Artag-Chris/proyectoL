@@ -31,7 +31,7 @@ const useGetAllProducts = () => {
                     setData(response.data)
                 } else {
                     const { product, soldProducts } = response.data
-                    console.log('Fetched data:', response.data);
+             
                     setData(response.data);
                 }
             } catch (err) {
