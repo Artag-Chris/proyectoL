@@ -30,7 +30,6 @@ const useGetAllProducts = () => {
                 if (!response.data.products && !response.data.soldProducts) {
                     setData(response.data)
                 } else {
-                    const { product, soldProducts } = response.data
              
                     setData(response.data);
                 }
