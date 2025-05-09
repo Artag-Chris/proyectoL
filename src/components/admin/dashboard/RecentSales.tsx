@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { motion } from "framer-motion"
 import { TrendingUp, TrendingDown, Clock, Award, Zap } from "lucide-react"
 import { useState, useEffect } from "react"
+import useGetRecentSales from "@/hooks/useGetRecentSales"
 
 /*
  * COMPONENTE DE VENTAS RECIENTES
@@ -101,6 +102,7 @@ import { useState, useEffect } from "react"
  */
 
 function RecentSales() {
+  const {sales,error,loading}=useGetRecentSales()
   interface Sale {
     id: string | number;
     name: string;
@@ -115,7 +117,7 @@ function RecentSales() {
   // Simulamos la llegada de una nueva venta cada 10 segundos
   useEffect(() => {
     // Inicializamos con los datos existentes
-    setAnimatedSales(recentSales as Sale[])
+    setAnimatedSales(sales as Sale[])
 
     // Simulación de nuevas ventas (solo para demo)
     const interval = setInterval(() => {
