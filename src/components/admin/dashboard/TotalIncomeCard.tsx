@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card"
 import { ArrowUpRight, ArrowDownRight, DollarSign, Loader2 } from "lucide-react"
 import { motion } from "framer-motion"
 import CountUp from "react-countup"
-import useGetTotalIncome from "@/hooks/getTotalIncome"
+import useGetTotalIncome from "@/hooks/useGetTotalIncome"
 import { cn } from "@/lib/utils"
 
 function TotalIncomeCard() {
