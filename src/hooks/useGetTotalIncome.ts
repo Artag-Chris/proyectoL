@@ -30,12 +30,9 @@ const useGetTotalIncome = () => {
 
             try {
                 const response = await axios.get(`http://localhost:45623/api/pedidos/totalIncome`);
-               
                 if (!response.data) {
-                    
                     setData({ response: { message: '', data: { totalIncome: 0, currentMonth: { month: 0, income: 0 }, previousMonth: { month: 0, income: 0 }, percentageChange: 0 } } });
-                } else {
-                   
+                } else {         
                     setData({ response: response.data });
                 }
             } catch (err) {

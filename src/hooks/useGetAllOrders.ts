@@ -5,7 +5,6 @@ import { GetAllOrdersResponse } from '@/utils/interfaces/ordersRelatedInterfaces
 const useGetAllOrders = () => {
     const [data, setData] = useState<{ orders: GetAllOrdersResponse[] }>({
         orders: [],
-     
     });
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -15,12 +14,9 @@ const useGetAllOrders = () => {
 
             try {
                 const response = await axios.get(`http://localhost:45623/api/pedidos/all`);
-               
                 if (!response.data) {
-                    
                     setData({ orders: [] });
                 } else {
-                   
                     setData({ orders: response.data });
                 }
             } catch (err) {

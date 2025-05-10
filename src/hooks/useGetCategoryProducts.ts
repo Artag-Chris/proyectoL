@@ -30,8 +30,6 @@ export default function useGetCategoryProducts(categoryId: string) {
         if (!response.data) {
           setProducts([]);
         } else {
-      
-          
           setProducts(response.data);
         }
       } catch (err) {

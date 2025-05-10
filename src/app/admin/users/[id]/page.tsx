@@ -155,7 +155,7 @@ export default function UserDetailsPage() {
       }
 
       // Enviar datos a la API
-      const response = await fetch(`/api/users/${userId}`, {
+      const response = await fetch(`http://localhost:45623/api/usuarios/admin/userInADmin/${userId}`, {
         method: "PUT",
         body: formDataToSend,
       })
@@ -179,7 +179,7 @@ export default function UserDetailsPage() {
 
   const handleDeleteUser = async () => {
     try {
-      const response = await fetch(`/api/users/${userId}`, {
+      const response = await fetch(`http://localhost:45623/api/usuarios/cliente/${userId}`, {
         method: "DELETE",
       })
 
@@ -546,6 +546,7 @@ export default function UserDetailsPage() {
                                 Admin
                               </Badge>
                             )}
+                            
                             <Badge
                               variant={formData.isAvailable ? "default" : "outline"}
                               className={

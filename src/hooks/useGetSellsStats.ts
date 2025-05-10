@@ -28,9 +28,7 @@ const useGetSellsStats= () => {
 
             try {
                 const response = await axios.get(`http://localhost:45623/api/pedidos/stats`);
-               
                 if (!response.data) {
-                    
                     setResponseData({ response: { message: { total: '0', currentMonth: '0', previousMonth: '0', changes:'0' }, data:{ totalVentas: { count: 0, amount: 0 }, currentMonth: { month: 0, count: 0, amount: 0 }, previousMonth: { month: 0, count: 0, amount: 0 }, changes: { incomePercentage: 0, countPercentage: 0 } } } });
                 } else {
                     setResponseData({ response: response.data });

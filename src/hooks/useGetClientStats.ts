@@ -32,9 +32,7 @@ const useGetClientsStats= () => {
 
             try {
                 const response = await axios.get(`http://localhost:45623/api/usuarios/statsClientes`);
-               
                 if (!response.data) {
-                    
                     setData({ response: { totalUsuarios: 0, usuariosActivos: 0, usuariosInActivos: 0, subscriptions: { currentMonth: { month: 0, count: 0 }, previousMonth: { month: 0, count: 0 }, percentageChange: 0 } } });
                 } else {
                     setData({ response: response.data });

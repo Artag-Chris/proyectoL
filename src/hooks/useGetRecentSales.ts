@@ -34,11 +34,9 @@ const useGetRecentSales = () => {
         const response = await axios.get<RecentSalesResponse>(
           'http://localhost:45623/api/pedidos/ventasRecientes'
         );
-
         if (!response.data) {
           throw new Error('No data received from server');
         }
-
         setData(response.data);
       } catch (err) {
         console.error('Error fetching recent sales:', err);
