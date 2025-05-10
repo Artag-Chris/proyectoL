@@ -59,9 +59,7 @@ export const handleSave = async (formData:any, images:any[], setIsSaving:Functio
       setHasChanges(false)
 
       // Redirigir a la página de detalles después de un breve retraso
-      setTimeout(() => {
-        router.push(`/admin/products/${parsedId}`)
-      }, 1500)
+     
     } catch (error) {
       console.error("Error al guardar:", error)
       toast.error("Error al guardar los cambios")

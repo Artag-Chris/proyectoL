@@ -178,7 +178,7 @@ TODO: Organizar la navegación de los hijos de este componente
             handleChange={handleChange}
             handleCategoryChange={handleCategoryChange}
             handleAvailabilityChange={handleAvailabilityChange}
-            handleSave={() => handleSave}
+            handleSave={() => handleSave(formData, images, setIsSaving, setErrors, setHasChanges, parsedId || 0)}
             handleCancel={() => handleCancel(hasChanges, setShowDiscardDialog)}
             categoriesData={categoriesData}
             product={product}
