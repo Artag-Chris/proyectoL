@@ -101,10 +101,13 @@ import { toast } from "sonner"
   }
 
   // Cancelar edición
- export const handleCancel = (hasChanges: boolean, setShowDiscardDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
+  export const handleCancel = (hasChanges: boolean, setShowDiscardDialog: React.Dispatch<React.SetStateAction<boolean>>) => {
     if (hasChanges) {
-      setShowDiscardDialog(true)
+      setShowDiscardDialog(true);
     } else {
-      router.back()
+      if (typeof window !== "undefined") {
+        window.history.back(); // Alternativa a router.back()
+      }
     }
-  }
+  };
+  
