@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { handleRemoveImage, handleImageUpload } from '@/utils/functions/handleProductAdminMethods'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ImageIcon, Badge, X, Plus } from 'lucide-react'
-import React from 'react'
+import React, { useState } from 'react'
 import Image from "next/image"
 
 interface LeftColumnImageComponentProps {
@@ -16,6 +16,7 @@ interface LeftColumnImageComponentProps {
 }
 
 function LeftColumnImageComponent({ images, activeImageIndex, setActiveImageIndex, setImages, errors, parsedId }: LeftColumnImageComponentProps) {
+  const [uploadMessage, setUploadMessage] = useState("");
     return (
         <>
         <div className="lg:col-span-2">
@@ -98,7 +99,16 @@ function LeftColumnImageComponent({ images, activeImageIndex, setActiveImageInde
                       type="file"
                       accept="image/png,image/jpeg,image/jpg"
                       className="hidden"
-                      onChange={(e) => handleImageUpload(e, setImages, setActiveImageIndex, typeof parsedId === 'string' ? parseInt(parsedId) : parsedId, images)}
+                      onChange={(e) =>
+                        handleImageUpload(
+                          e,
+                          setImages,
+                          setActiveImageIndex,
+                          setUploadMessage,
+                          typeof parsedId === "string" ? parseInt(parsedId) : parsedId,
+                          images
+                        )
+                      }
                       multiple
                     />
                     <Plus className="h-5 w-5 text-gray-400" />

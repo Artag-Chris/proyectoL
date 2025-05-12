@@ -37,28 +37,39 @@ import { toast } from "sonner"
   }
 
   // Manejar subida de imágenes
- export const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setImages: React.Dispatch<React.SetStateAction<any[]>>, setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>, parsedId: number | undefined, images: any[]) => {
-    const files = e.target.files
-    if (!files || files.length === 0) return
-
-    const newImages: any[] = []
-
+  export const handleImageUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setImages: React.Dispatch<React.SetStateAction<any[]>>,
+    setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>,
+    setUploadMessage: React.Dispatch<React.SetStateAction<string>>, // Nuevo estado para el mensaje
+    parsedId: number | undefined,
+    images: any[]
+  ) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+  
+    const newImages: any[] = [];
+  
     Array.from(files).forEach((file) => {
-      const imageUrl = URL.createObjectURL(file)
+      const imageUrl = URL.createObjectURL(file);
       newImages.push({
         url: imageUrl,
         productId: parsedId || 0,
         isNew: true,
         file,
-      })
-    })
-
-    setImages((prev) => [...prev, ...newImages])
-    setActiveImageIndex(images.length) // Seleccionar la primera imagen nueva
-
+      });
+    });
+  
+    setImages((prev) => [...prev, ...newImages]);
+    setActiveImageIndex(images.length); // Seleccionar la primera imagen nueva
+  
+    // Mostrar el mensaje "No implementado aún"
+    setUploadMessage("No implementado aún");
+  
     // Resetear el input
-    e.target.value = ""
-  }
+    e.target.value = "";
+  };
+  
 
   // Eliminar una imagen
  export const handleRemoveImage = (index: number, setImages: React.Dispatch<React.SetStateAction<any[]>>, setActiveImageIndex: React.Dispatch<React.SetStateAction<number>>, activeImageIndex: number, images: any[]) => {
