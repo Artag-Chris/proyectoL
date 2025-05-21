@@ -85,7 +85,7 @@ export function Navbar() {
             <Link href="/products" className="text-sm font-medium hover:text-primary transition-colors">
               Productos
             </Link>
-            <Link href="/collections" className="text-sm font-medium hover:text-primary transition-colors">
+            <Link href="/categories" className="text-sm font-medium hover:text-primary transition-colors">
               Colecciones
             </Link>
             <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors">
