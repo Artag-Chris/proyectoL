@@ -3,19 +3,8 @@
 import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ProductCard } from "./product-card"
+import { BentoSectionProps } from "@/utils/dummy/dummy"
 
-interface Product {
-  id: number
-  name: string
-  price: number
-  imageUrl: string
-  description: string
-}
-
-interface BentoSectionProps {
-  soldProducts: Product[]
-  containerVariants?: any
-}
 
 export function BentoSection({
   soldProducts,
@@ -53,7 +42,7 @@ export function BentoSection({
         animate="visible"
       >
         <AnimatePresence>
-          {product.slice(0, 10).map((product, index) => {
+          {product.slice(0, 12).map((product, index) => {
             // Define grid positions based on index
             const gridClasses = getGridClasses(index)
 
@@ -90,9 +79,9 @@ function getGridClasses(index: number): string {
     case 1: // Wide item
       return "sm:col-span-2 aspect-video"
     case 3: // Tall item
-      return "sm:row-span-2 aspect-[3/4]"
+      return "sm:row-span-2 aspect-[3/7]"
     case 5: // Wide item
-      return "sm:col-span-2 aspect-video"
+      return "sm:col-span-2 aspect-[16/9]"
     case 7: // Wide item on larger screens
       return "lg:col-span-2 aspect-video"
     default:

@@ -229,3 +229,10 @@ export interface ProductCarouselProps {
   product: Product[]
   title?: string
 }
+
+
+
+export interface BentoSectionProps {
+  soldProducts: Product[]
+  containerVariants?: any
+}
