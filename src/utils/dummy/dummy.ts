@@ -216,3 +216,16 @@ export const ProductRecomended = [
   { id: 3, name: 'Producto 3', price: 8.99, imageUrl: '/placeholder.svg' },
   { id: 4, name: 'Producto 4', price: 15.99, imageUrl: '/placeholder.svg' },
 ]
+
+export interface Product {
+  id: number
+  name: string
+  price: number
+  imageUrl: string
+  description: string
+}
+
+export interface ProductCarouselProps {
+  product: Product[]
+  title?: string
+}

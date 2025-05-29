@@ -9,19 +9,7 @@ import { ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import useCartStore from "@/utils/store/cartStore"
-
-interface Product {
-  id: number
-  name: string
-  price: number
-  imageUrl: string
-  description: string
-}
-
-interface ProductCarouselProps {
-  product: Product[]
-  title?: string
-}
+import type { ProductCarouselProps } from "@/utils/dummy/dummy"
 
 export function ProductCarousel({ product, title = "Productos Destacados" }: ProductCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -135,26 +123,9 @@ export function ProductCarousel({ product, title = "Productos Destacados" }: Pro
   return (
     <div className="w-full py-8">
       <div className="container mx-auto px-4">
-        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-amber-800">{title}</h2>
+        <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800">{title}</h2>
 
-        <div
-          ref={carouselRef}
-          className="relative overflow-hidden rounded-xl border-2 border-black bg-gradient-to-b from-amber-50 to-amber-100 p-6"
-        >
-          {/* Background Image with Gradient Overlay */}
-          <div className="absolute inset-0 z-0">
-            <Image
-              src="https://d1ih8jugeo2m5m.cloudfront.net/2024/10/velas_aromaticas-768x512.jpg"
-              alt="Candles Background"
-              fill
-              style={{ objectFit: "cover" }}
-              className="opacity-30"
-              sizes="100vw"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-amber-50/80 to-amber-100/80 backdrop-blur-sm" />
-          </div>
-
+        <div ref={carouselRef} className="relative overflow-hidden rounded-xl bg-gray-50 p-6">
           {/* Carousel Content */}
           <div className="relative z-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -166,7 +137,7 @@ export function ProductCarousel({ product, title = "Productos Destacados" }: Pro
                   transition={{ duration: 0.4, delay: idx * 0.1 }}
                   className="h-full"
                 >
-                  <Card className="h-full overflow-hidden backdrop-blur-md bg-white/70 border-black border-2 shadow-lg flex flex-col">
+                  <Card className="h-full overflow-hidden bg-white border border-gray-200 shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col">
                     <Link href={`/product/${item.id}`} className="relative block overflow-hidden group">
                       <div className="relative w-full pt-[75%] overflow-hidden">
                         <Image
@@ -177,21 +148,22 @@ export function ProductCarousel({ product, title = "Productos Destacados" }: Pro
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                           style={{ objectPosition: "center" }}
                         />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
                       </div>
                     </Link>
 
                     <CardHeader className="pb-2">
-                      <CardTitle className="text-lg font-semibold text-amber-800 line-clamp-1">{item.name}</CardTitle>
+                      <CardTitle className="text-lg font-semibold text-gray-900 line-clamp-1">{item.name}</CardTitle>
                     </CardHeader>
 
                     <CardContent className="pb-2 flex-grow">
-                      <p className="text-sm text-amber-700 line-clamp-2">{item.description}</p>
+                      <p className="text-sm text-gray-600 line-clamp-2">{item.description}</p>
                     </CardContent>
 
                     <CardFooter className="flex justify-between items-center pt-2 mt-auto">
-                      <span className="text-xl font-bold text-amber-800">${item.price.toFixed(2)}</span>
+                      <span className="text-xl font-bold text-gray-900">${item.price.toFixed(2)}</span>
                       <Button
-                        className="bg-orange-500 hover:bg-orange-600 text-white border-black border-2 transition-all duration-300 hover:shadow-md"
+                        className="bg-gray-900 hover:bg-gray-800 text-white border border-gray-300 transition-all duration-300 hover:shadow-md"
                         onClick={(e) => {
                           e.preventDefault()
                           addItem({
@@ -217,13 +189,13 @@ export function ProductCarousel({ product, title = "Productos Destacados" }: Pro
             {validProducts.length > visibleCount && (
               <>
                 <button
-                  className="absolute top-1/2 -left-3 md:left-2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg p-2 md:p-3 border-2 border-black z-10"
+                  className="absolute top-1/2 -left-3 md:left-2 -translate-y-1/2 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 rounded-full shadow-lg p-2 md:p-3 border border-gray-200 z-10"
                   onClick={prevSlide}
                 >
                   <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
                 </button>
                 <button
-                  className="absolute top-1/2 -right-3 md:right-2 -translate-y-1/2 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-lg p-2 md:p-3 border-2 border-black z-10"
+                  className="absolute top-1/2 -right-3 md:right-2 -translate-y-1/2 bg-white hover:bg-gray-50 text-gray-700 hover:text-gray-900 rounded-full shadow-lg p-2 md:p-3 border border-gray-200 z-10"
                   onClick={nextSlide}
                 >
                   <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
@@ -241,7 +213,7 @@ export function ProductCarousel({ product, title = "Productos Destacados" }: Pro
                   <button
                     key={index}
                     className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      isActive ? "bg-orange-500 border-2 border-black scale-110" : "bg-gray-300"
+                      isActive ? "bg-gray-900 border border-gray-300 scale-110" : "bg-gray-200"
                     }`}
                     onClick={() => setCurrentIndex(index * visibleCount)}
                   />
@@ -254,4 +226,3 @@ export function ProductCarousel({ product, title = "Productos Destacados" }: Pro
     </div>
   )
 }
-
